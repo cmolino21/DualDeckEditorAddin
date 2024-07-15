@@ -42,7 +42,7 @@
             this.textBoxDD_Length = new System.Windows.Forms.TextBox();
             this.textBoxDD_Width = new System.Windows.Forms.TextBox();
             this.textBox_BotJoint = new System.Windows.Forms.TextBox();
-            this.textBoxLedgeJoint = new System.Windows.Forms.TextBox();
+            this.textBoxDD_LedgeJoint = new System.Windows.Forms.TextBox();
             this.groupBoxTruss = new System.Windows.Forms.GroupBox();
             this.checkBoxTrussSymmetrical = new System.Windows.Forms.CheckBox();
             this.checkBoxTrussOffset = new System.Windows.Forms.CheckBox();
@@ -271,7 +271,7 @@
             this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_Length, 1, 1);
             this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_Width, 1, 2);
             this.tableLayoutPanelDimensions.Controls.Add(this.textBox_BotJoint, 1, 3);
-            this.tableLayoutPanelDimensions.Controls.Add(this.textBoxLedgeJoint, 1, 4);
+            this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_LedgeJoint, 1, 4);
             this.tableLayoutPanelDimensions.Location = new System.Drawing.Point(6, 19);
             this.tableLayoutPanelDimensions.Name = "tableLayoutPanelDimensions";
             this.tableLayoutPanelDimensions.RowCount = 5;
@@ -365,13 +365,13 @@
             this.textBox_BotJoint.Size = new System.Drawing.Size(131, 20);
             this.textBox_BotJoint.TabIndex = 66;
             // 
-            // textBoxLedgeJoint
+            // textBoxDD_LedgeJoint
             // 
-            this.textBoxLedgeJoint.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBoxLedgeJoint.Location = new System.Drawing.Point(103, 109);
-            this.textBoxLedgeJoint.Name = "textBoxLedgeJoint";
-            this.textBoxLedgeJoint.Size = new System.Drawing.Size(131, 20);
-            this.textBoxLedgeJoint.TabIndex = 67;
+            this.textBoxDD_LedgeJoint.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.textBoxDD_LedgeJoint.Location = new System.Drawing.Point(103, 109);
+            this.textBoxDD_LedgeJoint.Name = "textBoxDD_LedgeJoint";
+            this.textBoxDD_LedgeJoint.Size = new System.Drawing.Size(131, 20);
+            this.textBoxDD_LedgeJoint.TabIndex = 67;
             // 
             // groupBoxTruss
             // 
@@ -2333,7 +2333,7 @@
         private System.Windows.Forms.TextBox textBoxDD_Length;
         private System.Windows.Forms.TextBox textBoxDD_Width;
         private System.Windows.Forms.TextBox textBox_BotJoint;
-        private System.Windows.Forms.TextBox textBoxLedgeJoint;
+        private System.Windows.Forms.TextBox textBoxDD_LedgeJoint;
         private System.Windows.Forms.GroupBox groupBoxStrand;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelStrand;
         private System.Windows.Forms.Label label25;

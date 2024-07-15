@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static DualDeckEditorAddin.MainFormEditor;
+using BuildingCoder;
 
 namespace DualDeckEditorAddin
 {
@@ -24,8 +26,21 @@ namespace DualDeckEditorAddin
             _doc = doc;
             InitializeDualDeckSelection(uidoc);
             comboBoxFamilyType.SelectedIndexChanged += comboBoxFamilyType_SelectedIndexChanged; // Attach the event handler for updating the data based on DualDeck selection
+            //TestFamilyParameters(doc);
         }
 
+        public void TestFamilyParameters (Document doc)
+        {
+            if (!doc.IsFamilyDocument)
+            {
+                MessageBox.Show("This is not a family document!");
+            }
+
+            FamilyManager mgr = doc.FamilyManager;
+
+            int n = mgr.Parameters.Size;
+        }
+        
         // If a DualDeck is selected in the document when the program is launched, this will collect that ID
         private void InitializeDualDeckSelection(UIDocument uidoc)
         {
@@ -60,6 +75,35 @@ namespace DualDeckEditorAddin
             }
         }
 
+        static string FamilyParamValueString(Autodesk.Revit.DB.FamilyType t, FamilyParameter fp, Document doc)
+        {
+            string value = t.AsValueString(fp);
+            switch (fp.StorageType)
+            {
+                case StorageType.Double:
+                    value = Util.RealString((double)t.AsDouble(fp)) + " (double)";
+                    break;
+
+                case StorageType.ElementId:
+                    ElementId id = t.AsElementId(fp);
+                    Element e = doc.GetElement(id);
+                    value = id.IntegerValue.ToString() + " ("
+                      + Util.ElementDescription(e) + ")";
+                    break;
+
+                case StorageType.Integer:
+                    value = t.AsInteger(fp).ToString()
+                      + " (int)";
+                    break;
+
+                case StorageType.String:
+                    value = "'" + t.AsString(fp)
+                      + "' (string)";
+                    break;
+            }
+            return value;
+        }
+
         private void comboBoxFamilyType_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxFamilyType.SelectedItem is FamilyType selectedFamilyType)
@@ -70,41 +114,88 @@ namespace DualDeckEditorAddin
                     .WhereElementIsNotElementType()
                     .Where(x => ((FamilyInstance)x).Symbol.Id == selectedFamilyType.Id);
 
-                // Debugging: Output the number of instances found
-                MessageBox.Show($"Number of instances found: {collector.Count()}");
-
-                // Try to get the first instance of this family type
+                // Attempt to retrieve the first instance found; this will be used to access the family data
                 var selectedInstance = collector.FirstOrDefault() as FamilyInstance;
 
                 if (selectedInstance != null)
                 {
-                    // Debugging: Confirm the instance ID
-                    MessageBox.Show($"Instance ID: {selectedInstance.Id.IntegerValue}");
 
-                    Family family = selectedInstance.Symbol.Family;
+                    Family family = selectedInstance.Symbol.Family; // Retrieve the family from the instance symbol
 
-                    Document familyDoc = _doc.EditFamily( family );
-                    
-                    FamilyManager familyManager = familyDoc.FamilyManager;
+                    Document familyDoc = _doc.EditFamily( family ); // Open the family for editing which returns the family document
 
-                    FamilyParameter depthParam = familyManager.get_Parameter("DD_Depth");
+                    FamilyManager familyManager = familyDoc.FamilyManager; // Get the family manager which manages the parameters of the family
 
-                    if (depthParam != null)
+                    // Retrieve and print the number of parameters in the family
+                    int n = familyManager.Parameters.Size; 
+
+                    Debug.Print("\nFamily {0} has {1} parameter{2}", _doc.Title, n, Util.PluralSuffix( n ) );
+
+                    // Create a dictionary to map parameter names to their corresponding FamilyParameter objects
+                    Dictionary<string, FamilyParameter> fps = new Dictionary<string, FamilyParameter>(n);
+
+                    foreach (FamilyParameter fp in familyManager.Parameters)
                     {
-                        textBoxDD_Depth.Text = depthParam.ToString();
-                        // Debugging: Show the parameter's storage type and value
-                        MessageBox.Show($"Parameter storage type: {depthParam.StorageType}");
+                        string name = fp.Definition.Name;
+                        fps.Add (name, fp );
                     }
-                    else
+                    // Sort the keys (parameter names) for better manageability
+                    List<string> keys = new List<string>( fps.Keys );
+                    keys.Sort();
+
+                    // Print each key in the keys list
+                    foreach (string key in keys)
                     {
-                        textBoxDD_Depth.Text = "Parameter not found";
-                        // Debugging: Parameter not found
-                        MessageBox.Show("DD_Depth parameter not found.");
+                        Debug.Print(key);
                     }
-                }
-                else
-                {
-                    MessageBox.Show("No instances found for the selected family type.");
+
+                    // Print the number of types in the family and their names
+                    n = familyManager.Types.Size;
+
+                    Debug.Print("\nFamily {0} has {1} type{2}{3}", _doc.Title, n, Util.PluralSuffix(n), Util.DotOrColon(n));
+
+                    // Iterate through each type in the family
+                    foreach (Autodesk.Revit.DB.FamilyType t in familyManager.Types)
+                    {
+                        string name = t.Name;
+                        Debug.Print(" {0}:", name);
+
+                        // For each parameter key, check if the type has a value set and print it
+                        foreach ( string key in keys )
+                        {
+                            FamilyParameter fp = fps[key];
+                            if(t.HasValue(fp))
+                            {
+                                string value = FamilyParamValueString(t, fp, _doc);
+
+                                Debug.Print("    {0} = {1}", key, value);
+                            }
+                        }
+                    }
+
+
+
+                    //    FamilyParameter depthParam = familyManager.get_Parameter("DD_Depth");
+
+                    //    MessageBox.Show("Family Manager: " + familyManager.ToString() + "\nDepthParam: " + depthParam.ToString());
+
+
+                    //    if (depthParam != null)
+                    //    {
+                    //        textBoxDD_Depth.Text = depthParam.ToString();
+                    //        // Debugging: Show the parameter's storage type and value
+                    //        MessageBox.Show($"Parameter storage type: {depthParam.StorageType}");
+                    //    }
+                    //    else
+                    //    {
+                    //        textBoxDD_Depth.Text = "Parameter not found";
+                    //        // Debugging: Parameter not found
+                    //        MessageBox.Show("DD_Depth parameter not found.");
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    MessageBox.Show("No instances found for the selected family type.");
                 }
             }
         }
@@ -141,7 +232,7 @@ namespace DualDeckEditorAddin
         }
 
         public void LoadDualDeckTypes(Document doc)
-        {
+        {  
             try
             {
                 // Collector that retrieves all elements of category OST_Families, filtering by class FamilySymbol

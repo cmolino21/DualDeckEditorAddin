@@ -77,7 +77,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Util.cs" />
+    <Compile Include="ExampleClass.cs" />
     <Compile Include="DualDeckEditorCommand.cs" />
     <Compile Include="MainFormEditor.cs">
       <SubType>Form</SubType>
