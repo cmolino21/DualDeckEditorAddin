@@ -9,6 +9,7 @@ namespace DualDeckEditorAddin
 {
     public static class ControlMappings
     {
+        public static Dictionary<string, string> TextBoxDimensionMappings { get; private set; }
         public static Dictionary<string, string> TextBoxMappings { get; private set; }
         public static Dictionary<string, string> CheckBoxMappings { get; private set; }
 
@@ -16,17 +17,25 @@ namespace DualDeckEditorAddin
         {
             InitializeTextBoxMappings();
             InitializeCheckBoxMappings();
+            InitializeTextBoxDimensionMappings();
+        }
+
+        private static void InitializeTextBoxDimensionMappings()
+        {
+            TextBoxDimensionMappings = new Dictionary<string, string>
+            {
+                {"textBoxDD_Depth", "DD_Depth"},
+                {"textBoxDD_Length", "DD_Length"},
+                {"textBoxDD_Width", "DD_Width"},
+                {"textBoxDD_BotJoint", "Bot_Joint_Size"},
+                {"textBoxDD_LedgeJoint", "Ledge+Joint"}
+            };
         }
 
         private static void InitializeTextBoxMappings()
         {
             TextBoxMappings = new Dictionary<string, string>
             {
-                {"textBoxDD_Depth", "DD_Depth"},
-                {"textBoxDD_Length", "DD_Length"},
-                {"textBoxDD_Width", "DD_Width"},
-                {"textBoxDD_BotJoint", "Bot_Joint_Size"},
-                {"textBoxDD_LedgeJoint", "Ledge+Joint"},
                 {"textBoxShort_A", "TrussA/B_Short"},
                 {"textBoxLong_A", "TrussA/B_Long"},
                 {"textBoxShort_01", "Truss01/11_Short"},

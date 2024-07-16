@@ -129,7 +129,7 @@ namespace DualDeckEditorAddin
                                 {
                                     string value = Util.FamilyParamValueString(t, fp, _doc);
                                     parameterValues[key] = value; // Store the parameter value in the dictionary
-                                    Debug.Print("    {0} = {1}", key, value);
+                                    //Debug.Print("    {0} = {1}", key, value);
                                 }
                             }
                         }
@@ -138,6 +138,42 @@ namespace DualDeckEditorAddin
                             continue;
                         }
                     }
+
+
+                    // Set dimension text box values
+                    foreach (var entry in ControlMappings.TextBoxDimensionMappings)
+                    {
+                        var textBox = this.Controls.Find(entry.Key, true).FirstOrDefault() as System.Windows.Forms.TextBox;
+                        if (textBox != null)
+                        {
+                            textBox.Text = parameterValues.ContainsKey(entry.Value) ? parameterValues[entry.Value] : "Error";
+                        }
+                    }
+
+                    //// Set dimension text box values
+                    //foreach (var entry in ControlMappings.TextBoxDimensionMappings)
+                    //{
+                    //    var textBox = this.Controls.Find(entry.Key, true).FirstOrDefault() as System.Windows.Forms.TextBox;
+                    //    if (textBox != null)
+                    //    {
+                    //        if (parameterValues.ContainsKey(entry.Value))
+                    //        {
+                    //            double decimalFeet;
+                    //            if (double.TryParse(parameterValues[entry.Value], out decimalFeet))
+                    //            {
+                    //                textBox.Text = parameterValues[entry.Value] + " => " + UnitConverter.ConvertFeetToFeetAndFractionalInches(decimalFeet);
+                    //            }
+                    //            else
+                    //            {
+                    //                textBox.Text = "Error";
+                    //            }
+                    //        }
+                    //        else
+                    //        {
+                    //            textBox.Text = "Error";
+                    //        }
+                    //    }
+                    //}
 
                     // Set text box values
                     foreach (var entry in ControlMappings.TextBoxMappings)
@@ -166,19 +202,34 @@ namespace DualDeckEditorAddin
             }
         }
 
+        public static class UnitConverter
+        {
+            public static string ConvertFeetToFeetAndFractionalInches(double decimalFeet)
+            {
+                double feet = Math.Floor(decimalFeet);
+                double inches = (decimalFeet - feet) * 12;
+                double fraction = Math.Round(inches - Math.Floor(inches), 3);
+                int wholeInches = (int)Math.Floor(inches);
+                int numerator = (int)(fraction * 8);
+                int denominator = 8;
 
-        //private string FormatLength(double val)
-        //{
-        //    // Assuming 'val' is in feet and we need to convert it to a string in feet and inches format.
-        //    // Use FormatUtils for formatting based on built-in types
-        //    return UnitFormatUtils.Format(
-        //        _doc.GetUnits(),                      // Use the document's unit settings
-        //        UnitType.UT_Length,                   // Specify the unit type as length
-        //        val,                                  // The value in feet
-        //        false,                                // Specify if the units are abbreviated
-        //        false,                                // Specify if the value is in a different unit system
-        //        false);                               // Display zero in fields if necessary
-        //}
+                // Simplify the fraction
+                while (numerator % 2 == 0 && denominator % 2 == 0)
+                {
+                    numerator /= 2;
+                    denominator /= 2;
+                }
+
+                string result = $"{feet}' {wholeInches}";
+                if (numerator > 0)
+                {
+                    result += $" {numerator}/{denominator}";
+                }
+                result += "\"";
+
+                return result;
+            }
+        }
 
         public class FamilyTypeItem
         {

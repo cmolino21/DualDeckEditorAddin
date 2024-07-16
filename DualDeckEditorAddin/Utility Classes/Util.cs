@@ -1423,7 +1423,8 @@ const T f = ( ay * bx ) - ( ax * by );
             switch (fp.StorageType)
             {
                 case StorageType.Double:
-                    value = Util.RealString((double)t.AsDouble(fp));
+                    value = UnitFormatUtils.Format(doc.GetUnits(), SpecTypeId.Length, (double)t.AsDouble(fp), true);
+                    //value = Util.RealString((double)t.AsDouble(fp));
                     break;
 
                 case StorageType.ElementId:
@@ -1484,7 +1485,7 @@ const T f = ( ay * bx ) - ( ax * by );
         /// </summary>
         public static string RealString(double a)
         {
-            return a.ToString("0.##");
+            return a.ToString("0.#####");
         }
 
         /// <summary>
