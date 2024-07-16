@@ -77,7 +77,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Util.cs" />
+    <Compile Include="Utility Classes\UIMapping.cs" />
+    <Compile Include="Utility Classes\Util.cs" />
     <Compile Include="ExampleClass.cs" />
     <Compile Include="DualDeckEditorCommand.cs" />
     <Compile Include="MainFormEditor.cs">

@@ -26,20 +26,8 @@ namespace DualDeckEditorAddin
             _doc = doc;
             InitializeDualDeckSelection(uidoc);
             comboBoxFamilyType.SelectedIndexChanged += comboBoxFamilyType_SelectedIndexChanged; // Attach the event handler for updating the data based on DualDeck selection
-            //TestFamilyParameters(doc);
         }
 
-        public void TestFamilyParameters (Document doc)
-        {
-            if (!doc.IsFamilyDocument)
-            {
-                MessageBox.Show("This is not a family document!");
-            }
-
-            FamilyManager mgr = doc.FamilyManager;
-
-            int n = mgr.Parameters.Size;
-        }
         
         // If a DualDeck is selected in the document when the program is launched, this will collect that ID
         private void InitializeDualDeckSelection(UIDocument uidoc)
@@ -75,38 +63,11 @@ namespace DualDeckEditorAddin
             }
         }
 
-        static string FamilyParamValueString(Autodesk.Revit.DB.FamilyType t, FamilyParameter fp, Document doc)
-        {
-            string value = t.AsValueString(fp);
-            switch (fp.StorageType)
-            {
-                case StorageType.Double:
-                    value = Util.RealString((double)t.AsDouble(fp)) + " (double)";
-                    break;
 
-                case StorageType.ElementId:
-                    ElementId id = t.AsElementId(fp);
-                    Element e = doc.GetElement(id);
-                    value = id.IntegerValue.ToString() + " ("
-                      + Util.ElementDescription(e) + ")";
-                    break;
-
-                case StorageType.Integer:
-                    value = t.AsInteger(fp).ToString()
-                      + " (int)";
-                    break;
-
-                case StorageType.String:
-                    value = "'" + t.AsString(fp)
-                      + "' (string)";
-                    break;
-            }
-            return value;
-        }
 
         private void comboBoxFamilyType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxFamilyType.SelectedItem is FamilyType selectedFamilyType)
+            if (comboBoxFamilyType.SelectedItem is FamilyTypeItem selectedFamilyType)
             {
                 // Use a filtered element collector to find all instances of the selected family type
                 var collector = new FilteredElementCollector(_doc)
@@ -143,59 +104,64 @@ namespace DualDeckEditorAddin
                     List<string> keys = new List<string>( fps.Keys );
                     keys.Sort();
 
-                    // Print each key in the keys list
-                    foreach (string key in keys)
-                    {
-                        Debug.Print(key);
-                    }
-
                     // Print the number of types in the family and their names
                     n = familyManager.Types.Size;
 
-                    Debug.Print("\nFamily {0} has {1} type{2}{3}", _doc.Title, n, Util.PluralSuffix(n), Util.DotOrColon(n));
+                    //Debug.Print("\nFamily {0} has {1} type{2}{3}", _doc.Title, n, Util.PluralSuffix(n), Util.DotOrColon(n));
+
+                    string matchName = selectedFamilyType.ToString()
+                            .Replace("DD Mirror: ", "")
+                            .Replace("DD Adjust: ", "");
+
+                    Dictionary<string, string> parameterValues = new Dictionary<string, string>(); // Dictionary to store parameter values
 
                     // Iterate through each type in the family
                     foreach (Autodesk.Revit.DB.FamilyType t in familyManager.Types)
                     {
-                        string name = t.Name;
-                        Debug.Print(" {0}:", name);
-
-                        // For each parameter key, check if the type has a value set and print it
-                        foreach ( string key in keys )
+                        // Get the match name and remove "DD Mirror: " or "DD Adjust: " from it
+                        if (t.Name == matchName)
                         {
-                            FamilyParameter fp = fps[key];
-                            if(t.HasValue(fp))
+                            // For each parameter key, check if the type has a value set and print it
+                            foreach (string key in keys)
                             {
-                                string value = FamilyParamValueString(t, fp, _doc);
-
-                                Debug.Print("    {0} = {1}", key, value);
+                                FamilyParameter fp = fps[key];
+                                if (t.HasValue(fp))
+                                {
+                                    string value = Util.FamilyParamValueString(t, fp, _doc);
+                                    parameterValues[key] = value; // Store the parameter value in the dictionary
+                                    Debug.Print("    {0} = {1}", key, value);
+                                }
                             }
+                        }
+                        else
+                        {
+                            continue;
                         }
                     }
 
+                    // Set text box values
+                    foreach (var entry in ControlMappings.TextBoxMappings)
+                    {
+                        var textBox = this.Controls.Find(entry.Key, true).FirstOrDefault() as System.Windows.Forms.TextBox;
+                        if (textBox != null)
+                        {
+                            textBox.Text = parameterValues.ContainsKey(entry.Value) ? parameterValues[entry.Value] : "Error";
+                        }
+                    }
 
-
-                    //    FamilyParameter depthParam = familyManager.get_Parameter("DD_Depth");
-
-                    //    MessageBox.Show("Family Manager: " + familyManager.ToString() + "\nDepthParam: " + depthParam.ToString());
-
-
-                    //    if (depthParam != null)
-                    //    {
-                    //        textBoxDD_Depth.Text = depthParam.ToString();
-                    //        // Debugging: Show the parameter's storage type and value
-                    //        MessageBox.Show($"Parameter storage type: {depthParam.StorageType}");
-                    //    }
-                    //    else
-                    //    {
-                    //        textBoxDD_Depth.Text = "Parameter not found";
-                    //        // Debugging: Parameter not found
-                    //        MessageBox.Show("DD_Depth parameter not found.");
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show("No instances found for the selected family type.");
+                    // Set checkbox values
+                    foreach (var entry in ControlMappings.CheckBoxMappings)
+                    {
+                        var checkBox = this.Controls.Find(entry.Key, true).FirstOrDefault() as System.Windows.Forms.CheckBox;
+                        if (checkBox != null)
+                        {
+                            checkBox.Checked = parameterValues.ContainsKey(entry.Value) && parameterValues[entry.Value] == "1";
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No instances of the selected family type were found.");
                 }
             }
         }
@@ -214,12 +180,12 @@ namespace DualDeckEditorAddin
         //        false);                               // Display zero in fields if necessary
         //}
 
-        public class FamilyType
+        public class FamilyTypeItem
         {
             public string Name { get; set; }
             public ElementId Id { get; set; }
 
-            public FamilyType(string name, ElementId id)
+            public FamilyTypeItem(string name, ElementId id)
             {
                 Name = name;
                 Id = id;
@@ -244,7 +210,7 @@ namespace DualDeckEditorAddin
                 comboBoxFamilyType.Items.Clear();
 
                 // Create a temporary list for sorting before adding them to the combobox
-                List<FamilyType> familyTypes = new List<FamilyType>();
+                List<FamilyTypeItem> familyTypes = new List<FamilyTypeItem>();
 
                 // This HashSet is used to ensure unique names are added (optional based on your exact needs)
                 HashSet<string> addedNames = new HashSet<string>();
@@ -266,7 +232,7 @@ namespace DualDeckEditorAddin
 
                     if (!string.IsNullOrEmpty(display))
                     {
-                        familyTypes.Add(new FamilyType(display, symbol.Id));
+                        familyTypes.Add(new FamilyTypeItem(display, symbol.Id));
                     }
                 }
 
@@ -286,7 +252,7 @@ namespace DualDeckEditorAddin
 
                 if (_initialSelectedId != null)
                 {
-                    foreach (FamilyType item in comboBoxFamilyType.Items)
+                    foreach (FamilyTypeItem item in comboBoxFamilyType.Items)
                     {
                         if (item.Id == _initialSelectedId)
                         {
@@ -317,7 +283,7 @@ namespace DualDeckEditorAddin
                 if (dualDeckId != null)
                 {
                     // Update combobox selection based on picked element
-                    foreach (FamilyType item in comboBoxFamilyType.Items)
+                    foreach (FamilyTypeItem item in comboBoxFamilyType.Items)
                     {
                         if (item.Id == dualDeckId)
                         {
@@ -380,5 +346,6 @@ namespace DualDeckEditorAddin
                 return false; // We only want to select elements, not references
             }
         }
+
     }
 }

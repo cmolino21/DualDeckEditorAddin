@@ -1415,6 +1415,37 @@ const T f = ( ay * bx ) - ( ax * by );
         #region Formatting
 
         /// <summary>
+        ///     Return a formatted family parameter value as a string
+        /// </summary>
+        public static string FamilyParamValueString(Autodesk.Revit.DB.FamilyType t, FamilyParameter fp, Document doc)
+        {
+            string value = t.AsValueString(fp);
+            switch (fp.StorageType)
+            {
+                case StorageType.Double:
+                    value = Util.RealString((double)t.AsDouble(fp));
+                    break;
+
+                case StorageType.ElementId:
+                    ElementId id = t.AsElementId(fp);
+                    Element e = doc.GetElement(id);
+                    value = id.IntegerValue.ToString() + " ("
+                      + Util.ElementDescription(e) + ")";
+                    break;
+
+                case StorageType.Integer:
+                    value = t.AsInteger(fp).ToString();
+                    break;
+
+                case StorageType.String:
+                    value = "'" + t.AsString(fp)
+                      + "' (string)";
+                    break;
+            }
+            return value;
+        }
+
+        /// <summary>
         ///     Return an English plural suffix for the given
         ///     number of items, i.e. 's' for zero or more
         ///     than one, and nothing for exactly one.
