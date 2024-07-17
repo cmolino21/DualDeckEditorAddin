@@ -404,6 +404,7 @@ namespace DualDeckEditorAddin
             FormatAsFeetAndInches(sender as System.Windows.Forms.TextBox);
         }
 
+        // Convert text to proper format in text boxes
         private void FormatAsFeetAndInches(System.Windows.Forms.TextBox textBox)
         {
             if (textBox == null) return;
