@@ -206,11 +206,12 @@
             this.checkBoxTop_20 = new System.Windows.Forms.CheckBox();
             this.label50 = new System.Windows.Forms.Label();
             this.panelBottom = new System.Windows.Forms.Panel();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnRevert = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
             this.panelSelect = new System.Windows.Forms.Panel();
             this.label51 = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
             this.groupBoxDimensions.SuspendLayout();
             this.tableLayoutPanelDimensions.SuspendLayout();
             this.groupBoxTruss.SuspendLayout();
@@ -252,11 +253,12 @@
             // 
             // groupBoxDimensions
             // 
+            this.groupBoxDimensions.Controls.Add(this.label52);
             this.groupBoxDimensions.Controls.Add(this.tableLayoutPanelDimensions);
             this.groupBoxDimensions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxDimensions.Location = new System.Drawing.Point(15, 7);
             this.groupBoxDimensions.Name = "groupBoxDimensions";
-            this.groupBoxDimensions.Size = new System.Drawing.Size(463, 159);
+            this.groupBoxDimensions.Size = new System.Drawing.Size(463, 181);
             this.groupBoxDimensions.TabIndex = 3;
             this.groupBoxDimensions.TabStop = false;
             this.groupBoxDimensions.Text = "Dimensions:";
@@ -276,7 +278,7 @@
             this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_Width, 1, 2);
             this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_BotJoint, 1, 3);
             this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_LedgeJoint, 1, 4);
-            this.tableLayoutPanelDimensions.Location = new System.Drawing.Point(6, 19);
+            this.tableLayoutPanelDimensions.Location = new System.Drawing.Point(6, 37);
             this.tableLayoutPanelDimensions.Name = "tableLayoutPanelDimensions";
             this.tableLayoutPanelDimensions.RowCount = 5;
             this.tableLayoutPanelDimensions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -382,7 +384,7 @@
             this.groupBoxTruss.Controls.Add(this.checkBoxTrussSymmetrical);
             this.groupBoxTruss.Controls.Add(this.checkBoxTrussOffset);
             this.groupBoxTruss.Controls.Add(this.tableLayoutPanelTruss);
-            this.groupBoxTruss.Location = new System.Drawing.Point(15, 187);
+            this.groupBoxTruss.Location = new System.Drawing.Point(15, 194);
             this.groupBoxTruss.Name = "groupBoxTruss";
             this.groupBoxTruss.Size = new System.Drawing.Size(463, 420);
             this.groupBoxTruss.TabIndex = 4;
@@ -506,7 +508,7 @@
             this.tableLayoutPanelTruss.Controls.Add(this.textBoxShort_A, 2, 1);
             this.tableLayoutPanelTruss.Location = new System.Drawing.Point(6, 58);
             this.tableLayoutPanelTruss.Name = "tableLayoutPanelTruss";
-            this.tableLayoutPanelTruss.RowCount = 14;
+            this.tableLayoutPanelTruss.RowCount = 15;
             this.tableLayoutPanelTruss.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanelTruss.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanelTruss.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
@@ -521,6 +523,7 @@
             this.tableLayoutPanelTruss.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanelTruss.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanelTruss.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanelTruss.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelTruss.Size = new System.Drawing.Size(451, 352);
             this.tableLayoutPanelTruss.TabIndex = 0;
             // 
@@ -797,7 +800,7 @@
             // 
             this.label19.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(28, 332);
+            this.label19.Location = new System.Drawing.Point(28, 331);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(43, 13);
             this.label19.TabIndex = 17;
@@ -1059,7 +1062,7 @@
             // 
             this.checkBoxOnOff_B.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxOnOff_B.AutoSize = true;
-            this.checkBoxOnOff_B.Location = new System.Drawing.Point(122, 331);
+            this.checkBoxOnOff_B.Location = new System.Drawing.Point(122, 330);
             this.checkBoxOnOff_B.Name = "checkBoxOnOff_B";
             this.checkBoxOnOff_B.Size = new System.Drawing.Size(15, 14);
             this.checkBoxOnOff_B.TabIndex = 31;
@@ -1199,7 +1202,7 @@
             // 
             this.checkBox_2Out_B.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_2Out_B.AutoSize = true;
-            this.checkBox_2Out_B.Location = new System.Drawing.Point(345, 331);
+            this.checkBox_2Out_B.Location = new System.Drawing.Point(345, 330);
             this.checkBox_2Out_B.Name = "checkBox_2Out_B";
             this.checkBox_2Out_B.Size = new System.Drawing.Size(15, 14);
             this.checkBox_2Out_B.TabIndex = 48;
@@ -1329,7 +1332,7 @@
             // 
             this.checkBox_2In_B.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_2In_B.AutoSize = true;
-            this.checkBox_2In_B.Location = new System.Drawing.Point(410, 331);
+            this.checkBox_2In_B.Location = new System.Drawing.Point(410, 330);
             this.checkBox_2In_B.Name = "checkBox_2In_B";
             this.checkBox_2In_B.Size = new System.Drawing.Size(15, 14);
             this.checkBox_2In_B.TabIndex = 61;
@@ -1350,7 +1353,7 @@
             this.groupBoxStrand.Controls.Add(this.checkBoxBotOn);
             this.groupBoxStrand.Controls.Add(this.checkBoxTopOn);
             this.groupBoxStrand.Controls.Add(this.tableLayoutPanelStrand);
-            this.groupBoxStrand.Location = new System.Drawing.Point(15, 621);
+            this.groupBoxStrand.Location = new System.Drawing.Point(15, 628);
             this.groupBoxStrand.Name = "groupBoxStrand";
             this.groupBoxStrand.Size = new System.Drawing.Size(463, 514);
             this.groupBoxStrand.TabIndex = 5;
@@ -2188,7 +2191,7 @@
             // 
             // panelBottom
             // 
-            this.panelBottom.Controls.Add(this.btnCancel);
+            this.panelBottom.Controls.Add(this.btnRevert);
             this.panelBottom.Controls.Add(this.btnSave);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelBottom.Location = new System.Drawing.Point(0, 765);
@@ -2196,14 +2199,14 @@
             this.panelBottom.Size = new System.Drawing.Size(512, 35);
             this.panelBottom.TabIndex = 6;
             // 
-            // btnCancel
+            // btnRevert
             // 
-            this.btnCancel.Location = new System.Drawing.Point(428, 5);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 1;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnRevert.Location = new System.Drawing.Point(428, 5);
+            this.btnRevert.Name = "btnRevert";
+            this.btnRevert.Size = new System.Drawing.Size(75, 23);
+            this.btnRevert.TabIndex = 1;
+            this.btnRevert.Text = "Revert";
+            this.btnRevert.UseVisualStyleBackColor = true;
             // 
             // btnSave
             // 
@@ -2248,6 +2251,18 @@
             this.label51.TabIndex = 92;
             this.label51.Text = "------------Mirror Across Center------------";
             // 
+            // label52
+            // 
+            this.label52.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label52.AutoSize = true;
+            this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label52.Location = new System.Drawing.Point(5, 18);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(395, 12);
+            this.label52.TabIndex = 88;
+            this.label52.Text = "Please Input Values In Feet or Feet and Fractional Inches. Avoid Decimals and Inc" +
+    "hes Over 12.";
+            // 
             // MainFormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2261,6 +2276,7 @@
             this.Name = "MainFormEditor";
             this.Text = "DualDeck Editor Tool";
             this.groupBoxDimensions.ResumeLayout(false);
+            this.groupBoxDimensions.PerformLayout();
             this.tableLayoutPanelDimensions.ResumeLayout(false);
             this.tableLayoutPanelDimensions.PerformLayout();
             this.groupBoxTruss.ResumeLayout(false);
@@ -2456,7 +2472,7 @@
         private System.Windows.Forms.CheckBox checkBoxBot_19;
         private System.Windows.Forms.CheckBox checkBoxTop_20;
         private System.Windows.Forms.Panel panelBottom;
-        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnRevert;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.Panel panelSelect;
@@ -2464,6 +2480,7 @@
         private System.Windows.Forms.CheckBox checkBoxTopOn;
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.Label label52;
     }
 }
 

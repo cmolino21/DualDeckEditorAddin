@@ -26,6 +26,7 @@ namespace DualDeckEditorAddin
             _doc = doc;
             InitializeDualDeckSelection(uidoc);
             comboBoxFamilyType.SelectedIndexChanged += comboBoxFamilyType_SelectedIndexChanged; // Attach the event handler for updating the data based on DualDeck selection
+            textBoxDD_Depth.Leave += textBoxDD_Depth_Leave;
         }
 
         
@@ -90,7 +91,7 @@ namespace DualDeckEditorAddin
                     // Retrieve and print the number of parameters in the family
                     int n = familyManager.Parameters.Size; 
 
-                    Debug.Print("\nFamily {0} has {1} parameter{2}", _doc.Title, n, Util.PluralSuffix( n ) );
+                    //Debug.Print("\nFamily {0} has {1} parameter{2}", _doc.Title, n, Util.PluralSuffix( n ) );
 
                     // Create a dictionary to map parameter names to their corresponding FamilyParameter objects
                     Dictionary<string, FamilyParameter> fps = new Dictionary<string, FamilyParameter>(n);
@@ -397,6 +398,109 @@ namespace DualDeckEditorAddin
                 return false; // We only want to select elements, not references
             }
         }
+
+        private void textBoxDD_Depth_Leave(object sender, EventArgs e)
+        {
+            FormatAsFeetAndInches(sender as System.Windows.Forms.TextBox);
+        }
+
+        private void FormatAsFeetAndInches(System.Windows.Forms.TextBox textBox)
+        {
+            if (textBox == null) return;
+
+            string input = textBox.Text.Trim();
+            double feet = 0, inches = 0;
+            string fractionPart = "";
+            bool isValid = false;
+
+            // Split the input into parts to differentiate feet, inches, and fractions
+            string[] parts = input.Split(new char[] { ' ', '\'' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (parts.Length == 1)
+            {
+                // Handle single value which could be feet or inches
+                isValid = TryParseValue(parts[0], out feet);
+                if (!isValid)
+                {
+                    isValid = TryParseFraction(parts[0], out inches);
+                    if (isValid) feet = 0;
+                }
+                else
+                {
+                    inches = 0;
+                }
+            }
+            else if (parts.Length == 2)
+            {
+                // Handle feet and inches or feet and fractional inches
+                isValid = TryParseValue(parts[0], out feet) && (TryParseValue(parts[1], out inches) || TryParseFraction(parts[1], out inches));
+            }
+            else if (parts.Length == 3)
+            {
+                // Handle feet, inches, and fractions
+                isValid = TryParseValue(parts[0], out feet) && TryParseValue(parts[1], out inches);
+                if (isValid)
+                {
+                    isValid = TryParseFraction(parts[2], out double fraction);
+                    if (isValid)
+                    {
+                        fractionPart = " " + parts[2]; // Keep the fraction part as string
+                        inches += fraction;
+                    }
+                }
+            }
+
+            if (isValid)
+            {
+                textBox.Text = FormatFeetInchesString(feet, inches, fractionPart);
+            }
+            else
+            {
+                textBox.Text = input;
+            }
+        }
+
+        private bool TryParseValue(string input, out double result)
+        {
+            result = 0;
+            if (double.TryParse(input, out result)) // Direct decimal or integer
+                return true;
+            return TryParseFraction(input, out result); // Fractional value
+        }
+
+
+        private bool TryParseFraction(string input, out double fraction)
+        {
+            fraction = 0;
+            if (input.Contains("/"))
+            {
+                var parts = input.Split('/');
+                if (parts.Length == 2 && double.TryParse(parts[0], out double numerator) && double.TryParse(parts[1], out double denominator))
+                {
+                    if (denominator != 0)
+                    {
+                        fraction = numerator / denominator;
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return double.TryParse(input, out fraction);
+        }
+
+        private string FormatFeetInchesString(double feet, double inches, string fractionPart)
+        {
+            int intFeet = (int)feet;
+            int intInches = (int)inches;
+            double remainingInches = inches % 1;
+
+            // Format remaining inches fractionally if there is a fraction part
+            string formattedInches = (remainingInches > 0 && string.IsNullOrEmpty(fractionPart)) ?
+                                     $"{intInches + remainingInches:0.#}\"" : $"{intInches}{fractionPart}\"";
+
+            return $"{intFeet}'  {formattedInches}";
+        }
+
 
     }
 }

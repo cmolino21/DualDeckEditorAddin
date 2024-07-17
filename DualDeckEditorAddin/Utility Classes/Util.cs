@@ -1424,7 +1424,6 @@ const T f = ( ay * bx ) - ( ax * by );
             {
                 case StorageType.Double:
                     value = UnitFormatUtils.Format(doc.GetUnits(), SpecTypeId.Length, (double)t.AsDouble(fp), true);
-                    //value = Util.RealString((double)t.AsDouble(fp));
                     break;
 
                 case StorageType.ElementId:
