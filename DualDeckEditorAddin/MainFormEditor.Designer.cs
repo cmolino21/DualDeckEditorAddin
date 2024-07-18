@@ -32,6 +32,7 @@
             this.labelSelect = new System.Windows.Forms.Label();
             this.btnSelectDeck = new System.Windows.Forms.Button();
             this.groupBoxDimensions = new System.Windows.Forms.GroupBox();
+            this.label52 = new System.Windows.Forms.Label();
             this.tableLayoutPanelDimensions = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -132,6 +133,7 @@
             this.checkBox_2In_B = new System.Windows.Forms.CheckBox();
             this.textBoxShort_A = new System.Windows.Forms.TextBox();
             this.groupBoxStrand = new System.Windows.Forms.GroupBox();
+            this.label51 = new System.Windows.Forms.Label();
             this.checkBoxBotOn = new System.Windows.Forms.CheckBox();
             this.checkBoxTopOn = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanelStrand = new System.Windows.Forms.TableLayoutPanel();
@@ -210,8 +212,6 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
             this.panelSelect = new System.Windows.Forms.Panel();
-            this.label51 = new System.Windows.Forms.Label();
-            this.label52 = new System.Windows.Forms.Label();
             this.groupBoxDimensions.SuspendLayout();
             this.tableLayoutPanelDimensions.SuspendLayout();
             this.groupBoxTruss.SuspendLayout();
@@ -262,6 +262,18 @@
             this.groupBoxDimensions.TabIndex = 3;
             this.groupBoxDimensions.TabStop = false;
             this.groupBoxDimensions.Text = "Dimensions:";
+            // 
+            // label52
+            // 
+            this.label52.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label52.AutoSize = true;
+            this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label52.Location = new System.Drawing.Point(5, 18);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(395, 12);
+            this.label52.TabIndex = 88;
+            this.label52.Text = "Please Input Values In Feet or Feet and Fractional Inches. Avoid Decimals and Inc" +
+    "hes Over 12.";
             // 
             // tableLayoutPanelDimensions
             // 
@@ -1360,6 +1372,16 @@
             this.groupBoxStrand.TabStop = false;
             this.groupBoxStrand.Text = "Strand Controls:";
             // 
+            // label51
+            // 
+            this.label51.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label51.AutoSize = true;
+            this.label51.Location = new System.Drawing.Point(20, 490);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(174, 13);
+            this.label51.TabIndex = 92;
+            this.label51.Text = "------------Mirror Across Center------------";
+            // 
             // checkBoxBotOn
             // 
             this.checkBoxBotOn.AutoSize = true;
@@ -2207,6 +2229,7 @@
             this.btnRevert.TabIndex = 1;
             this.btnRevert.Text = "Revert";
             this.btnRevert.UseVisualStyleBackColor = true;
+            this.btnRevert.Click += new System.EventHandler(this.btnRevert_Click);
             // 
             // btnSave
             // 
@@ -2216,6 +2239,7 @@
             this.btnSave.TabIndex = 0;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // panelMain
             // 
@@ -2240,28 +2264,6 @@
             this.panelSelect.Name = "panelSelect";
             this.panelSelect.Size = new System.Drawing.Size(512, 36);
             this.panelSelect.TabIndex = 4;
-            // 
-            // label51
-            // 
-            this.label51.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(20, 490);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(174, 13);
-            this.label51.TabIndex = 92;
-            this.label51.Text = "------------Mirror Across Center------------";
-            // 
-            // label52
-            // 
-            this.label52.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label52.AutoSize = true;
-            this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label52.Location = new System.Drawing.Point(5, 18);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(395, 12);
-            this.label52.TabIndex = 88;
-            this.label52.Text = "Please Input Values In Feet or Feet and Fractional Inches. Avoid Decimals and Inc" +
-    "hes Over 12.";
             // 
             // MainFormEditor
             // 

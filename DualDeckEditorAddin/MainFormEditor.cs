@@ -18,8 +18,14 @@ namespace DualDeckEditorAddin
 {
     public partial class MainFormEditor : System.Windows.Forms.Form
     {
+        private Dictionary<string, string> originalParameterValues; // Dictionary to store parameter values
+        private Dictionary<string, string> changesTracker = new Dictionary<string, string>();
         private Document _doc;
+        private Document familyDoc;  // Add class-level family document
+        private FamilyManager familyManager;  // Add class-level family manager
         private ElementId _initialSelectedId = null; // If a DualDeck is selected in the document when the program is launched, store it here
+        private ExternalEvent exEvent;
+        private ParameterUpdateHandler handler;
         public MainFormEditor(Document doc, UIDocument uidoc)
         {
             InitializeComponent();
@@ -27,6 +33,10 @@ namespace DualDeckEditorAddin
             InitializeDualDeckSelection(uidoc);
             comboBoxFamilyType.SelectedIndexChanged += comboBoxFamilyType_SelectedIndexChanged; // Attach the event handler for updating the data based on DualDeck selection
             textBoxDD_Depth.Leave += textBoxDD_Depth_Leave;
+            SetupChangeTracking();
+
+            handler = new ParameterUpdateHandler(); // Initially empty, setup later
+            exEvent = ExternalEvent.Create(handler);
         }
 
         
@@ -84,9 +94,15 @@ namespace DualDeckEditorAddin
 
                     Family family = selectedInstance.Symbol.Family; // Retrieve the family from the instance symbol
 
-                    Document familyDoc = _doc.EditFamily( family ); // Open the family for editing which returns the family document
+                    familyDoc = _doc.EditFamily( family ); // Open the family for editing which returns the family document
 
-                    FamilyManager familyManager = familyDoc.FamilyManager; // Get the family manager which manages the parameters of the family
+                    familyManager = familyDoc.FamilyManager; // Get the family manager which manages the parameters of the family
+
+                    if (familyDoc != null && familyManager != null)
+                    {
+                        // Update the handler with current documents and parameters
+                        handler.Setup(familyDoc, familyManager, changesTracker);
+                    }
 
                     // Retrieve and print the number of parameters in the family
                     int n = familyManager.Parameters.Size; 
@@ -150,31 +166,6 @@ namespace DualDeckEditorAddin
                             textBox.Text = parameterValues.ContainsKey(entry.Value) ? parameterValues[entry.Value] : "Error";
                         }
                     }
-
-                    //// Set dimension text box values
-                    //foreach (var entry in ControlMappings.TextBoxDimensionMappings)
-                    //{
-                    //    var textBox = this.Controls.Find(entry.Key, true).FirstOrDefault() as System.Windows.Forms.TextBox;
-                    //    if (textBox != null)
-                    //    {
-                    //        if (parameterValues.ContainsKey(entry.Value))
-                    //        {
-                    //            double decimalFeet;
-                    //            if (double.TryParse(parameterValues[entry.Value], out decimalFeet))
-                    //            {
-                    //                textBox.Text = parameterValues[entry.Value] + " => " + UnitConverter.ConvertFeetToFeetAndFractionalInches(decimalFeet);
-                    //            }
-                    //            else
-                    //            {
-                    //                textBox.Text = "Error";
-                    //            }
-                    //        }
-                    //        else
-                    //        {
-                    //            textBox.Text = "Error";
-                    //        }
-                    //    }
-                    //}
 
                     // Set text box values
                     foreach (var entry in ControlMappings.TextBoxMappings)
@@ -502,6 +493,64 @@ namespace DualDeckEditorAddin
             return $"{intFeet}'  {formattedInches}";
         }
 
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            exEvent.Raise();
+        }
 
+
+
+        private void btnRevert_Click(object sender, EventArgs e)
+        {
+            //RevertChanges();
+        }
+
+        private void SetupChangeTracking()
+        {
+            // iterate through all the controls of the form that are of type TextBox.
+            foreach (var textBox in this.Controls.OfType<System.Windows.Forms.TextBox>())
+            {
+                string originalText = textBox.Text;
+                textBox.Leave += (s, e) => {
+                    if (textBox.Text != originalText)
+                    {
+                        changesTracker[textBox.Name] = textBox.Text; // Update the changesTracker dictionary
+                        originalText = textBox.Text; // Update originalText to the new text
+                    }
+                };
+            }
+
+            foreach (var checkBox in this.Controls.OfType<CheckBox>())
+            {
+                bool originalState = checkBox.Checked;
+                checkBox.CheckedChanged += (s, e) => {
+                    if (checkBox.Checked != originalState)
+                    {
+                        changesTracker[checkBox.Name] = checkBox.Checked ? "1" : "0"; // Update the changesTracker dictionary
+                        originalState = checkBox.Checked; // Update originalState to the new state
+                    }
+                };
+            }
+        }
+
+        //// Revert functionality
+        //private void RevertChanges()
+        //{
+        //    foreach (var entry in originalParameterValues)
+        //    {
+        //        var control = this.Controls.Find(entry.Key, true).FirstOrDefault();
+        //        if (control is System.Windows.Forms.TextBox textBox)
+        //        {
+        //            textBox.Text = entry.Value;
+        //        }
+        //        else if (control is CheckBox checkBox)
+        //        {
+        //            checkBox.Checked = entry.Value == "1";
+        //        }
+        //    }
+        //}
+
+        // Save functionality
+        
     }
 }
