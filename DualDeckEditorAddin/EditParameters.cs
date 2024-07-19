@@ -2,9 +2,11 @@
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DualDeckEditorAddin
 {
@@ -23,6 +25,7 @@ namespace DualDeckEditorAddin
 
         public void Execute(UIApplication app)
         {
+            MessageBox.Show("Executing update with changes count: " + changesTracker.Count); // Check if this shows and has count > 0
             using (Transaction tx = new Transaction(doc, "Update Parameters"))
             {
                 tx.Start();
@@ -51,7 +54,16 @@ namespace DualDeckEditorAddin
                         }
                     }
                 }
-                tx.Commit();
+                try
+                {
+                    // parameter setting code
+                    tx.Commit();
+                }
+                catch (Exception ex)
+                {
+                    Debug.Print("Failed to commit transaction: " + ex.Message);
+                    tx.RollBack();
+                }
             }
         }
 

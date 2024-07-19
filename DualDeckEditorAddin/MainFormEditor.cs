@@ -18,14 +18,18 @@ namespace DualDeckEditorAddin
 {
     public partial class MainFormEditor : System.Windows.Forms.Form
     {
-        private Dictionary<string, string> originalParameterValues; // Dictionary to store parameter values
+        //private Dictionary<string, string> originalParameterValues; // Dictionary to store parameter values
         private Dictionary<string, string> changesTracker = new Dictionary<string, string>();
         private Document _doc;
         private Document familyDoc;  // Add class-level family document
         private FamilyManager familyManager;  // Add class-level family manager
         private ElementId _initialSelectedId = null; // If a DualDeck is selected in the document when the program is launched, store it here
+
         private ExternalEvent exEvent;
         private ParameterUpdateHandler handler;
+
+        private Dictionary<System.Windows.Forms.Control, EventHandler> textBoxDelegates = new Dictionary<System.Windows.Forms.Control, EventHandler>();
+        private Dictionary<System.Windows.Forms.Control, EventHandler> checkBoxDelegates = new Dictionary<System.Windows.Forms.Control, EventHandler>();
         public MainFormEditor(Document doc, UIDocument uidoc)
         {
             InitializeComponent();
@@ -33,10 +37,11 @@ namespace DualDeckEditorAddin
             InitializeDualDeckSelection(uidoc);
             comboBoxFamilyType.SelectedIndexChanged += comboBoxFamilyType_SelectedIndexChanged; // Attach the event handler for updating the data based on DualDeck selection
             textBoxDD_Depth.Leave += textBoxDD_Depth_Leave;
-            SetupChangeTracking();
+            //SetupChangeTracking();
 
             handler = new ParameterUpdateHandler(); // Initially empty, setup later
             exEvent = ExternalEvent.Create(handler);
+            //btnSave.Click += btnSave_Click;
         }
 
         
@@ -91,6 +96,7 @@ namespace DualDeckEditorAddin
 
                 if (selectedInstance != null)
                 {
+                    changesTracker.Clear();
 
                     Family family = selectedInstance.Symbol.Family; // Retrieve the family from the instance symbol
 
@@ -156,6 +162,9 @@ namespace DualDeckEditorAddin
                         }
                     }
 
+                    // Temporarily disable change tracking
+                    DisableChangeTracking();
+
 
                     // Set dimension text box values
                     foreach (var entry in ControlMappings.TextBoxDimensionMappings)
@@ -186,6 +195,8 @@ namespace DualDeckEditorAddin
                             checkBox.Checked = parameterValues.ContainsKey(entry.Value) && parameterValues[entry.Value] == "1";
                         }
                     }
+
+                    SetupChangeTracking();
                 }
                 else
                 {
@@ -495,6 +506,8 @@ namespace DualDeckEditorAddin
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Save Clicked. Changes: " + changesTracker.Count);
+            Debug.Print("Changes to save: " + changesTracker.Count);
             exEvent.Raise();
         }
 
@@ -507,31 +520,77 @@ namespace DualDeckEditorAddin
 
         private void SetupChangeTracking()
         {
-            // iterate through all the controls of the form that are of type TextBox.
-            foreach (var textBox in this.Controls.OfType<System.Windows.Forms.TextBox>())
-            {
-                string originalText = textBox.Text;
-                textBox.Leave += (s, e) => {
-                    if (textBox.Text != originalText)
-                    {
-                        changesTracker[textBox.Name] = textBox.Text; // Update the changesTracker dictionary
-                        originalText = textBox.Text; // Update originalText to the new text
-                    }
-                };
-            }
+            // Initiate recursive setup from the top-level form controls
+            SetupControlTracking(this);
+        }
 
-            foreach (var checkBox in this.Controls.OfType<CheckBox>())
+        private void SetupControlTracking(System.Windows.Forms.Control control)
+        {
+            foreach (System.Windows.Forms.Control child in control.Controls)
             {
-                bool originalState = checkBox.Checked;
-                checkBox.CheckedChanged += (s, e) => {
-                    if (checkBox.Checked != originalState)
+                if (child is System.Windows.Forms.TextBox textBox)
+                {
+                    string originalText = textBox.Text; // Store initial text
+                    textBox.Tag = originalText;  // Use Tag to store the original value
+                    EventHandler textBoxHandler = (s, e) =>
                     {
-                        changesTracker[checkBox.Name] = checkBox.Checked ? "1" : "0"; // Update the changesTracker dictionary
-                        originalState = checkBox.Checked; // Update originalState to the new state
-                    }
-                };
+                        if (textBox.Text != originalText)
+                        {
+                            changesTracker[textBox.Name] = textBox.Text;
+                            originalText = textBox.Text; // Update the original text after the change
+                        }
+                    };
+                    textBox.Leave += textBoxHandler;
+                    textBoxDelegates[textBox] = textBoxHandler;
+                }
+                else if (child is CheckBox checkBox)
+                {
+                    bool originalState = checkBox.Checked; // Store initial state
+                    checkBox.Tag = originalState;  // Use Tag to store the original value
+                    EventHandler checkBoxHandler = (s, e) =>
+                    {
+                        if (checkBox.Checked != originalState)
+                        {
+                            changesTracker[checkBox.Name] = checkBox.Checked ? "1" : "0";
+                            originalState = checkBox.Checked; // Update the original state after the change
+                        }
+                    };
+                    checkBox.CheckedChanged += checkBoxHandler;
+                    checkBoxDelegates[checkBox] = checkBoxHandler;
+                }
+
+                // Recursively handle child controls
+                if (child.HasChildren)
+                {
+                    SetupControlTracking(child);
+                }
             }
         }
+
+        private void DisableChangeTracking()
+        {
+            DisableEventHandler(this);
+        }
+
+        private void DisableEventHandler(System.Windows.Forms.Control control)
+        {
+            foreach (System.Windows.Forms.Control child in control.Controls)
+            {
+                if (child is System.Windows.Forms.TextBox textBox && textBoxDelegates.ContainsKey(textBox))
+                {
+                    textBox.Leave -= textBoxDelegates[textBox];
+                }
+                else if (child is CheckBox checkBox && checkBoxDelegates.ContainsKey(checkBox))
+                {
+                    checkBox.CheckedChanged -= checkBoxDelegates[checkBox];
+                }
+                if (child.HasChildren)
+                {
+                    DisableEventHandler(child);
+                }
+            }
+        }
+
 
         //// Revert functionality
         //private void RevertChanges()
@@ -551,6 +610,6 @@ namespace DualDeckEditorAddin
         //}
 
         // Save functionality
-        
+
     }
 }
