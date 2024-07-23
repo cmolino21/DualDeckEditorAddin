@@ -21,9 +21,12 @@ namespace DualDeckEditorAddin
         //private Dictionary<string, string> originalParameterValues; // Dictionary to store parameter values
         private Dictionary<string, string> changesTracker = new Dictionary<string, string>();
         private Document _doc;
+
         private Document familyDoc;  // Add class-level family document
+        private FamilySymbol familySymbol = null;  // Add class-level family symbol
         private FamilyManager familyManager;  // Add class-level family manager
         private ElementId _initialSelectedId = null; // If a DualDeck is selected in the document when the program is launched, store it here
+        private FamilyType activeFamilyType = null;
 
         private ExternalEvent exEvent;
         private ParameterUpdateHandler handler;
@@ -98,17 +101,13 @@ namespace DualDeckEditorAddin
                 {
                     changesTracker.Clear();
 
+                    familySymbol = selectedInstance.Symbol;
+
                     Family family = selectedInstance.Symbol.Family; // Retrieve the family from the instance symbol
 
                     familyDoc = _doc.EditFamily( family ); // Open the family for editing which returns the family document
 
                     familyManager = familyDoc.FamilyManager; // Get the family manager which manages the parameters of the family
-
-                    if (familyDoc != null && familyManager != null)
-                    {
-                        // Update the handler with current documents and parameters
-                        handler.Setup(familyDoc, familyManager, changesTracker);
-                    }
 
                     // Retrieve and print the number of parameters in the family
                     int n = familyManager.Parameters.Size; 
@@ -124,8 +123,8 @@ namespace DualDeckEditorAddin
                         fps.Add (name, fp );
                     }
                     // Sort the keys (parameter names) for better manageability
-                    List<string> keys = new List<string>( fps.Keys );
-                    keys.Sort();
+                    List<string> parameters = new List<string>( fps.Keys );
+                    parameters.Sort();
 
                     // Print the number of types in the family and their names
                     n = familyManager.Types.Size;
@@ -139,18 +138,19 @@ namespace DualDeckEditorAddin
                     Dictionary<string, string> parameterValues = new Dictionary<string, string>(); // Dictionary to store parameter values
 
                     // Iterate through each type in the family
-                    foreach (Autodesk.Revit.DB.FamilyType t in familyManager.Types)
+                    foreach (Autodesk.Revit.DB.FamilyType type in familyManager.Types)
                     {
                         // Get the match name and remove "DD Mirror: " or "DD Adjust: " from it
-                        if (t.Name == matchName)
+                        if (type.Name == matchName)
                         {
+                            activeFamilyType = type;
                             // For each parameter key, check if the type has a value set and print it
-                            foreach (string key in keys)
+                            foreach (string key in parameters)
                             {
                                 FamilyParameter fp = fps[key];
-                                if (t.HasValue(fp))
+                                if (type.HasValue(fp))
                                 {
-                                    string value = Util.FamilyParamValueString(t, fp, _doc);
+                                    string value = Util.FamilyParamValueString(type, fp, _doc);
                                     parameterValues[key] = value; // Store the parameter value in the dictionary
                                     //Debug.Print("    {0} = {1}", key, value);
                                 }
@@ -197,6 +197,16 @@ namespace DualDeckEditorAddin
                     }
 
                     SetupChangeTracking();
+
+                    Parameter parameterTest = familySymbol.LookupParameter("DD_Width");
+                    if (parameterTest != null)
+                    {
+                        MessageBox.Show("DD_Width: " + parameterTest.AsDouble());
+                    }
+                    else
+                    {
+                        MessageBox.Show("DD_Width not found");
+                    }
                 }
                 else
                 {
@@ -506,8 +516,12 @@ namespace DualDeckEditorAddin
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Save Clicked. Changes: " + changesTracker.Count);
             Debug.Print("Changes to save: " + changesTracker.Count);
+            if (familyDoc != null && familyManager != null)
+            {
+                // Update the handler with current documents and parameters
+                handler.Setup( _doc, familyDoc, familySymbol, familyManager, activeFamilyType, changesTracker);
+            }
             exEvent.Raise();
         }
 

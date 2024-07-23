@@ -1417,28 +1417,28 @@ const T f = ( ay * bx ) - ( ax * by );
         /// <summary>
         ///     Return a formatted family parameter value as a string
         /// </summary>
-        public static string FamilyParamValueString(Autodesk.Revit.DB.FamilyType t, FamilyParameter fp, Document doc)
+        public static string FamilyParamValueString(Autodesk.Revit.DB.FamilyType type, FamilyParameter fp, Document doc)
         {
-            string value = t.AsValueString(fp);
+            string value = type.AsValueString(fp);
             switch (fp.StorageType)
             {
                 case StorageType.Double:
-                    value = UnitFormatUtils.Format(doc.GetUnits(), SpecTypeId.Length, (double)t.AsDouble(fp), true);
+                    value = UnitFormatUtils.Format(doc.GetUnits(), SpecTypeId.Length, (double)type.AsDouble(fp), true);
                     break;
 
                 case StorageType.ElementId:
-                    ElementId id = t.AsElementId(fp);
+                    ElementId id = type.AsElementId(fp);
                     Element e = doc.GetElement(id);
                     value = id.IntegerValue.ToString() + " ("
                       + Util.ElementDescription(e) + ")";
                     break;
 
                 case StorageType.Integer:
-                    value = t.AsInteger(fp).ToString();
+                    value = type.AsInteger(fp).ToString();
                     break;
 
                 case StorageType.String:
-                    value = "'" + t.AsString(fp)
+                    value = "'" + type.AsString(fp)
                       + "' (string)";
                     break;
             }
