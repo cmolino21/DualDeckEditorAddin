@@ -18,8 +18,9 @@ namespace DualDeckEditorAddin
         private FamilyManager familyManager;
         private FamilyType currentFamilyType;
         private Dictionary<string, string> changesTracker;
+        private MainFormEditor _mainForm;
 
-        public void Setup(Document _doc, Document familydoc, FamilySymbol familySymbol, FamilyManager manager, FamilyType familyType , Dictionary<string, string> tracker)
+        public void Setup(Document _doc, Document familydoc, FamilySymbol familySymbol, FamilyManager manager, FamilyType familyType , Dictionary<string, string> tracker, MainFormEditor mainForm)
         {
             this._doc = _doc;
             this.familydoc = familydoc;
@@ -27,6 +28,7 @@ namespace DualDeckEditorAddin
             this.familyManager = manager;
             this.changesTracker = new Dictionary<string, string>(tracker);
             this.currentFamilyType = familyType; // Setup with current family type
+            _mainForm = mainForm;
         }
 
         public void Execute(UIApplication app)
@@ -77,7 +79,7 @@ namespace DualDeckEditorAddin
 
                 try
                 {
-                    // parameter setting code
+                    Debug.Print("Committing tx: Update parameters");
                     tx.Commit();
                 }
                 catch (Exception ex)
@@ -87,6 +89,9 @@ namespace DualDeckEditorAddin
                     tx.RollBack();
                 }
             }
+
+            familydoc.Close(false);
+            _mainForm.UpdateFamilyTypeData();
         }
 
         public double ConvertToDecimalFeet(string input)

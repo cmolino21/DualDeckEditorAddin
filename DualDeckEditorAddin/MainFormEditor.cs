@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static DualDeckEditorAddin.MainFormEditor;
 using BuildingCoder;
+using System.Threading;
 
 namespace DualDeckEditorAddin
 {
     public partial class MainFormEditor : System.Windows.Forms.Form
     {
-        //private Dictionary<string, string> originalParameterValues; // Dictionary to store parameter values
         private Dictionary<string, string> changesTracker = new Dictionary<string, string>();
         private Document _doc;
 
@@ -33,6 +33,8 @@ namespace DualDeckEditorAddin
 
         private Dictionary<System.Windows.Forms.Control, EventHandler> textBoxDelegates = new Dictionary<System.Windows.Forms.Control, EventHandler>();
         private Dictionary<System.Windows.Forms.Control, EventHandler> checkBoxDelegates = new Dictionary<System.Windows.Forms.Control, EventHandler>();
+        private Dictionary<string, string> parameterValues = new Dictionary<string, string>(); // Dictionary to store parameter values
+
         public MainFormEditor(Document doc, UIDocument uidoc)
         {
             InitializeComponent();
@@ -40,6 +42,7 @@ namespace DualDeckEditorAddin
             InitializeDualDeckSelection(uidoc);
             comboBoxFamilyType.SelectedIndexChanged += comboBoxFamilyType_SelectedIndexChanged; // Attach the event handler for updating the data based on DualDeck selection
             textBoxDD_Depth.Leave += textBoxDD_Depth_Leave;
+            this.FormClosing += MainFormEditor_FormClosing;
             //SetupChangeTracking();
 
             handler = new ParameterUpdateHandler(); // Initially empty, setup later
@@ -47,7 +50,18 @@ namespace DualDeckEditorAddin
             //btnSave.Click += btnSave_Click;
         }
 
-        
+        private void MainFormEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Close the family document if it's open
+            if (familyDoc != null)
+            {
+                familyDoc.Close(false);
+            }
+        }
+
+
+
+
         // If a DualDeck is selected in the document when the program is launched, this will collect that ID
         private void InitializeDualDeckSelection(UIDocument uidoc)
         {
@@ -86,8 +100,27 @@ namespace DualDeckEditorAddin
 
         private void comboBoxFamilyType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            UpdateFamilyTypeData();
+        }
+
+        public void UpdateFamilyTypeData()
+        {
             if (comboBoxFamilyType.SelectedItem is FamilyTypeItem selectedFamilyType)
             {
+                bool isAdjust = selectedFamilyType.ToString().StartsWith("DD Adjust");
+                bool isMirror = selectedFamilyType.ToString().StartsWith("DD Mirror");
+
+                if (isAdjust)
+                {
+                    // Enable all truss controls
+                    UpdateTrussControlState(this, true);
+                }
+                else if (isMirror)
+                {
+                    // Disable specific truss controls
+                    UpdateTrussControlState(this, false);
+                }
+
                 // Use a filtered element collector to find all instances of the selected family type
                 var collector = new FilteredElementCollector(_doc)
                     .OfClass(typeof(FamilyInstance))
@@ -100,17 +133,18 @@ namespace DualDeckEditorAddin
                 if (selectedInstance != null)
                 {
                     changesTracker.Clear();
+                    parameterValues.Clear();
 
                     familySymbol = selectedInstance.Symbol;
 
                     Family family = selectedInstance.Symbol.Family; // Retrieve the family from the instance symbol
 
-                    familyDoc = _doc.EditFamily( family ); // Open the family for editing which returns the family document
+                    familyDoc = _doc.EditFamily(family); // Open the family for editing which returns the family document
 
                     familyManager = familyDoc.FamilyManager; // Get the family manager which manages the parameters of the family
 
                     // Retrieve and print the number of parameters in the family
-                    int n = familyManager.Parameters.Size; 
+                    int n = familyManager.Parameters.Size;
 
                     //Debug.Print("\nFamily {0} has {1} parameter{2}", _doc.Title, n, Util.PluralSuffix( n ) );
 
@@ -120,10 +154,10 @@ namespace DualDeckEditorAddin
                     foreach (FamilyParameter fp in familyManager.Parameters)
                     {
                         string name = fp.Definition.Name;
-                        fps.Add (name, fp );
+                        fps.Add(name, fp);
                     }
                     // Sort the keys (parameter names) for better manageability
-                    List<string> parameters = new List<string>( fps.Keys );
+                    List<string> parameters = new List<string>(fps.Keys);
                     parameters.Sort();
 
                     // Print the number of types in the family and their names
@@ -135,7 +169,7 @@ namespace DualDeckEditorAddin
                             .Replace("DD Mirror: ", "")
                             .Replace("DD Adjust: ", "");
 
-                    Dictionary<string, string> parameterValues = new Dictionary<string, string>(); // Dictionary to store parameter values
+                    parameterValues = new Dictionary<string, string>(); // Dictionary to store parameter values
 
                     // Iterate through each type in the family
                     foreach (Autodesk.Revit.DB.FamilyType type in familyManager.Types)
@@ -161,58 +195,50 @@ namespace DualDeckEditorAddin
                             continue;
                         }
                     }
-
-                    // Temporarily disable change tracking
+                    // Temporarily disable change tracking, populate textboxes, and then re-enable
                     DisableChangeTracking();
-
-
-                    // Set dimension text box values
-                    foreach (var entry in ControlMappings.TextBoxDimensionMappings)
-                    {
-                        var textBox = this.Controls.Find(entry.Key, true).FirstOrDefault() as System.Windows.Forms.TextBox;
-                        if (textBox != null)
-                        {
-                            textBox.Text = parameterValues.ContainsKey(entry.Value) ? parameterValues[entry.Value] : "Error";
-                        }
-                    }
-
-                    // Set text box values
-                    foreach (var entry in ControlMappings.TextBoxMappings)
-                    {
-                        var textBox = this.Controls.Find(entry.Key, true).FirstOrDefault() as System.Windows.Forms.TextBox;
-                        if (textBox != null)
-                        {
-                            textBox.Text = parameterValues.ContainsKey(entry.Value) ? parameterValues[entry.Value] : "Error";
-                        }
-                    }
-
-                    // Set checkbox values
-                    foreach (var entry in ControlMappings.CheckBoxMappings)
-                    {
-                        var checkBox = this.Controls.Find(entry.Key, true).FirstOrDefault() as System.Windows.Forms.CheckBox;
-                        if (checkBox != null)
-                        {
-                            checkBox.Checked = parameterValues.ContainsKey(entry.Value) && parameterValues[entry.Value] == "1";
-                        }
-                    }
-
+                    populateCheckBoxes();
                     SetupChangeTracking();
-
-                    Parameter parameterTest = familySymbol.LookupParameter("DD_Width");
-                    if (parameterTest != null)
-                    {
-                        MessageBox.Show("DD_Width: " + parameterTest.AsDouble());
-                    }
-                    else
-                    {
-                        MessageBox.Show("DD_Width not found");
-                    }
                 }
                 else
                 {
                     MessageBox.Show("No instances of the selected family type were found.");
                 }
             }
+        }
+
+        public void populateCheckBoxes()
+        {
+            // Set dimension text box values
+            foreach (var entry in ControlMappings.TextBoxDimensionMappings)
+            {
+                var textBox = this.Controls.Find(entry.Key, true).FirstOrDefault() as System.Windows.Forms.TextBox;
+                if (textBox != null)
+                {
+                    textBox.Text = parameterValues.ContainsKey(entry.Value) ? parameterValues[entry.Value] : "Error";
+                }
+            }
+
+            // Set text box values
+            foreach (var entry in ControlMappings.TextBoxMappings)
+            {
+                var textBox = this.Controls.Find(entry.Key, true).FirstOrDefault() as System.Windows.Forms.TextBox;
+                if (textBox != null)
+                {
+                    textBox.Text = parameterValues.ContainsKey(entry.Value) ? parameterValues[entry.Value] : "Error";
+                }
+            }
+
+            // Set checkbox values
+            foreach (var entry in ControlMappings.CheckBoxMappings)
+            {
+                var checkBox = this.Controls.Find(entry.Key, true).FirstOrDefault() as System.Windows.Forms.CheckBox;
+                if (checkBox != null)
+                {
+                    checkBox.Checked = parameterValues.ContainsKey(entry.Value) && parameterValues[entry.Value] == "1";
+                }
+            }
+            Debug.Print("Types loaded successfully");
         }
 
         public static class UnitConverter
@@ -517,19 +543,29 @@ namespace DualDeckEditorAddin
         private void btnSave_Click(object sender, EventArgs e)
         {
             Debug.Print("Changes to save: " + changesTracker.Count);
-            if (familyDoc != null && familyManager != null)
+            if (familyDoc != null && familyManager != null && changesTracker.Count > 0)
             {
                 // Update the handler with current documents and parameters
-                handler.Setup( _doc, familyDoc, familySymbol, familyManager, activeFamilyType, changesTracker);
+                handler.Setup(_doc, familyDoc, familySymbol, familyManager, activeFamilyType, changesTracker, this);
+                Debug.Print("Handing off to exEvent: Edit parameters");
+                exEvent.Raise();
             }
-            exEvent.Raise();
+            else
+            {
+                MessageBox.Show("No changes detected");
+            }
+
+            if (changesTracker.Count > 0)
+            {
+                changesTracker.Clear();
+            }
         }
 
 
 
         private void btnRevert_Click(object sender, EventArgs e)
         {
-            //RevertChanges();
+            populateCheckBoxes();
         }
 
         private void SetupChangeTracking()
@@ -605,25 +641,51 @@ namespace DualDeckEditorAddin
             }
         }
 
+        private List<string> trussControlsToDisable = new List<string>
+        {
+            "textBoxShort_07", "textBoxLong_07",
+            "textBoxShort_08", "textBoxLong_08",
+            "textBoxShort_09", "textBoxLong_09",
+            "textBoxShort_10", "textBoxLong_10",
+            "textBoxShort_11", "textBoxLong_11",
+            "textBoxShort_B", "textBoxLong_B",
+            "checkBoxOnOff_07", "checkBoxOnOff_08",
+            "checkBoxOnOff_09", "checkBoxOnOff_10",
+            "checkBoxOnOff_11", "checkBoxOnOff_B",
+            "checkBox_2Out_07", "checkBox_2In_07",
+            "checkBox_2Out_08", "checkBox_2In_08",
+            "checkBox_2Out_09", "checkBox_2In_09",
+            "checkBox_2Out_10", "checkBox_2In_10",
+            "checkBox_2Out_11", "checkBox_2In_11",
+            "checkBox_2Out_B", "checkBox_2In_B",
+            "checkBoxTrussOffset",
+            "label13", "label14", "label15",
+            "label17", "label16", "label19"
+        };
 
-        //// Revert functionality
-        //private void RevertChanges()
-        //{
-        //    foreach (var entry in originalParameterValues)
-        //    {
-        //        var control = this.Controls.Find(entry.Key, true).FirstOrDefault();
-        //        if (control is System.Windows.Forms.TextBox textBox)
-        //        {
-        //            textBox.Text = entry.Value;
-        //        }
-        //        else if (control is CheckBox checkBox)
-        //        {
-        //            checkBox.Checked = entry.Value == "1";
-        //        }
-        //    }
-        //}
+        private void UpdateTrussControlState(System.Windows.Forms.Control control, bool enable)
+        {
+            foreach (System.Windows.Forms.Control child in control.Controls)
+            {
+                if (child is System.Windows.Forms.TextBox textBox && trussControlsToDisable.Contains(textBox.Name))
+                {
+                    textBox.Enabled = enable;
+                }
+                else if (child is System.Windows.Forms.CheckBox checkBox && trussControlsToDisable.Contains(checkBox.Name))
+                {
+                    checkBox.Enabled = enable;
+                }
+                else if (child is System.Windows.Forms.Label label && trussControlsToDisable.Contains(label.Name))
+                {
+                    label.Enabled = enable;
+                }
 
-        // Save functionality
-
+                // Recursively handle child controls
+                if (child.HasChildren)
+                {
+                    UpdateTrussControlState(child, enable);
+                }
+            }
+        }
     }
 }
