@@ -41,9 +41,13 @@ namespace DualDeckEditorAddin
             _doc = doc;
             InitializeDualDeckSelection(uidoc);
             comboBoxFamilyType.SelectedIndexChanged += comboBoxFamilyType_SelectedIndexChanged; // Attach the event handler for updating the data based on DualDeck selection
-            textBoxDD_Depth.Leave += textBoxDD_Depth_Leave;
+            checkBoxTrussOffset.CheckedChanged += checkBoxTrussOffset_CheckedChanged;
+            textBoxDD_Depth.Leave += textBoxDD_Leave;
+            textBoxDD_Length.Leave += textBoxDD_Leave;
+            textBoxDD_Width.Leave += textBoxDD_Leave;
+            textBoxDD_BotJoint.Leave += textBoxDD_Leave;
+            textBoxDD_LedgeJoint.Leave += textBoxDD_Leave;
             this.FormClosing += MainFormEditor_FormClosing;
-            //SetupChangeTracking();
 
             handler = new ParameterUpdateHandler(); // Initially empty, setup later
             exEvent = ExternalEvent.Create(handler);
@@ -59,7 +63,10 @@ namespace DualDeckEditorAddin
             }
         }
 
-
+        private void checkBoxTrussOffset_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateTruss6EnabledStatus();
+        }
 
 
         // If a DualDeck is selected in the document when the program is launched, this will collect that ID
@@ -107,18 +114,27 @@ namespace DualDeckEditorAddin
         {
             if (comboBoxFamilyType.SelectedItem is FamilyTypeItem selectedFamilyType)
             {
+
                 bool isAdjust = selectedFamilyType.ToString().StartsWith("DD Adjust");
                 bool isMirror = selectedFamilyType.ToString().StartsWith("DD Mirror");
 
                 if (isAdjust)
                 {
-                    // Enable all truss controls
-                    UpdateTrussControlState(this, true);
+                    checkBoxTrussOffset.Enabled = true;
+                    // Switch to Adjust mappings
+                    ControlMappings.TextBoxDimensionMappings = ControlMappings.TextBoxDimensionMappingsAdjust;
+                    ControlMappings.TextBoxMappings = ControlMappings.TextBoxMappingsAdjust;
+                    ControlMappings.CheckBoxMappings = ControlMappings.CheckBoxMappingsAdjust;
                 }
                 else if (isMirror)
                 {
-                    // Disable specific truss controls
-                    UpdateTrussControlState(this, false);
+                    checkBoxTrussOffset.Enabled = false;
+                    // Since this checkbox does not exist in mirror, need to explicitly state it should be unchecked
+                    checkBoxTrussOffset.Checked = false;
+                    // Switch to Mirror mappings
+                    ControlMappings.TextBoxDimensionMappings = ControlMappings.TextBoxDimensionMappingsMirror;
+                    ControlMappings.TextBoxMappings = ControlMappings.TextBoxMappingsMirror;
+                    ControlMappings.CheckBoxMappings = ControlMappings.CheckBoxMappingsMirror;
                 }
 
                 // Use a filtered element collector to find all instances of the selected family type
@@ -199,6 +215,8 @@ namespace DualDeckEditorAddin
                     DisableChangeTracking();
                     populateCheckBoxes();
                     SetupChangeTracking();
+
+                    UpdateTruss6EnabledStatus();
                 }
                 else
                 {
@@ -437,7 +455,7 @@ namespace DualDeckEditorAddin
             }
         }
 
-        private void textBoxDD_Depth_Leave(object sender, EventArgs e)
+        private void textBoxDD_Leave(object sender, EventArgs e)
         {
             FormatAsFeetAndInches(sender as System.Windows.Forms.TextBox);
         }
@@ -588,6 +606,7 @@ namespace DualDeckEditorAddin
                         {
                             changesTracker[textBox.Name] = textBox.Text;
                             originalText = textBox.Text; // Update the original text after the change
+                            MirrorControlChanges(textBox);
                         }
                     };
                     textBox.Leave += textBoxHandler;
@@ -603,6 +622,7 @@ namespace DualDeckEditorAddin
                         {
                             changesTracker[checkBox.Name] = checkBox.Checked ? "1" : "0";
                             originalState = checkBox.Checked; // Update the original state after the change
+                            MirrorControlChanges(checkBox);
                         }
                     };
                     checkBox.CheckedChanged += checkBoxHandler;
@@ -613,6 +633,28 @@ namespace DualDeckEditorAddin
                 if (child.HasChildren)
                 {
                     SetupControlTracking(child);
+                }
+            }
+        }
+
+        private void MirrorControlChanges(System.Windows.Forms.Control control)
+        {
+            bool isOffsetChecked = checkBoxTrussOffset.Checked;
+            var mirroringPairs = isOffsetChecked ? ControlMappings.mirroringPairsWithOffset : ControlMappings.mirroringPairsWithoutOffset;
+
+            if (mirroringPairs.TryGetValue(control.Name, out string mirrorControlName))
+            {
+                var mirrorControl = this.Controls.Find(mirrorControlName, true).FirstOrDefault();
+                if (mirrorControl != null)
+                {
+                    if (control is System.Windows.Forms.TextBox textBox && mirrorControl is System.Windows.Forms.TextBox mirrorTextBox)
+                    {
+                        mirrorTextBox.Text = textBox.Text;
+                    }
+                    else if (control is CheckBox checkBox && mirrorControl is CheckBox mirrorCheckBox)
+                    {
+                        mirrorCheckBox.Checked = checkBox.Checked;
+                    }
                 }
             }
         }
@@ -641,29 +683,41 @@ namespace DualDeckEditorAddin
             }
         }
 
+
         private List<string> trussControlsToDisable = new List<string>
         {
-            "textBoxShort_07", "textBoxLong_07",
-            "textBoxShort_08", "textBoxLong_08",
-            "textBoxShort_09", "textBoxLong_09",
-            "textBoxShort_10", "textBoxLong_10",
-            "textBoxShort_11", "textBoxLong_11",
-            "textBoxShort_B", "textBoxLong_B",
-            "checkBoxOnOff_07", "checkBoxOnOff_08",
-            "checkBoxOnOff_09", "checkBoxOnOff_10",
-            "checkBoxOnOff_11", "checkBoxOnOff_B",
-            "checkBox_2Out_07", "checkBox_2In_07",
-            "checkBox_2Out_08", "checkBox_2In_08",
-            "checkBox_2Out_09", "checkBox_2In_09",
-            "checkBox_2Out_10", "checkBox_2In_10",
-            "checkBox_2Out_11", "checkBox_2In_11",
-            "checkBox_2Out_B", "checkBox_2In_B",
-            "checkBoxTrussOffset",
-            "label13", "label14", "label15",
-            "label17", "label16", "label19"
+            "textBoxShort_06", "textBoxLong_06",
+            "checkBoxOnOff_06", "label12",
+            "checkBox_2Out_06", "checkBox_2In_06"
         };
 
-        private void UpdateTrussControlState(System.Windows.Forms.Control control, bool enable)
+        private void UpdateTruss6EnabledStatus()
+        {
+            bool enable = !checkBoxTrussOffset.Checked;
+            foreach (System.Windows.Forms.Control child in this.Controls)
+            {
+                if (child is System.Windows.Forms.TextBox textBox && trussControlsToDisable.Contains(textBox.Name))
+                {
+                    textBox.Enabled = enable;
+                }
+                else if (child is System.Windows.Forms.CheckBox checkBox && trussControlsToDisable.Contains(checkBox.Name))
+                {
+                    checkBox.Enabled = enable;
+                }
+                else if (child is System.Windows.Forms.Label label && trussControlsToDisable.Contains(label.Name))
+                {
+                    label.Enabled = enable;
+                }
+
+                // Recursively handle child controls
+                if (child.HasChildren)
+                {
+                    UpdateTruss6EnabledStatus(child, enable);
+                }
+            }
+        }
+
+        private void UpdateTruss6EnabledStatus(System.Windows.Forms.Control control, bool enable)
         {
             foreach (System.Windows.Forms.Control child in control.Controls)
             {
@@ -683,7 +737,7 @@ namespace DualDeckEditorAddin
                 // Recursively handle child controls
                 if (child.HasChildren)
                 {
-                    UpdateTrussControlState(child, enable);
+                    UpdateTruss6EnabledStatus(child, enable);
                 }
             }
         }

@@ -528,6 +528,7 @@
             // textBoxLong_B
             // 
             this.textBoxLong_B.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxLong_B.Enabled = false;
             this.textBoxLong_B.Location = new System.Drawing.Point(210, 328);
             this.textBoxLong_B.Name = "textBoxLong_B";
             this.textBoxLong_B.Size = new System.Drawing.Size(49, 20);
@@ -537,6 +538,7 @@
             // textBoxShort_B
             // 
             this.textBoxShort_B.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxShort_B.Enabled = false;
             this.textBoxShort_B.Location = new System.Drawing.Point(140, 328);
             this.textBoxShort_B.Name = "textBoxShort_B";
             this.textBoxShort_B.Size = new System.Drawing.Size(49, 20);
@@ -546,6 +548,7 @@
             // textBoxLong_11
             // 
             this.textBoxLong_11.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxLong_11.Enabled = false;
             this.textBoxLong_11.Location = new System.Drawing.Point(210, 303);
             this.textBoxLong_11.Name = "textBoxLong_11";
             this.textBoxLong_11.Size = new System.Drawing.Size(49, 20);
@@ -555,6 +558,7 @@
             // textBoxShort_11
             // 
             this.textBoxShort_11.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxShort_11.Enabled = false;
             this.textBoxShort_11.Location = new System.Drawing.Point(140, 303);
             this.textBoxShort_11.Name = "textBoxShort_11";
             this.textBoxShort_11.Size = new System.Drawing.Size(49, 20);
@@ -564,6 +568,7 @@
             // textBoxLong_10
             // 
             this.textBoxLong_10.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxLong_10.Enabled = false;
             this.textBoxLong_10.Location = new System.Drawing.Point(210, 278);
             this.textBoxLong_10.Name = "textBoxLong_10";
             this.textBoxLong_10.Size = new System.Drawing.Size(49, 20);
@@ -573,6 +578,7 @@
             // textBoxShort_10
             // 
             this.textBoxShort_10.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxShort_10.Enabled = false;
             this.textBoxShort_10.Location = new System.Drawing.Point(140, 278);
             this.textBoxShort_10.Name = "textBoxShort_10";
             this.textBoxShort_10.Size = new System.Drawing.Size(49, 20);
@@ -582,6 +588,7 @@
             // textBoxLong_09
             // 
             this.textBoxLong_09.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxLong_09.Enabled = false;
             this.textBoxLong_09.Location = new System.Drawing.Point(210, 253);
             this.textBoxLong_09.Name = "textBoxLong_09";
             this.textBoxLong_09.Size = new System.Drawing.Size(49, 20);
@@ -591,6 +598,7 @@
             // textBoxShort_09
             // 
             this.textBoxShort_09.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxShort_09.Enabled = false;
             this.textBoxShort_09.Location = new System.Drawing.Point(140, 253);
             this.textBoxShort_09.Name = "textBoxShort_09";
             this.textBoxShort_09.Size = new System.Drawing.Size(49, 20);
@@ -600,6 +608,7 @@
             // textBoxLong_08
             // 
             this.textBoxLong_08.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxLong_08.Enabled = false;
             this.textBoxLong_08.Location = new System.Drawing.Point(210, 228);
             this.textBoxLong_08.Name = "textBoxLong_08";
             this.textBoxLong_08.Size = new System.Drawing.Size(49, 20);
@@ -609,6 +618,7 @@
             // textBoxShort_08
             // 
             this.textBoxShort_08.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxShort_08.Enabled = false;
             this.textBoxShort_08.Location = new System.Drawing.Point(140, 228);
             this.textBoxShort_08.Name = "textBoxShort_08";
             this.textBoxShort_08.Size = new System.Drawing.Size(49, 20);
@@ -618,6 +628,7 @@
             // textBoxLong_07
             // 
             this.textBoxLong_07.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxLong_07.Enabled = false;
             this.textBoxLong_07.Location = new System.Drawing.Point(210, 203);
             this.textBoxLong_07.Name = "textBoxLong_07";
             this.textBoxLong_07.Size = new System.Drawing.Size(49, 20);
@@ -627,6 +638,7 @@
             // textBoxShort_07
             // 
             this.textBoxShort_07.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxShort_07.Enabled = false;
             this.textBoxShort_07.Location = new System.Drawing.Point(140, 203);
             this.textBoxShort_07.Name = "textBoxShort_07";
             this.textBoxShort_07.Size = new System.Drawing.Size(49, 20);
@@ -798,6 +810,7 @@
             // 
             this.label19.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label19.AutoSize = true;
+            this.label19.Enabled = false;
             this.label19.Location = new System.Drawing.Point(16, 331);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(43, 13);
@@ -808,6 +821,7 @@
             // 
             this.label17.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label17.AutoSize = true;
+            this.label17.Enabled = false;
             this.label17.Location = new System.Drawing.Point(13, 281);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(48, 13);
@@ -888,6 +902,7 @@
             // 
             this.label13.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label13.AutoSize = true;
+            this.label13.Enabled = false;
             this.label13.Location = new System.Drawing.Point(13, 206);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(48, 13);
@@ -898,6 +913,7 @@
             // 
             this.label14.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label14.AutoSize = true;
+            this.label14.Enabled = false;
             this.label14.Location = new System.Drawing.Point(13, 231);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(48, 13);
@@ -908,6 +924,7 @@
             // 
             this.label15.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label15.AutoSize = true;
+            this.label15.Enabled = false;
             this.label15.Location = new System.Drawing.Point(13, 256);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(48, 13);
@@ -918,6 +935,7 @@
             // 
             this.label16.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label16.AutoSize = true;
+            this.label16.Enabled = false;
             this.label16.Location = new System.Drawing.Point(13, 306);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(48, 13);
@@ -1010,6 +1028,7 @@
             // 
             this.checkBoxOnOff_07.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxOnOff_07.AutoSize = true;
+            this.checkBoxOnOff_07.Enabled = false;
             this.checkBoxOnOff_07.Location = new System.Drawing.Point(95, 205);
             this.checkBoxOnOff_07.Name = "checkBoxOnOff_07";
             this.checkBoxOnOff_07.Size = new System.Drawing.Size(15, 14);
@@ -1020,6 +1039,7 @@
             // 
             this.checkBoxOnOff_08.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxOnOff_08.AutoSize = true;
+            this.checkBoxOnOff_08.Enabled = false;
             this.checkBoxOnOff_08.Location = new System.Drawing.Point(95, 230);
             this.checkBoxOnOff_08.Name = "checkBoxOnOff_08";
             this.checkBoxOnOff_08.Size = new System.Drawing.Size(15, 14);
@@ -1030,6 +1050,7 @@
             // 
             this.checkBoxOnOff_09.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxOnOff_09.AutoSize = true;
+            this.checkBoxOnOff_09.Enabled = false;
             this.checkBoxOnOff_09.Location = new System.Drawing.Point(95, 255);
             this.checkBoxOnOff_09.Name = "checkBoxOnOff_09";
             this.checkBoxOnOff_09.Size = new System.Drawing.Size(15, 14);
@@ -1040,6 +1061,7 @@
             // 
             this.checkBoxOnOff_10.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxOnOff_10.AutoSize = true;
+            this.checkBoxOnOff_10.Enabled = false;
             this.checkBoxOnOff_10.Location = new System.Drawing.Point(95, 280);
             this.checkBoxOnOff_10.Name = "checkBoxOnOff_10";
             this.checkBoxOnOff_10.Size = new System.Drawing.Size(15, 14);
@@ -1050,6 +1072,7 @@
             // 
             this.checkBoxOnOff_11.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxOnOff_11.AutoSize = true;
+            this.checkBoxOnOff_11.Enabled = false;
             this.checkBoxOnOff_11.Location = new System.Drawing.Point(95, 305);
             this.checkBoxOnOff_11.Name = "checkBoxOnOff_11";
             this.checkBoxOnOff_11.Size = new System.Drawing.Size(15, 14);
@@ -1060,6 +1083,7 @@
             // 
             this.checkBoxOnOff_B.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxOnOff_B.AutoSize = true;
+            this.checkBoxOnOff_B.Enabled = false;
             this.checkBoxOnOff_B.Location = new System.Drawing.Point(95, 330);
             this.checkBoxOnOff_B.Name = "checkBoxOnOff_B";
             this.checkBoxOnOff_B.Size = new System.Drawing.Size(15, 14);
@@ -1150,6 +1174,7 @@
             // 
             this.checkBox_2Out_07.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_2Out_07.AutoSize = true;
+            this.checkBox_2Out_07.Enabled = false;
             this.checkBox_2Out_07.Location = new System.Drawing.Point(290, 205);
             this.checkBox_2Out_07.Name = "checkBox_2Out_07";
             this.checkBox_2Out_07.Size = new System.Drawing.Size(15, 14);
@@ -1160,6 +1185,7 @@
             // 
             this.checkBox_2Out_08.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_2Out_08.AutoSize = true;
+            this.checkBox_2Out_08.Enabled = false;
             this.checkBox_2Out_08.Location = new System.Drawing.Point(290, 230);
             this.checkBox_2Out_08.Name = "checkBox_2Out_08";
             this.checkBox_2Out_08.Size = new System.Drawing.Size(15, 14);
@@ -1170,6 +1196,7 @@
             // 
             this.checkBox_2Out_09.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_2Out_09.AutoSize = true;
+            this.checkBox_2Out_09.Enabled = false;
             this.checkBox_2Out_09.Location = new System.Drawing.Point(290, 255);
             this.checkBox_2Out_09.Name = "checkBox_2Out_09";
             this.checkBox_2Out_09.Size = new System.Drawing.Size(15, 14);
@@ -1180,6 +1207,7 @@
             // 
             this.checkBox_2Out_10.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_2Out_10.AutoSize = true;
+            this.checkBox_2Out_10.Enabled = false;
             this.checkBox_2Out_10.Location = new System.Drawing.Point(290, 280);
             this.checkBox_2Out_10.Name = "checkBox_2Out_10";
             this.checkBox_2Out_10.Size = new System.Drawing.Size(15, 14);
@@ -1190,6 +1218,7 @@
             // 
             this.checkBox_2Out_11.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_2Out_11.AutoSize = true;
+            this.checkBox_2Out_11.Enabled = false;
             this.checkBox_2Out_11.Location = new System.Drawing.Point(290, 305);
             this.checkBox_2Out_11.Name = "checkBox_2Out_11";
             this.checkBox_2Out_11.Size = new System.Drawing.Size(15, 14);
@@ -1200,6 +1229,7 @@
             // 
             this.checkBox_2Out_B.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_2Out_B.AutoSize = true;
+            this.checkBox_2Out_B.Enabled = false;
             this.checkBox_2Out_B.Location = new System.Drawing.Point(290, 330);
             this.checkBox_2Out_B.Name = "checkBox_2Out_B";
             this.checkBox_2Out_B.Size = new System.Drawing.Size(15, 14);
@@ -1280,6 +1310,7 @@
             // 
             this.checkBox_2In_07.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_2In_07.AutoSize = true;
+            this.checkBox_2In_07.Enabled = false;
             this.checkBox_2In_07.Location = new System.Drawing.Point(345, 205);
             this.checkBox_2In_07.Name = "checkBox_2In_07";
             this.checkBox_2In_07.Size = new System.Drawing.Size(15, 14);
@@ -1290,6 +1321,7 @@
             // 
             this.checkBox_2In_08.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_2In_08.AutoSize = true;
+            this.checkBox_2In_08.Enabled = false;
             this.checkBox_2In_08.Location = new System.Drawing.Point(345, 230);
             this.checkBox_2In_08.Name = "checkBox_2In_08";
             this.checkBox_2In_08.Size = new System.Drawing.Size(15, 14);
@@ -1300,6 +1332,7 @@
             // 
             this.checkBox_2In_09.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_2In_09.AutoSize = true;
+            this.checkBox_2In_09.Enabled = false;
             this.checkBox_2In_09.Location = new System.Drawing.Point(345, 255);
             this.checkBox_2In_09.Name = "checkBox_2In_09";
             this.checkBox_2In_09.Size = new System.Drawing.Size(15, 14);
@@ -1310,6 +1343,7 @@
             // 
             this.checkBox_2In_10.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_2In_10.AutoSize = true;
+            this.checkBox_2In_10.Enabled = false;
             this.checkBox_2In_10.Location = new System.Drawing.Point(345, 280);
             this.checkBox_2In_10.Name = "checkBox_2In_10";
             this.checkBox_2In_10.Size = new System.Drawing.Size(15, 14);
@@ -1320,6 +1354,7 @@
             // 
             this.checkBox_2In_11.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_2In_11.AutoSize = true;
+            this.checkBox_2In_11.Enabled = false;
             this.checkBox_2In_11.Location = new System.Drawing.Point(345, 305);
             this.checkBox_2In_11.Name = "checkBox_2In_11";
             this.checkBox_2In_11.Size = new System.Drawing.Size(15, 14);
@@ -1330,6 +1365,7 @@
             // 
             this.checkBox_2In_B.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBox_2In_B.AutoSize = true;
+            this.checkBox_2In_B.Enabled = false;
             this.checkBox_2In_B.Location = new System.Drawing.Point(345, 330);
             this.checkBox_2In_B.Name = "checkBox_2In_B";
             this.checkBox_2In_B.Size = new System.Drawing.Size(15, 14);
