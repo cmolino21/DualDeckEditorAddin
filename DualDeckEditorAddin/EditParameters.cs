@@ -33,7 +33,7 @@ namespace DualDeckEditorAddin
 
         public void Execute(UIApplication app)
         {
-            MessageBox.Show("Executing update with changes count: " + changesTracker.Count); // Check if this shows and has count > 0
+            Debug.Print("Executing update with changes count: " + changesTracker.Count); // Check if this shows and has count > 0
             using (Transaction tx = new Transaction(_doc, "Update Parameters"))
             {
                 tx.Start();
@@ -56,7 +56,7 @@ namespace DualDeckEditorAddin
                             if (parameter != null)
                             {
                                 double decimalFeet = ConvertToDecimalFeet(newValue);
-                                MessageBox.Show("Changing " + textBoxEntry.Value.ToString() + " to " + decimalFeet);
+                                Debug.Print("Changing " + textBoxEntry.Value.ToString() + " to " + decimalFeet);
                                 parameter.Set(decimalFeet);
                             }
                         }
@@ -70,7 +70,7 @@ namespace DualDeckEditorAddin
                             if (parameter != null)
                             {
                                 int checkboxValue = newCheckValue == "1" ? 1 : 0;
-                                MessageBox.Show("Changing " + checkBoxEntry.Value.ToString() + " to " + checkboxValue);
+                                Debug.Print("Changing " + checkBoxEntry.Value.ToString() + " to " + checkboxValue);
                                 parameter.Set(checkboxValue);
                             }
                         }
