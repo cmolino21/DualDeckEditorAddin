@@ -224,6 +224,8 @@
             // 
             // comboBoxFamilyType
             // 
+            this.comboBoxFamilyType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxFamilyType.FormattingEnabled = true;
             this.comboBoxFamilyType.Location = new System.Drawing.Point(124, 8);
             this.comboBoxFamilyType.Name = "comboBoxFamilyType";
@@ -242,6 +244,7 @@
             // 
             // btnSelectDeck
             // 
+            this.btnSelectDeck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSelectDeck.Location = new System.Drawing.Point(408, 7);
             this.btnSelectDeck.Name = "btnSelectDeck";
             this.btnSelectDeck.Size = new System.Drawing.Size(97, 23);
@@ -252,6 +255,8 @@
             // 
             // groupBoxDimensions
             // 
+            this.groupBoxDimensions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxDimensions.Controls.Add(this.label52);
             this.groupBoxDimensions.Controls.Add(this.tableLayoutPanelDimensions);
             this.groupBoxDimensions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -264,7 +269,7 @@
             // 
             // label52
             // 
-            this.label52.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label52.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label52.AutoSize = true;
             this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label52.Location = new System.Drawing.Point(5, 18);
@@ -392,6 +397,8 @@
             // 
             // groupBoxTruss
             // 
+            this.groupBoxTruss.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxTruss.Controls.Add(this.checkBoxTrussOffset);
             this.groupBoxTruss.Controls.Add(this.tableLayoutPanelTruss);
             this.groupBoxTruss.Location = new System.Drawing.Point(15, 194);
@@ -1383,6 +1390,8 @@
             // 
             // groupBoxStrand
             // 
+            this.groupBoxStrand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxStrand.Controls.Add(this.label51);
             this.groupBoxStrand.Controls.Add(this.checkBoxBotOn);
             this.groupBoxStrand.Controls.Add(this.checkBoxTopOn);
@@ -1396,13 +1405,13 @@
             // 
             // label51
             // 
-            this.label51.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label51.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(20, 490);
+            this.label51.Location = new System.Drawing.Point(9, 487);
             this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(174, 13);
+            this.label51.Size = new System.Drawing.Size(138, 13);
             this.label51.TabIndex = 92;
-            this.label51.Text = "------------Mirror Across Center------------";
+            this.label51.Text = "------Mirror Across Center------";
             // 
             // checkBoxBotOn
             // 
@@ -2244,6 +2253,7 @@
             // 
             // btnRevert
             // 
+            this.btnRevert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRevert.Location = new System.Drawing.Point(428, 5);
             this.btnRevert.Name = "btnRevert";
             this.btnRevert.Size = new System.Drawing.Size(75, 23);
@@ -2254,6 +2264,7 @@
             // 
             // btnSave
             // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Location = new System.Drawing.Point(343, 5);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);

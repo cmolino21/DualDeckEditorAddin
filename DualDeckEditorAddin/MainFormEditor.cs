@@ -42,6 +42,7 @@ namespace DualDeckEditorAddin
             InitializeDualDeckSelection(uidoc);
             comboBoxFamilyType.SelectedIndexChanged += comboBoxFamilyType_SelectedIndexChanged; // Attach the event handler for updating the data based on DualDeck selection
             checkBoxTrussOffset.CheckedChanged += checkBoxTrussOffset_CheckedChanged;
+            AddOffsetCheckboxHandlers();
             textBoxDD_Depth.Leave += textBoxDD_Leave;
             textBoxDD_Length.Leave += textBoxDD_Leave;
             textBoxDD_Width.Leave += textBoxDD_Leave;
@@ -66,6 +67,52 @@ namespace DualDeckEditorAddin
         private void checkBoxTrussOffset_CheckedChanged(object sender, EventArgs e)
         {
             UpdateTruss6EnabledStatus();
+        }
+
+        private void AddOffsetCheckboxHandlers()
+        {
+            var offsetCheckboxes = new List<CheckBox>
+            {
+                checkBox_2Out_A, checkBox_2In_A, checkBox_2Out_01, checkBox_2In_01,
+                checkBox_2Out_02, checkBox_2In_02, checkBox_2Out_03, checkBox_2In_03,
+                checkBox_2Out_04, checkBox_2In_04, checkBox_2Out_05, checkBox_2In_05,
+                checkBox_2Out_06, checkBox_2In_06, checkBox_2Out_07, checkBox_2In_07,
+                checkBox_2Out_08, checkBox_2In_08, checkBox_2Out_09, checkBox_2In_09,
+                checkBox_2Out_10, checkBox_2In_10, checkBox_2Out_11, checkBox_2In_11,
+                checkBox_2Out_B, checkBox_2In_B
+            };
+
+            foreach (var checkBox in offsetCheckboxes)
+            {
+                checkBox.CheckedChanged += OffsetCheckbox_CheckedChanged;
+            }
+        }
+
+        private void OffsetCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is CheckBox changedCheckBox && changedCheckBox.Checked)
+            {
+                string checkBoxName = changedCheckBox.Name;
+                string oppositeCheckBoxName = null;
+
+                if (checkBoxName.Contains("_2Out_"))
+                {
+                    oppositeCheckBoxName = checkBoxName.Replace("_2Out_", "_2In_");
+                }
+                else if (checkBoxName.Contains("_2In_"))
+                {
+                    oppositeCheckBoxName = checkBoxName.Replace("_2In_", "_2Out_");
+                }
+
+                if (!string.IsNullOrEmpty(oppositeCheckBoxName))
+                {
+                    var oppositeCheckBox = this.Controls.Find(oppositeCheckBoxName, true).FirstOrDefault() as CheckBox;
+                    if (oppositeCheckBox != null && oppositeCheckBox.Checked)
+                    {
+                        oppositeCheckBox.Checked = false;
+                    }
+                }
+            }
         }
 
 

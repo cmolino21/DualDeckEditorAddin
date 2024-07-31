@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+	<AddIn Type="Command">
+		<Name>DualDeckEditorCommand</Name>
+		<Assembly>J:\Autodesk Standards\Revit\Add-Ins\DualDeckEditor\2023\DualDeckEditor.dll</Assembly>
+		<!-- Path to your DLL -->
+		<AddInId>{4002DEB8-474D-4993-AECB-F1B353CA1837}</AddInId>
+		<!-- Unique GUID for your add-in -->
+		<FullClassName>DualDeckEditorAddin.DualDeckEditorCommand</FullClassName>
+		<VendorId>FINFROCK</VendorId>
+		<VendorDescription>Finfrock Apps - Precast Concrete Solutions</VendorDescription>
+	</AddIn>
+</RevitAddIns>
