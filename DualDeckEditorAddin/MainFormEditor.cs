@@ -57,6 +57,8 @@ namespace DualDeckEditorAddin
             textBoxDD_LedgeJoint.KeyPress += textBoxDD_KeyPress;
             this.FormClosing += MainFormEditor_FormClosing;
 
+            this.StartPosition = FormStartPosition.CenterScreen;
+
             handler = new ParameterUpdateHandler(); 
             exEvent = ExternalEvent.Create(handler);
         }
@@ -731,7 +733,7 @@ namespace DualDeckEditorAddin
                 return $"0'  {inches} {fraction}\"";
             }
 
-            // Return the input unchanged if it doesn't match any pattern
+            // Return the input unchanged if it doesn't match any pattern and warn the user
             MessageBox.Show("Dimension formatting not recognized. Ensure you entered it in a valid format");
             return input;
         }
