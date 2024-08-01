@@ -32,7 +32,6 @@
             this.labelSelect = new System.Windows.Forms.Label();
             this.btnSelectDeck = new System.Windows.Forms.Button();
             this.groupBoxDimensions = new System.Windows.Forms.GroupBox();
-            this.label52 = new System.Windows.Forms.Label();
             this.tableLayoutPanelDimensions = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -257,27 +256,14 @@
             // 
             this.groupBoxDimensions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxDimensions.Controls.Add(this.label52);
             this.groupBoxDimensions.Controls.Add(this.tableLayoutPanelDimensions);
             this.groupBoxDimensions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxDimensions.Location = new System.Drawing.Point(15, 7);
             this.groupBoxDimensions.Name = "groupBoxDimensions";
-            this.groupBoxDimensions.Size = new System.Drawing.Size(463, 181);
+            this.groupBoxDimensions.Size = new System.Drawing.Size(463, 160);
             this.groupBoxDimensions.TabIndex = 3;
             this.groupBoxDimensions.TabStop = false;
             this.groupBoxDimensions.Text = "Dimensions:";
-            // 
-            // label52
-            // 
-            this.label52.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label52.AutoSize = true;
-            this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label52.Location = new System.Drawing.Point(5, 18);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(395, 12);
-            this.label52.TabIndex = 88;
-            this.label52.Text = "Please Input Values In Feet or Feet and Fractional Inches. Avoid Decimals and Inc" +
-    "hes Over 12.";
             // 
             // tableLayoutPanelDimensions
             // 
@@ -294,7 +280,7 @@
             this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_Width, 1, 2);
             this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_BotJoint, 1, 3);
             this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_LedgeJoint, 1, 4);
-            this.tableLayoutPanelDimensions.Location = new System.Drawing.Point(6, 37);
+            this.tableLayoutPanelDimensions.Location = new System.Drawing.Point(6, 18);
             this.tableLayoutPanelDimensions.Name = "tableLayoutPanelDimensions";
             this.tableLayoutPanelDimensions.RowCount = 5;
             this.tableLayoutPanelDimensions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -401,7 +387,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxTruss.Controls.Add(this.checkBoxTrussOffset);
             this.groupBoxTruss.Controls.Add(this.tableLayoutPanelTruss);
-            this.groupBoxTruss.Location = new System.Drawing.Point(15, 194);
+            this.groupBoxTruss.Location = new System.Drawing.Point(15, 174);
             this.groupBoxTruss.Name = "groupBoxTruss";
             this.groupBoxTruss.Size = new System.Drawing.Size(463, 399);
             this.groupBoxTruss.TabIndex = 4;
@@ -1396,7 +1382,7 @@
             this.groupBoxStrand.Controls.Add(this.checkBoxBotOn);
             this.groupBoxStrand.Controls.Add(this.checkBoxTopOn);
             this.groupBoxStrand.Controls.Add(this.tableLayoutPanelStrand);
-            this.groupBoxStrand.Location = new System.Drawing.Point(15, 600);
+            this.groupBoxStrand.Location = new System.Drawing.Point(15, 580);
             this.groupBoxStrand.Name = "groupBoxStrand";
             this.groupBoxStrand.Size = new System.Drawing.Size(463, 514);
             this.groupBoxStrand.TabIndex = 5;
@@ -2310,7 +2296,6 @@
             this.Name = "MainFormEditor";
             this.Text = "DualDeck Editor Tool";
             this.groupBoxDimensions.ResumeLayout(false);
-            this.groupBoxDimensions.PerformLayout();
             this.tableLayoutPanelDimensions.ResumeLayout(false);
             this.tableLayoutPanelDimensions.PerformLayout();
             this.groupBoxTruss.ResumeLayout(false);
@@ -2513,7 +2498,6 @@
         private System.Windows.Forms.CheckBox checkBoxTopOn;
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.Label label51;
-        private System.Windows.Forms.Label label52;
     }
 }
 
