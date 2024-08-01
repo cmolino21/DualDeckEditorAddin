@@ -14,6 +14,8 @@ using System.Windows.Forms;
 using static DualDeckEditorAddin.MainFormEditor;
 using BuildingCoder;
 using System.Threading;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace DualDeckEditorAddin
 {
@@ -48,11 +50,15 @@ namespace DualDeckEditorAddin
             textBoxDD_Width.Leave += textBoxDD_Leave;
             textBoxDD_BotJoint.Leave += textBoxDD_Leave;
             textBoxDD_LedgeJoint.Leave += textBoxDD_Leave;
+            textBoxDD_Depth.KeyPress += textBoxDD_KeyPress;
+            textBoxDD_Length.KeyPress += textBoxDD_KeyPress;
+            textBoxDD_Width.KeyPress += textBoxDD_KeyPress;
+            textBoxDD_BotJoint.KeyPress += textBoxDD_KeyPress;
+            textBoxDD_LedgeJoint.KeyPress += textBoxDD_KeyPress;
             this.FormClosing += MainFormEditor_FormClosing;
 
-            handler = new ParameterUpdateHandler(); // Initially empty, setup later
+            handler = new ParameterUpdateHandler(); 
             exEvent = ExternalEvent.Create(handler);
-            //btnSave.Click += btnSave_Click;
         }
 
         private void MainFormEditor_FormClosing(object sender, FormClosingEventArgs e)
@@ -502,8 +508,19 @@ namespace DualDeckEditorAddin
             }
         }
 
+        private void textBoxDD_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true; // Prevent the beep sound
+                FormatAsFeetAndInches(sender as System.Windows.Forms.TextBox);
+            }
+        }
+
+
         private void textBoxDD_Leave(object sender, EventArgs e)
         {
+            // Call the method to format the text in the TextBox to feet and inches format
             FormatAsFeetAndInches(sender as System.Windows.Forms.TextBox);
         }
 
@@ -512,97 +529,211 @@ namespace DualDeckEditorAddin
         {
             if (textBox == null) return;
 
+            // Get the trimmed text from the TextBox
             string input = textBox.Text.Trim();
-            double feet = 0, inches = 0;
-            string fractionPart = "";
-            bool isValid = false;
-
-            // Split the input into parts to differentiate feet, inches, and fractions
-            string[] parts = input.Split(new char[] { ' ', '\'' }, StringSplitOptions.RemoveEmptyEntries);
-
-            if (parts.Length == 1)
-            {
-                // Handle single value which could be feet or inches
-                isValid = TryParseValue(parts[0], out feet);
-                if (!isValid)
-                {
-                    isValid = TryParseFraction(parts[0], out inches);
-                    if (isValid) feet = 0;
-                }
-                else
-                {
-                    inches = 0;
-                }
-            }
-            else if (parts.Length == 2)
-            {
-                // Handle feet and inches or feet and fractional inches
-                isValid = TryParseValue(parts[0], out feet) && (TryParseValue(parts[1], out inches) || TryParseFraction(parts[1], out inches));
-            }
-            else if (parts.Length == 3)
-            {
-                // Handle feet, inches, and fractions
-                isValid = TryParseValue(parts[0], out feet) && TryParseValue(parts[1], out inches);
-                if (isValid)
-                {
-                    isValid = TryParseFraction(parts[2], out double fraction);
-                    if (isValid)
-                    {
-                        fractionPart = " " + parts[2]; // Keep the fraction part as string
-                        inches += fraction;
-                    }
-                }
-            }
-
-            if (isValid)
-            {
-                textBox.Text = FormatFeetInchesString(feet, inches, fractionPart);
-            }
-            else
-            {
-                textBox.Text = input;
-            }
+            // Format the input text and set it back to the TextBox
+            textBox.Text = FormatAsFeetAndInches(input);
         }
 
-        private bool TryParseValue(string input, out double result)
+        // Method to format a given string as feet and inches
+        internal static string FormatAsFeetAndInches(string input)
         {
-            result = 0;
-            if (double.TryParse(input, out result)) // Direct decimal or integer
-                return true;
-            return TryParseFraction(input, out result); // Fractional value
-        }
+            // Regular expression patterns to match various input formats
+            string feetInchesFraction = @"^(?<feet>\d+)\s*(?<inches>\d*)\s*(?<fraction>\d+/\d+)?$";
+            string feetInchesDecimal = @"^(?<feet>\d+)\.(?<decimal>\d+)$";
+            string feetWholeInchesDecimal = @"^(?<feet>\d+)\s+(?<inches>\d+)\.(?<decimal>\d+)$";
+            string inchesOnly = @"^(?<inches>\d+)\""$";
+            string feetOnlyWithApostrophe = @"^(?<feet>\d+)\'$";
+            string feetAndInchesWithSymbols = @"^(?<feet>\d+)\s*'\s*(?<inches>\d+)\s*\""$";
+            string inchesDecimal = @"^(?<inches>\d+)\.(?<decimal>\d+)\""$";
+            string feetInchesFractionWithSymbols = @"^(?<feet>\d+)\s*'\s*(?<inches>\d+)\s+(?<fraction>\d+/\d+)\""$";
 
-
-        private bool TryParseFraction(string input, out double fraction)
-        {
-            fraction = 0;
-            if (input.Contains("/"))
+            // Match the input with the feet and inches with optional fraction pattern i.e 2 (feet only) 2 6 (feet and inches) 2 6 1/2(feet, inches, and fraction)
+            Match match = Regex.Match(input, feetInchesFraction);
+            if (match.Success)
             {
-                var parts = input.Split('/');
-                if (parts.Length == 2 && double.TryParse(parts[0], out double numerator) && double.TryParse(parts[1], out double denominator))
+                Debug.WriteLine("feetInchesFraction detected");
+                // Parse the feet, inches, and fraction parts from the matched groups
+                int feet = int.Parse(match.Groups["feet"].Value);
+                int inches = string.IsNullOrEmpty(match.Groups["inches"].Value) ? 0 : int.Parse(match.Groups["inches"].Value);
+                string fractionPart = match.Groups["fraction"].Value;
+
+                // Calculate total inches if fraction is present
+                double fractionInches = 0.0;
+                if (!string.IsNullOrEmpty(fractionPart))
                 {
-                    if (denominator != 0)
-                    {
-                        fraction = numerator / denominator;
-                        return true;
-                    }
+                    string[] fractionSplit = fractionPart.Split('/');
+                    double numerator = double.Parse(fractionSplit[0]);
+                    double denominator = double.Parse(fractionSplit[1]);
+                    fractionInches = numerator / denominator;
                 }
-                return false;
+
+                // Calculate total inches including the fraction part
+                double totalInches = feet * 12 + inches + fractionInches;
+                feet = (int)totalInches / 12;
+                inches = (int)totalInches % 12;
+                fractionInches = totalInches - feet * 12 - inches;
+
+                // Calculate the new fraction part in 1/16ths
+                int numeratorInSixteenths = (int)Math.Round(fractionInches * 16);
+                int denominatorInSixteenths = 16;
+
+                // Reduce the fraction to its simplest form
+                int gcd = GCD(numeratorInSixteenths, denominatorInSixteenths);
+                numeratorInSixteenths /= gcd;
+                denominatorInSixteenths /= gcd;
+
+                // Construct the fraction string
+                string fraction = numeratorInSixteenths == 0 ? "" : $" {numeratorInSixteenths}/{denominatorInSixteenths}";
+
+                return $"{feet}'  {inches}{fraction}\"";
             }
-            return double.TryParse(input, out fraction);
-        }
 
-        private string FormatFeetInchesString(double feet, double inches, string fractionPart)
-        {
-            int intFeet = (int)feet;
-            int intInches = (int)inches;
-            double remainingInches = inches % 1;
+            // Match the input with the feet and decimal inches pattern i.e. 2.5 (feet and decimal inches)
+            match = Regex.Match(input, feetInchesDecimal);
+            if (match.Success)
+            {
+                // Parse the feet and decimal part from the matched groups
+                int feet = int.Parse(match.Groups["feet"].Value);
+                double decimalPart = double.Parse("0." + match.Groups["decimal"].Value, CultureInfo.InvariantCulture);
+                double totalInches = decimalPart * 12; // Convert the decimal part to inches
+                int wholeInches = (int)Math.Floor(totalInches);
+                double fractionalInches = totalInches - wholeInches;
+                int numerator = (int)Math.Round(fractionalInches * 16); // Convert fractional part to 1/16
+                int denominator = 16;
 
-            // Format remaining inches fractionally if there is a fraction part
-            string formattedInches = (remainingInches > 0 && string.IsNullOrEmpty(fractionPart)) ?
-                                     $"{intInches + remainingInches:0.#}\"" : $"{intInches}{fractionPart}\"";
+                // Reduce the fraction to its simplest form
+                int gcd = GCD(numerator, denominator);
+                numerator /= gcd;
+                denominator /= gcd;
 
-            return $"{intFeet}'  {formattedInches}";
+                Debug.WriteLine("feetInchesDecimal detected\nfeet: " + feet + "\ndecimalPart: " + decimalPart + "\ntotalInches: " + totalInches + "\nwholeInches: " + wholeInches + "\nfractionalInches: " + fractionalInches 
+                    + "\nnumerator: " + numerator + "\ndenominator: " + denominator);
+
+                string fraction = numerator == 0 ? "" : $" {numerator}/{denominator}";
+                return $"{feet}'  {wholeInches}{fraction}\"";
+            }
+
+            // Match the input with the feet, whole inches, and decimal inches pattern i.e  2 6.5 (feet, whole inches, and decimal inches - fraction part not working)
+            match = Regex.Match(input, feetWholeInchesDecimal);
+            if (match.Success)
+            {
+                // Parse the feet, whole inches, and decimal part from the matched groups
+                int feet = int.Parse(match.Groups["feet"].Value);
+                int inches = int.Parse(match.Groups["inches"].Value);
+                double decimalPart = double.Parse("0." + match.Groups["decimal"].Value, CultureInfo.InvariantCulture);
+
+                // Calculate the fractional part in inches
+                double fractionalInches = decimalPart;
+                int numerator = (int)Math.Round(fractionalInches * 16); // Convert fractional part to 1/16
+                int denominator = 16;
+
+                // Reduce the fraction to its simplest form
+                int gcd = GCD(numerator, denominator);
+                numerator /= gcd;
+                denominator /= gcd;
+
+                Debug.WriteLine("feetInchesDecimal detected\nfeet: " + feet + "\ninches: " + inches + "\ndecimalPart: " + decimalPart + "\nfractionalInches: " + fractionalInches + "\nnumerator: " + numerator
+                    + "\ndenominator: " + denominator);
+
+                // Construct the fraction string
+                string fraction = numerator == 0 ? "" : $" {numerator}/{denominator}";
+
+                return $"{feet}'  {inches}{fraction}\"";
+            }
+
+            // Function to calculate the Greatest Common Divisor (GCD) using Euclidean algorithm
+            int GCD(int a, int b)
+            {
+                while (b != 0)
+                {
+                    int temp = b;
+                    b = a % b;
+                    a = temp;
+                }
+                return a;
+            }
+
+            // Match the input with the inches only pattern i.e.  6" (inches only - working but maybe convert to feet if more than 12")
+            match = Regex.Match(input, inchesOnly);
+            if (match.Success)
+            {
+                Debug.WriteLine("inchesOnly detected");
+                // Parse the inches part from the matched group
+                int totalInches = int.Parse(match.Groups["inches"].Value);
+
+                // Convert the total inches to feet and remaining inches
+                int feet = totalInches / 12;
+                int inches = totalInches % 12;
+                return $"{feet}'  {inches}\"";
+            }
+
+            // Match the input with the feet only pattern i.e. 5'
+            match = Regex.Match(input, feetOnlyWithApostrophe);
+            if (match.Success)
+            {
+                Debug.WriteLine("feetOnlyWithApostrophe detected");
+                // Parse the feet part from the matched group
+                int feet = int.Parse(match.Groups["feet"].Value);
+                return $"{feet}'  0\"";
+            }
+
+            // Match the input with the feet and inches pattern i.e. X' Y" (new case)
+            match = Regex.Match(input, feetAndInchesWithSymbols);
+            if (match.Success)
+            {
+                Debug.WriteLine("feetAndInchesWithSymbols detected");
+                // Parse the feet and inches parts from the matched groups
+                int feet = int.Parse(match.Groups["feet"].Value);
+                int inches = int.Parse(match.Groups["inches"].Value);
+                return $"{feet}'  {inches}\"";
+            }
+
+            // Match the input with the feet and inches pattern with fraction i.e. X' Y a/b"
+            match = Regex.Match(input, feetInchesFractionWithSymbols);
+            if (match.Success)
+            {
+                Debug.WriteLine("feetInchesFractionWithSymbols detected");
+                int feet = int.Parse(match.Groups["feet"].Value);
+                int inches = int.Parse(match.Groups["inches"].Value);
+                string fractionPart = match.Groups["fraction"].Value;
+
+                string[] fractionSplit = fractionPart.Split('/');
+                int numerator = int.Parse(fractionSplit[0]);
+                int denominator = int.Parse(fractionSplit[1]);
+
+                // Reduce the fraction to its simplest form
+                int gcd = GCD(numerator, denominator);
+                numerator /= gcd;
+                denominator /= gcd;
+
+                string fraction = numerator == 0 ? "" : $"{numerator}/{denominator}";
+                return $"{feet}'  {inches} {fraction}\"";
+            }
+
+            // Match the input with the decimal inches pattern i.e. Y.Z"
+            match = Regex.Match(input, inchesDecimal);
+            if (match.Success)
+            {
+                Debug.WriteLine("inchesDecimal detected");
+                int inches = int.Parse(match.Groups["inches"].Value);
+                double decimalPart = double.Parse("0." + match.Groups["decimal"].Value, CultureInfo.InvariantCulture);
+                double fractionalInches = decimalPart;
+                int numerator = (int)Math.Round(fractionalInches * 16); // Convert fractional part to 1/16
+                int denominator = 16;
+
+                // Reduce the fraction to its simplest form
+                int gcd = GCD(numerator, denominator);
+                numerator /= gcd;
+                denominator /= gcd;
+
+                string fraction = numerator == 0 ? "" : $"{numerator}/{denominator}";
+                return $"0'  {inches} {fraction}\"";
+            }
+
+            // Return the input unchanged if it doesn't match any pattern
+            MessageBox.Show("Dimension formatting not recognized. Ensure you entered it in a valid format");
+            return input;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
