@@ -24,9 +24,7 @@ namespace DualDeckEditorAddin
         private Dictionary<string, string> changesTracker = new Dictionary<string, string>();
         private Document _doc;
 
-        private Document familyDoc;  // Add class-level family document
         private FamilySymbol familySymbol = null;  // Add class-level family symbol
-        private FamilyManager familyManager;  // Add class-level family manager
         private ElementId _initialSelectedId = null; // If a DualDeck is selected in the document when the program is launched, store it here
         private FamilyType activeFamilyType = null;
 
@@ -55,21 +53,11 @@ namespace DualDeckEditorAddin
             textBoxDD_Width.KeyPress += textBoxDD_KeyPress;
             textBoxDD_BotJoint.KeyPress += textBoxDD_KeyPress;
             textBoxDD_LedgeJoint.KeyPress += textBoxDD_KeyPress;
-            this.FormClosing += MainFormEditor_FormClosing;
 
             this.StartPosition = FormStartPosition.CenterScreen;
 
             handler = new ParameterUpdateHandler(); 
             exEvent = ExternalEvent.Create(handler);
-        }
-
-        private void MainFormEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            // Close the family document if it's open
-            if (familyDoc != null)
-            {
-                familyDoc.Close(false);
-            }
         }
 
         private void checkBoxTrussOffset_CheckedChanged(object sender, EventArgs e)
@@ -208,64 +196,8 @@ namespace DualDeckEditorAddin
 
                     familySymbol = selectedInstance.Symbol;
 
-                    Family family = selectedInstance.Symbol.Family; // Retrieve the family from the instance symbol
+                    PopulateParameterValuesFromSymbol(familySymbol);
 
-                    familyDoc = _doc.EditFamily(family); // Open the family for editing which returns the family document
-
-                    familyManager = familyDoc.FamilyManager; // Get the family manager which manages the parameters of the family
-
-                    // Retrieve and print the number of parameters in the family
-                    int n = familyManager.Parameters.Size;
-
-                    //Debug.Print("\nFamily {0} has {1} parameter{2}", _doc.Title, n, Util.PluralSuffix( n ) );
-
-                    // Create a dictionary to map parameter names to their corresponding FamilyParameter objects
-                    Dictionary<string, FamilyParameter> fps = new Dictionary<string, FamilyParameter>(n);
-
-                    foreach (FamilyParameter fp in familyManager.Parameters)
-                    {
-                        string name = fp.Definition.Name;
-                        fps.Add(name, fp);
-                    }
-                    // Sort the keys (parameter names) for better manageability
-                    List<string> parameters = new List<string>(fps.Keys);
-                    parameters.Sort();
-
-                    // Print the number of types in the family and their names
-                    n = familyManager.Types.Size;
-
-                    //Debug.Print("\nFamily {0} has {1} type{2}{3}", _doc.Title, n, Util.PluralSuffix(n), Util.DotOrColon(n));
-
-                    string matchName = selectedFamilyType.ToString()
-                            .Replace("DD Mirror: ", "")
-                            .Replace("DD Adjust: ", "");
-
-                    parameterValues = new Dictionary<string, string>(); // Dictionary to store parameter values
-
-                    // Iterate through each type in the family
-                    foreach (Autodesk.Revit.DB.FamilyType type in familyManager.Types)
-                    {
-                        // Get the match name and remove "DD Mirror: " or "DD Adjust: " from it
-                        if (type.Name == matchName)
-                        {
-                            activeFamilyType = type;
-                            // For each parameter key, check if the type has a value set and print it
-                            foreach (string key in parameters)
-                            {
-                                FamilyParameter fp = fps[key];
-                                if (type.HasValue(fp))
-                                {
-                                    string value = Util.FamilyParamValueString(type, fp, _doc);
-                                    parameterValues[key] = value; // Store the parameter value in the dictionary
-                                    //Debug.Print("    {0} = {1}", key, value);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    }
                     // Temporarily disable change tracking, populate textboxes, and then re-enable
                     DisableChangeTracking();
                     populateCheckBoxes();
@@ -277,6 +209,55 @@ namespace DualDeckEditorAddin
                 {
                     MessageBox.Show("No instances of the selected family type were found.");
                 }
+            }
+        }
+
+
+        private void PopulateParameterValuesFromSymbol(FamilySymbol familySymbol)
+        {
+            // Set dimension text box values
+            foreach (var entry in ControlMappings.TextBoxDimensionMappings)
+            {
+                Parameter param = familySymbol.LookupParameter(entry.Value);
+                if (param != null)
+                {
+                    parameterValues[entry.Value] = FormatParameterValue(param, _doc);
+                }
+            }
+
+            // Set text box values
+            foreach (var entry in ControlMappings.TextBoxMappings)
+            {
+                Parameter param = familySymbol.LookupParameter(entry.Value);
+                if (param != null)
+                {
+                    parameterValues[entry.Value] = FormatParameterValue(param, _doc);
+                }
+            }
+
+            // Set checkbox values
+            foreach (var entry in ControlMappings.CheckBoxMappings)
+            {
+                Parameter param = familySymbol.LookupParameter(entry.Value);
+                if (param != null)
+                {
+                    parameterValues[entry.Value] = param.AsInteger().ToString();
+                }
+            }
+        }
+
+        private string FormatParameterValue(Parameter param, Document doc)
+        {
+            switch (param.StorageType)
+            {
+                case StorageType.Double:
+                    return UnitFormatUtils.Format(doc.GetUnits(), SpecTypeId.Length, param.AsDouble(), true);            
+                case StorageType.Integer:
+                    return param.AsInteger().ToString();
+                case StorageType.String:
+                    return param.AsString();
+                default:
+                    return "Unknown";
             }
         }
 
@@ -741,10 +722,10 @@ namespace DualDeckEditorAddin
         private void btnSave_Click(object sender, EventArgs e)
         {
             Debug.Print("Changes to save: " + changesTracker.Count);
-            if (familyDoc != null && familyManager != null && changesTracker.Count > 0)
+            if (changesTracker.Count > 0)
             {
                 // Update the handler with current documents and parameters
-                handler.Setup(_doc, familyDoc, familySymbol, familyManager, activeFamilyType, changesTracker, this);
+                handler.Setup(_doc, familySymbol, activeFamilyType, changesTracker, this);
                 Debug.Print("Handing off to exEvent: Edit parameters");
                 exEvent.Raise();
             }

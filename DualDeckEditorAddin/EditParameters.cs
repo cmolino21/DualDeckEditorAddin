@@ -13,19 +13,16 @@ namespace DualDeckEditorAddin
     public class ParameterUpdateHandler : IExternalEventHandler
     {
         private Document _doc;
-        private Document familydoc;
         private FamilySymbol familySymbol;
         private FamilyManager familyManager;
         private FamilyType currentFamilyType;
         private Dictionary<string, string> changesTracker;
         private MainFormEditor _mainForm;
 
-        public void Setup(Document _doc, Document familydoc, FamilySymbol familySymbol, FamilyManager manager, FamilyType familyType , Dictionary<string, string> tracker, MainFormEditor mainForm)
+        public void Setup(Document _doc, FamilySymbol familySymbol, FamilyType familyType , Dictionary<string, string> tracker, MainFormEditor mainForm)
         {
             this._doc = _doc;
-            this.familydoc = familydoc;
             this.familySymbol = familySymbol;
-            this.familyManager = manager;
             this.changesTracker = new Dictionary<string, string>(tracker);
             this.currentFamilyType = familyType; // Setup with current family type
             _mainForm = mainForm;
@@ -40,13 +37,6 @@ namespace DualDeckEditorAddin
 
                 if (familySymbol != null)
                 {
-                    // Activate the family symbol if it's not already active
-                    //if (!familySymbol.IsActive)
-                    //{
-                    //    familySymbol.Activate();
-                    //    _doc.Regenerate();
-                    //}
-
                     // Modify the family type parameters
                     foreach (var textBoxEntry in ControlMappings.TextBoxDimensionMappings.Concat(ControlMappings.TextBoxMappings))
                     {
@@ -89,8 +79,6 @@ namespace DualDeckEditorAddin
                     tx.RollBack();
                 }
             }
-
-            familydoc.Close(false);
             _mainForm.UpdateFamilyTypeData();
         }
 
