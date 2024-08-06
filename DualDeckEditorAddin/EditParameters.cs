@@ -14,7 +14,6 @@ namespace DualDeckEditorAddin
     {
         private Document _doc;
         private FamilySymbol familySymbol;
-        private FamilyManager familyManager;
         private FamilyType currentFamilyType;
         private Dictionary<string, string> changesTracker;
         private MainFormEditor _mainForm;
@@ -45,9 +44,16 @@ namespace DualDeckEditorAddin
                             Parameter parameter = familySymbol.LookupParameter(textBoxEntry.Value);
                             if (parameter != null)
                             {
-                                double decimalFeet = ConvertToDecimalFeet(newValue);
-                                Debug.Print("Changing " + textBoxEntry.Value.ToString() + " to " + decimalFeet);
-                                parameter.Set(decimalFeet);
+                                if (textBoxEntry.Key == "textBoxSkewOME" || textBoxEntry.Key == "textBoxSkewME")
+                                {
+                                    MessageBox.Show("Skew angle not yet supported");
+                                }
+                                else
+                                {
+                                    double decimalFeet = ConvertToDecimalFeet(newValue);
+                                    Debug.Print("Changing " + textBoxEntry.Value.ToString() + " to " + decimalFeet);
+                                    parameter.Set(decimalFeet);
+                                }
                             }
                         }
                     }

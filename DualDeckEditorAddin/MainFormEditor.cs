@@ -12,7 +12,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static DualDeckEditorAddin.MainFormEditor;
-using BuildingCoder;
 using System.Threading;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -35,6 +34,13 @@ namespace DualDeckEditorAddin
         private Dictionary<System.Windows.Forms.Control, EventHandler> checkBoxDelegates = new Dictionary<System.Windows.Forms.Control, EventHandler>();
         private Dictionary<string, string> parameterValues = new Dictionary<string, string>(); // Dictionary to store parameter values
 
+        private bool isAdjust = false;
+        private bool isMirror = false;
+        private bool is1Skew = false;
+        private bool is2Skew = false; 
+
+        private bool areSkewedColumnsDisplayed = false;
+
         public MainFormEditor(Document doc, UIDocument uidoc)
         {
             InitializeComponent();
@@ -42,27 +48,25 @@ namespace DualDeckEditorAddin
             InitializeDualDeckSelection(uidoc);
             comboBoxFamilyType.SelectedIndexChanged += comboBoxFamilyType_SelectedIndexChanged; // Attach the event handler for updating the data based on DualDeck selection
             checkBoxTrussOffset.CheckedChanged += checkBoxTrussOffset_CheckedChanged;
+            checkBoxAsymOME.CheckedChanged += checkBoxAsymOME_CheckChanged;
             AddOffsetCheckboxHandlers();
             textBoxDD_Depth.Leave += textBoxDD_Leave;
             textBoxDD_Length.Leave += textBoxDD_Leave;
             textBoxDD_Width.Leave += textBoxDD_Leave;
             textBoxDD_BotJoint.Leave += textBoxDD_Leave;
             textBoxDD_LedgeJoint.Leave += textBoxDD_Leave;
+            textBoxSkewOME.Leave += textBoxSkew_Leave;
             textBoxDD_Depth.KeyPress += textBoxDD_KeyPress;
             textBoxDD_Length.KeyPress += textBoxDD_KeyPress;
             textBoxDD_Width.KeyPress += textBoxDD_KeyPress;
             textBoxDD_BotJoint.KeyPress += textBoxDD_KeyPress;
             textBoxDD_LedgeJoint.KeyPress += textBoxDD_KeyPress;
+            textBoxSkewOME.KeyPress += textBoxSkew_KeyPress;
 
             this.StartPosition = FormStartPosition.CenterScreen;
 
             handler = new ParameterUpdateHandler(); 
             exEvent = ExternalEvent.Create(handler);
-        }
-
-        private void checkBoxTrussOffset_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateTruss6EnabledStatus();
         }
 
         private void AddOffsetCheckboxHandlers()
@@ -121,7 +125,7 @@ namespace DualDeckEditorAddin
                 Element selectedElement = _doc.GetElement(selectedIds.First());
                 if (selectedElement is FamilyInstance instance)
                 {
-                    if (instance.Symbol.Family.Name == "VDC DualDeck_Mirror" || instance.Symbol.Family.Name == "VDC DualDeck_Adjust")
+                    if (instance.Symbol.Family.Name == "VDC DualDeck_Mirror" || instance.Symbol.Family.Name == "VDC DualDeck_Adjust" || instance.Symbol.Family.Name == "VDC DualDeck_OME_Skewed" || instance.Symbol.Family.Name == "VDC DualDeck_Double_Skewed")
                     {
                         _initialSelectedId = instance.Symbol.Id;
                     }
@@ -136,7 +140,9 @@ namespace DualDeckEditorAddin
                         Element member = _doc.GetElement(memberId);
                         if (member is FamilyInstance memberInstance &&
                             (memberInstance.Symbol.Family.Name == "VDC DualDeck_Mirror" ||
-                             memberInstance.Symbol.Family.Name == "VDC DualDeck_Adjust"))
+                             memberInstance.Symbol.Family.Name == "VDC DualDeck_Adjust" ||
+                             memberInstance.Symbol.Family.Name == "VDC DualDeck_OME_Skewed" ||
+                             memberInstance.Symbol.Family.Name == "VDC DualDeck_Double_Skewed"))
                         {
                             _initialSelectedId = memberInstance.Symbol.Id;
                             return; // Exit after finding the first match
@@ -150,6 +156,10 @@ namespace DualDeckEditorAddin
 
         private void comboBoxFamilyType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            isAdjust = false;
+            isMirror = false;
+            is1Skew = false;
+            is2Skew = false;
             UpdateFamilyTypeData();
         }
 
@@ -158,26 +168,73 @@ namespace DualDeckEditorAddin
             if (comboBoxFamilyType.SelectedItem is FamilyTypeItem selectedFamilyType)
             {
 
-                bool isAdjust = selectedFamilyType.ToString().StartsWith("DD Adjust");
-                bool isMirror = selectedFamilyType.ToString().StartsWith("DD Mirror");
+                isAdjust = selectedFamilyType.ToString().StartsWith("DD Adjust");
+                isMirror = selectedFamilyType.ToString().StartsWith("DD Mirror");
+                is1Skew = selectedFamilyType.ToString().StartsWith("DD Skew");
+                is2Skew = selectedFamilyType.ToString().StartsWith("DD 2Skew");
 
                 if (isAdjust)
                 {
+                    isAdjust=true;
                     checkBoxTrussOffset.Enabled = true;
+                    checkBoxAsymOME.Visible = false;
+                    labelSkewME.Visible = false;
+                    labelSkewOME.Visible = false;
+                    textBoxSkewME.Visible = false;
+                    textBoxSkewOME.Visible = false;
                     // Switch to Adjust mappings
                     ControlMappings.TextBoxDimensionMappings = ControlMappings.TextBoxDimensionMappingsAdjust;
                     ControlMappings.TextBoxMappings = ControlMappings.TextBoxMappingsAdjust;
                     ControlMappings.CheckBoxMappings = ControlMappings.CheckBoxMappingsAdjust;
+                    ResetTableLayoutPanelColumns();
                 }
                 else if (isMirror)
                 {
+                    isMirror = true;
                     checkBoxTrussOffset.Enabled = false;
+                    checkBoxAsymOME.Visible = false;
+                    labelSkewME.Visible = false;
+                    labelSkewOME.Visible = false;
+                    textBoxSkewME.Visible = false;
+                    textBoxSkewOME.Visible = false;
                     // Since this checkbox does not exist in mirror, need to explicitly state it should be unchecked
                     checkBoxTrussOffset.Checked = false;
                     // Switch to Mirror mappings
                     ControlMappings.TextBoxDimensionMappings = ControlMappings.TextBoxDimensionMappingsMirror;
                     ControlMappings.TextBoxMappings = ControlMappings.TextBoxMappingsMirror;
                     ControlMappings.CheckBoxMappings = ControlMappings.CheckBoxMappingsMirror;
+                    ResetTableLayoutPanelColumns();
+                }
+                else if (is1Skew)
+                {
+                    is1Skew = true;
+                    checkBoxTrussOffset.Enabled = true;
+                    checkBoxAsymOME.Visible = false;
+                    checkBoxAsymOME.Checked = true;
+                    labelSkewME.Visible = false;
+                    labelSkewOME.Visible = true;
+                    textBoxSkewME.Visible = false;
+                    textBoxSkewOME.Visible = true;
+                    // Switch to Skew mappings
+                    ControlMappings.TextBoxDimensionMappings = ControlMappings.TextBoxDimensionMappingsSkew;
+                    ControlMappings.TextBoxMappings = ControlMappings.TextBoxMappingsSkew;
+                    ControlMappings.CheckBoxMappings = ControlMappings.CheckBoxMappingsSkew;
+                    AddSkewedColumns();
+                }
+                else if (is2Skew)
+                {
+                    is2Skew = true;
+                    checkBoxTrussOffset.Enabled = true;
+                    checkBoxAsymOME.Visible = true;
+                    labelSkewME.Visible = true;
+                    labelSkewOME.Visible = true;
+                    textBoxSkewME.Visible = true;
+                    textBoxSkewOME.Visible = true;
+                    // Switch to Skew mappings
+                    ControlMappings.TextBoxDimensionMappings = ControlMappings.TextBoxDimensionMappings2Skew;
+                    ControlMappings.TextBoxMappings = ControlMappings.TextBoxMappings2Skew;
+                    ControlMappings.CheckBoxMappings = ControlMappings.CheckBoxMappings2Skew;
+                    AddSkewedColumns();
                 }
 
                 // Use a filtered element collector to find all instances of the selected family type
@@ -203,6 +260,7 @@ namespace DualDeckEditorAddin
                     populateCheckBoxes();
                     SetupChangeTracking();
 
+                    UpdateMirrorTrussEnabledStatus();
                     UpdateTruss6EnabledStatus();
                 }
                 else
@@ -211,6 +269,109 @@ namespace DualDeckEditorAddin
                 }
             }
         }
+       
+        private void AddSkewedColumns()
+        {
+            if (areSkewedColumnsDisplayed)
+                return;
+
+            Font HeaderFont = new Font(DefaultFont, FontStyle.Bold);
+            Size TextBoxSize = new Size(49, 20);
+
+            tableLayoutPanelTruss.SuspendLayout();
+
+            // Adjust the width of the tableLayoutPanel
+            tableLayoutPanelTruss.Size = new Size(tableLayoutPanelTruss.Width + 140, tableLayoutPanelTruss.Height);
+
+            // Adjust the width of columns 4 and 5
+            tableLayoutPanelTruss.ColumnStyles[4].Width = 70;
+            tableLayoutPanelTruss.ColumnStyles[5].Width = 70;
+
+
+            // Move controls in the existing columns to the right
+            for (int i = 5; i >= 4; i--)
+            {
+                for (int j = 0; j < tableLayoutPanelTruss.RowCount; j++)
+                {
+                    System.Windows.Forms.Control control = tableLayoutPanelTruss.GetControlFromPosition(i, j); // Get control at original position
+                    if (control != null)
+                    {
+                        Debug.Print($"Moving control from ({i}, {j}) to ({i + 2}, {j})");
+                        tableLayoutPanelTruss.SetColumn(control, i + 2); // Set new position
+                    }
+                }
+            }
+
+            // Add headers for the new columns
+            tableLayoutPanelTruss.Controls.Add(new Label { Text = "OME Short", TextAlign = ContentAlignment.MiddleCenter, Dock = DockStyle.None, Anchor = AnchorStyles.None , Font = HeaderFont }, 4, 0);
+            tableLayoutPanelTruss.Controls.Add(new Label { Text = "OME Long", TextAlign = ContentAlignment.MiddleCenter, Dock = DockStyle.None, Anchor = AnchorStyles.None , Font = HeaderFont }, 5, 0);
+
+            // Define the order of names for text boxes
+            string[] order = { "A", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "B" };
+
+            // Add new TextBoxes for each row in the new columns
+            for (int i = 0; i < order.Length; i++)
+            {
+                tableLayoutPanelTruss.Controls.Add(new System.Windows.Forms.TextBox { Name = "textBoxOME_Short_" + order[i], Dock = DockStyle.None, Anchor = AnchorStyles.None, Size = TextBoxSize }, 4, i + 1);
+                tableLayoutPanelTruss.Controls.Add(new System.Windows.Forms.TextBox { Name = "textBoxOME_Long_" + order[i], Dock = DockStyle.None, Anchor = AnchorStyles.None, Size = TextBoxSize }, 5, i + 1);
+            }
+
+            areSkewedColumnsDisplayed = true; // Set the flag to true
+
+            // Adjust the form size
+            this.Size = new Size(600, 839);
+
+            tableLayoutPanelTruss.ResumeLayout();
+        }
+
+        private void ResetTableLayoutPanelColumns()
+        {
+            if (!areSkewedColumnsDisplayed)
+                return;
+
+            tableLayoutPanelTruss.SuspendLayout();
+
+            // Remove controls in the columns to be deleted
+            for (int i = 4; i <= 5; i++)
+            {
+                for (int j = 0; j < tableLayoutPanelTruss.RowCount; j++)
+                {
+                    System.Windows.Forms.Control control = tableLayoutPanelTruss.GetControlFromPosition(i, j);
+                    if (control != null)
+                    {
+                        tableLayoutPanelTruss.Controls.Remove(control);
+                    }
+                }
+            }
+
+            // Move controls in the existing columns to the left
+            for (int i = 6; i < tableLayoutPanelTruss.ColumnCount; i++)
+            {
+                for (int j = 0; j < tableLayoutPanelTruss.RowCount; j++)
+                {
+                    System.Windows.Forms.Control control = tableLayoutPanelTruss.GetControlFromPosition(i, j);
+                    if (control != null)
+                    {
+                        Debug.Print($"Moving control from ({i}, {j}) to ({i - 2}, {j})");
+                        tableLayoutPanelTruss.SetColumn(control, i - 2);
+                    }
+                }
+            }
+
+            // Adjust the width of columns 4 and 5
+            tableLayoutPanelTruss.ColumnStyles[4].Width = 50;
+            tableLayoutPanelTruss.ColumnStyles[5].Width = 50;
+
+            // Adjust the width of the tableLayoutPanel back
+            tableLayoutPanelTruss.Size = new Size(tableLayoutPanelTruss.Width - 140, tableLayoutPanelTruss.Height);
+
+            areSkewedColumnsDisplayed = false; // Reset the flag
+
+            // Adjust the form size
+            this.Size = new Size(528, 839);
+
+            tableLayoutPanelTruss.ResumeLayout();
+        }
 
 
         private void PopulateParameterValuesFromSymbol(FamilySymbol familySymbol)
@@ -218,10 +379,21 @@ namespace DualDeckEditorAddin
             // Set dimension text box values
             foreach (var entry in ControlMappings.TextBoxDimensionMappings)
             {
-                Parameter param = familySymbol.LookupParameter(entry.Value);
-                if (param != null)
+                if (entry.Key == "textBoxSkewME" || entry.Key == "textBoxSkewOME")
                 {
-                    parameterValues[entry.Value] = FormatParameterValue(param, _doc);
+                    Parameter param = familySymbol.LookupParameter(entry.Value);
+                    if (param != null)
+                    {
+                        parameterValues[entry.Value] = UnitFormatUtils.Format(_doc.GetUnits(), SpecTypeId.Angle, param.AsDouble(), true);
+                    }
+                }
+                else
+                {
+                    Parameter param = familySymbol.LookupParameter(entry.Value);
+                    if (param != null)
+                    {
+                        parameterValues[entry.Value] = FormatParameterValue(param, _doc);
+                    }
                 }
             }
 
@@ -373,6 +545,14 @@ namespace DualDeckEditorAddin
                     {
                         display = $"DD Adjust: {symbol.Name}";
                     }
+                    else if (familyName == "VDC DualDeck_OME_Skewed")
+                    {
+                        display = $"DD Skew: {symbol.Name}";
+                    }
+                    else if (familyName == "VDC DualDeck_Double_Skewed")
+                    {
+                        display = $"DD 2Skew: {symbol.Name}";
+                    }
 
                     if (!string.IsNullOrEmpty(display))
                     {
@@ -455,7 +635,8 @@ namespace DualDeckEditorAddin
         private ElementId CheckAndRetrieveDualDeckId(Element selectedElement)
         {
             if (selectedElement is FamilyInstance instance &&
-                (instance.Symbol.Family.Name == "VDC DualDeck_Mirror" || instance.Symbol.Family.Name == "VDC DualDeck_Adjust"))
+                (instance.Symbol.Family.Name == "VDC DualDeck_Mirror" || instance.Symbol.Family.Name == "VDC DualDeck_Adjust" || instance.Symbol.Family.Name == "VDC DualDeck_OME_Skewed"
+                        || instance.Symbol.Family.Name == "VDC DualDeck_Double_Skewed"))
             {
                 return instance.Symbol.Id;
             }
@@ -467,7 +648,9 @@ namespace DualDeckEditorAddin
                     Element member = _doc.GetElement(memberId);
                     if (member is FamilyInstance memberInstance &&
                         (memberInstance.Symbol.Family.Name == "VDC DualDeck_Mirror" ||
-                         memberInstance.Symbol.Family.Name == "VDC DualDeck_Adjust"))
+                         memberInstance.Symbol.Family.Name == "VDC DualDeck_Adjust" || 
+                         memberInstance.Symbol.Family.Name == "VDC DualDeck_OME_Skewed" || 
+                         memberInstance.Symbol.Family.Name == "VDC DualDeck_Double_Skewed"))
                     {
                         return memberInstance.Symbol.Id;
                     }
@@ -482,12 +665,52 @@ namespace DualDeckEditorAddin
             public bool AllowElement(Element elem)
             {
                 return elem is FamilyInstance fi &&
-                       (fi.Symbol.Family.Name == "VDC DualDeck_Mirror" || fi.Symbol.Family.Name == "VDC DualDeck_Adjust");
+                       (fi.Symbol.Family.Name == "VDC DualDeck_Mirror" || fi.Symbol.Family.Name == "VDC DualDeck_Adjust" || fi.Symbol.Family.Name == "VDC DualDeck_OME_Skewed"
+                        || fi.Symbol.Family.Name == "VDC DualDeck_Double_Skewed");
             }
 
             public bool AllowReference(Reference reference, XYZ position)
             {
                 return false; // We only want to select elements, not references
+            }
+        }
+
+        private void textBoxSkew_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true; // Prevent the beep sound
+                FormatAsAngle(sender as System.Windows.Forms.TextBox);
+            }
+        }
+
+
+        private void textBoxSkew_Leave(object sender, EventArgs e)
+        {
+            // Call the method to format the text in the TextBox to feet and inches format
+            FormatAsAngle(sender as System.Windows.Forms.TextBox);
+        }
+
+        private void FormatAsAngle(System.Windows.Forms.TextBox textBox)
+        {
+            if (textBox == null) return;
+
+            string input = textBox.Text.Trim();
+
+            // Check if the input ends with the degree symbol and remove it for parsing
+            if (input.EndsWith("°"))
+            {
+                input = input.TrimEnd('°').Trim();
+            }
+
+            if (decimal.TryParse(input, out decimal angle))
+            {
+                textBox.Text = $"{angle:F3}°"; // Format to 3 decimal places and add degree symbol
+            }
+            else
+            {
+                MessageBox.Show("Invalid angle format. Please enter a valid number.");
+                textBox.Focus();
             }
         }
 
@@ -741,7 +964,6 @@ namespace DualDeckEditorAddin
         }
 
 
-
         private void btnRevert_Click(object sender, EventArgs e)
         {
             populateCheckBoxes();
@@ -800,21 +1022,28 @@ namespace DualDeckEditorAddin
 
         private void MirrorControlChanges(System.Windows.Forms.Control control)
         {
-            bool isOffsetChecked = checkBoxTrussOffset.Checked;
-            var mirroringPairs = isOffsetChecked ? ControlMappings.mirroringPairsWithOffset : ControlMappings.mirroringPairsWithoutOffset;
-
-            if (mirroringPairs.TryGetValue(control.Name, out string mirrorControlName))
+            if (is1Skew == true || is2Skew == true)
             {
-                var mirrorControl = this.Controls.Find(mirrorControlName, true).FirstOrDefault();
-                if (mirrorControl != null)
+                return;
+            }
+            else
+            {
+                bool isOffsetChecked = checkBoxTrussOffset.Checked;
+                var mirroringPairs = isOffsetChecked ? ControlMappings.mirroringPairsWithOffset : ControlMappings.mirroringPairsWithoutOffset;
+
+                if (mirroringPairs.TryGetValue(control.Name, out string mirrorControlName))
                 {
-                    if (control is System.Windows.Forms.TextBox textBox && mirrorControl is System.Windows.Forms.TextBox mirrorTextBox)
+                    var mirrorControl = this.Controls.Find(mirrorControlName, true).FirstOrDefault();
+                    if (mirrorControl != null)
                     {
-                        mirrorTextBox.Text = textBox.Text;
-                    }
-                    else if (control is CheckBox checkBox && mirrorControl is CheckBox mirrorCheckBox)
-                    {
-                        mirrorCheckBox.Checked = checkBox.Checked;
+                        if (control is System.Windows.Forms.TextBox textBox && mirrorControl is System.Windows.Forms.TextBox mirrorTextBox)
+                        {
+                            mirrorTextBox.Text = textBox.Text;
+                        }
+                        else if (control is CheckBox checkBox && mirrorControl is CheckBox mirrorCheckBox)
+                        {
+                            mirrorCheckBox.Checked = checkBox.Checked;
+                        }
                     }
                 }
             }
@@ -852,9 +1081,24 @@ namespace DualDeckEditorAddin
             "checkBox_2Out_06", "checkBox_2In_06"
         };
 
+        private void checkBoxTrussOffset_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateTruss6EnabledStatus();
+        }
+
         private void UpdateTruss6EnabledStatus()
         {
-            bool enable = !checkBoxTrussOffset.Checked;
+            bool enable = true;
+
+            if (is1Skew == true || is2Skew == true)
+            {
+                enable = true;
+            }
+            else
+            {
+                enable = !checkBoxTrussOffset.Checked;
+            }
+
             foreach (System.Windows.Forms.Control child in this.Controls)
             {
                 if (child is System.Windows.Forms.TextBox textBox && trussControlsToDisable.Contains(textBox.Name))
@@ -902,5 +1146,144 @@ namespace DualDeckEditorAddin
                 }
             }
         }
+
+        private void checkBoxAsymOME_CheckChanged(object sender, EventArgs e)
+        {
+            UpdateOMETrussEnabledStatus();
+        }
+
+        private void UpdateOMETrussEnabledStatus()
+        {
+            // Positions of the entries you want to enable
+            int[] textBoxMappingsPositions = Enumerable.Range(26, 26).ToArray(); // Entries 15-26 (0-based index)
+
+            bool enable = false; // Initialize to a default value
+            if (is1Skew == true || isAdjust == true || isMirror == true)
+            {
+                enable = true;
+            }
+            else
+            {
+                enable = checkBoxAsymOME.Checked;
+            }
+
+            List<string> keysToEnable = GetKeysToEnable(textBoxMappingsPositions, null, null, null);
+
+            // Start the recursive process with the initial control
+            UpdateMirrorTrussEnabledStatus(this, enable, keysToEnable);
+        }
+
+        private void UpdateMirrorTrussEnabledStatus()
+        {
+            // Positions of the entries you want to enable
+            int[] textBoxMappingsPositions = null;
+            int[] checkBoxMappingsPositionsPart1 = null;
+            int[] checkBoxMappingsPositionsPart2 = null;                                                                            
+            string[] specificLabels = { "label13", "label14", "label15", "label16", "label17", "label19" };
+
+            bool enable = false; // Initialize to a default value
+            if (is1Skew == true || is2Skew == true)
+            {
+                enable = true;
+                // Positions of the entries you want to enable
+                textBoxMappingsPositions = Enumerable.Range(14, 12).ToArray(); // Entries 15-26 (0-based index)
+                checkBoxMappingsPositionsPart1 = Enumerable.Range(8, 6).ToArray(); // Entries 9-14 (0-based index)
+                checkBoxMappingsPositionsPart2 = Enumerable.Range(28, 12).ToArray(); // Entries 29-40 (0-based index)                                                                            
+            }
+            else if (isMirror == true)
+            {
+                enable = false;
+                // Positions of the entries you want to enable
+                textBoxMappingsPositions = Enumerable.Range(14, 12).ToArray(); // Entries 15-26 (0-based index)
+                checkBoxMappingsPositionsPart1 = Enumerable.Range(7, 6).ToArray(); // Entries 9-14 (0-based index)
+                checkBoxMappingsPositionsPart2 = Enumerable.Range(27, 12).ToArray(); // Entries 29-40 (0-based index)                                                                            
+            }
+            else if (isAdjust == true)
+            {
+                enable = false;
+                // Positions of the entries you want to enable
+                textBoxMappingsPositions = Enumerable.Range(14, 12).ToArray(); // Entries 15-26 (0-based index)
+                checkBoxMappingsPositionsPart1 = Enumerable.Range(8, 6).ToArray(); // Entries 9-14 (0-based index)
+                checkBoxMappingsPositionsPart2 = Enumerable.Range(28, 12).ToArray(); // Entries 29-40 (0-based index)                                                                             
+            }
+
+            List<string> keysToEnable = GetKeysToEnable(textBoxMappingsPositions , checkBoxMappingsPositionsPart1 , checkBoxMappingsPositionsPart2 , specificLabels);
+
+            // Start the recursive process with the initial control
+            UpdateMirrorTrussEnabledStatus(this, enable, keysToEnable);
+        }
+
+        private void UpdateMirrorTrussEnabledStatus(System.Windows.Forms.Control control, bool enable, List<string> keysToEnable)
+        {
+            foreach (System.Windows.Forms.Control child in control.Controls)
+            {
+                if (child is System.Windows.Forms.TextBox textBox && keysToEnable.Contains(textBox.Name))
+                {
+                    textBox.Enabled = enable;
+                }
+                else if (child is System.Windows.Forms.CheckBox checkBox && keysToEnable.Contains(checkBox.Name))
+                {
+                    checkBox.Enabled = enable;
+                }
+                else if (child is System.Windows.Forms.Label label && keysToEnable.Contains(label.Name))
+                {
+                    label.Enabled = enable;
+                }
+
+                // Recursively handle child controls
+                if (child.HasChildren)
+                {
+                    UpdateMirrorTrussEnabledStatus(child, enable, keysToEnable);
+                }
+            }
+        }
+
+        private List<string> GetKeysToEnable(int[] textBoxMappingsPositions, int[] checkBoxMappingsPositionsPart1, int[] checkBoxMappingsPositionsPart2, string[] specificLabels)
+        {
+
+
+            List<string> keysToEnable = new List<string>();
+
+            if (textBoxMappingsPositions != null)
+            {
+                // Add keys from TextBoxMappings
+                AddKeysFromDictionary(ControlMappings.TextBoxMappings, textBoxMappingsPositions, keysToEnable);
+            }
+
+            if (checkBoxMappingsPositionsPart1 != null && checkBoxMappingsPositionsPart2 != null)
+            {
+                // Add keys from CheckBoxMappings
+                AddKeysFromDictionary(ControlMappings.CheckBoxMappings, checkBoxMappingsPositionsPart1, keysToEnable);
+                AddKeysFromDictionary(ControlMappings.CheckBoxMappings, checkBoxMappingsPositionsPart2, keysToEnable);
+            }
+
+            if (specificLabels != null)
+            {
+                keysToEnable.AddRange(specificLabels); // Add keys from label list
+            }
+
+            // Debug print all keys to enable
+            Debug.Print("Keys to enable:");
+            foreach (var key in keysToEnable)
+            {
+                Debug.Print(key);
+            }
+
+            return keysToEnable;
+        }
+
+        // Function to get keys by positions from a dictionary
+        private void AddKeysFromDictionary(Dictionary<string, string> dictionary, int[] positions, List<string> keys)
+        {
+            var keysArray = dictionary.Keys.ToArray();
+            foreach (var pos in positions)
+            {
+                if (pos < keysArray.Length)
+                {
+                    keys.Add(keysArray[pos]); // Add the key, not the value
+                }
+            }
+        }
+
     }
 }
