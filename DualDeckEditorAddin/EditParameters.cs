@@ -46,7 +46,9 @@ namespace DualDeckEditorAddin
                             {
                                 if (textBoxEntry.Key == "textBoxSkewOME" || textBoxEntry.Key == "textBoxSkewME")
                                 {
-                                    MessageBox.Show("Skew angle not yet supported");
+                                    double radianAngle = ConvertToRadians(newValue);
+                                    Debug.Print("Changing " + textBoxEntry.Value.ToString() + " to " + radianAngle);
+                                    parameter.Set(radianAngle);
                                 }
                                 else
                                 {
@@ -142,6 +144,23 @@ namespace DualDeckEditorAddin
             // Convert to decimal feet
             double decimalFeet = Math.Round(feet + (inches / 12.0) , 6);
             return decimalFeet;
+        }
+
+        public double ConvertToRadians(string input)
+        {
+            input = input.TrimEnd('°').Trim();
+
+            // Try to parse the input as a decimal number
+            if (decimal.TryParse(input, out decimal degrees))
+            {
+                // Convert degrees to radians
+                double radians = (double)degrees * Math.PI / 180.0;
+                return radians;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid angle format. Please ensure the input is a valid number.");
+            }
         }
 
         public string GetName()

@@ -215,6 +215,8 @@
             this.textBoxSkewME = new System.Windows.Forms.TextBox();
             this.labelSkewOME = new System.Windows.Forms.Label();
             this.textBoxSkewOME = new System.Windows.Forms.TextBox();
+            this.labelTotTop = new System.Windows.Forms.Label();
+            this.labelTotBot = new System.Windows.Forms.Label();
             this.groupBoxDimensions.SuspendLayout();
             this.tableLayoutPanelDimensions.SuspendLayout();
             this.groupBoxTruss.SuspendLayout();
@@ -1393,6 +1395,8 @@
             // 
             this.groupBoxStrand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxStrand.Controls.Add(this.labelTotBot);
+            this.groupBoxStrand.Controls.Add(this.labelTotTop);
             this.groupBoxStrand.Controls.Add(this.label51);
             this.groupBoxStrand.Controls.Add(this.checkBoxBotOn);
             this.groupBoxStrand.Controls.Add(this.checkBoxTopOn);
@@ -1408,7 +1412,7 @@
             // 
             this.label51.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(9, 487);
+            this.label51.Location = new System.Drawing.Point(13, 487);
             this.label51.Name = "label51";
             this.label51.Size = new System.Drawing.Size(138, 13);
             this.label51.TabIndex = 92;
@@ -1437,9 +1441,9 @@
             // tableLayoutPanelStrand
             // 
             this.tableLayoutPanelStrand.ColumnCount = 3;
-            this.tableLayoutPanelStrand.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
-            this.tableLayoutPanelStrand.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelStrand.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelStrand.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 85F));
+            this.tableLayoutPanelStrand.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanelStrand.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanelStrand.Controls.Add(this.label49, 0, 22);
             this.tableLayoutPanelStrand.Controls.Add(this.label26, 4, 0);
             this.tableLayoutPanelStrand.Controls.Add(this.label29, 0, 13);
@@ -1537,25 +1541,25 @@
             this.tableLayoutPanelStrand.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelStrand.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelStrand.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelStrand.Size = new System.Drawing.Size(154, 462);
+            this.tableLayoutPanelStrand.Size = new System.Drawing.Size(165, 462);
             this.tableLayoutPanelStrand.TabIndex = 0;
             // 
             // label49
             // 
             this.label49.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(11, 443);
+            this.label49.Location = new System.Drawing.Point(4, 443);
             this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(53, 13);
+            this.label49.Size = new System.Drawing.Size(76, 13);
             this.label49.TabIndex = 72;
-            this.label49.Text = "Strand 20";
+            this.label49.Text = "Strand 20 / 21";
             // 
             // label26
             // 
             this.label26.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.Location = new System.Drawing.Point(121, 3);
+            this.label26.Location = new System.Drawing.Point(132, 3);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(26, 13);
             this.label26.TabIndex = 34;
@@ -1565,138 +1569,138 @@
             // 
             this.label29.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(11, 263);
+            this.label29.Location = new System.Drawing.Point(4, 263);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(53, 13);
+            this.label29.Size = new System.Drawing.Size(76, 13);
             this.label29.TabIndex = 17;
-            this.label29.Text = "Strand 11";
+            this.label29.Text = "Strand 11 / 30";
             // 
             // label30
             // 
             this.label30.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(11, 223);
+            this.label30.Location = new System.Drawing.Point(4, 223);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(53, 13);
+            this.label30.Size = new System.Drawing.Size(76, 13);
             this.label30.TabIndex = 15;
-            this.label30.Text = "Strand 09";
+            this.label30.Text = "Strand 09 / 32";
             // 
             // label31
             // 
             this.label31.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(11, 143);
+            this.label31.Location = new System.Drawing.Point(4, 143);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(53, 13);
+            this.label31.Size = new System.Drawing.Size(76, 13);
             this.label31.TabIndex = 10;
-            this.label31.Text = "Strand 05";
+            this.label31.Text = "Strand 05 / 36";
             // 
             // label32
             // 
             this.label32.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(11, 123);
+            this.label32.Location = new System.Drawing.Point(4, 123);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(53, 13);
+            this.label32.Size = new System.Drawing.Size(76, 13);
             this.label32.TabIndex = 9;
-            this.label32.Text = "Strand 04";
+            this.label32.Text = "Strand 04 / 37";
             // 
             // label33
             // 
             this.label33.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(11, 103);
+            this.label33.Location = new System.Drawing.Point(4, 103);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(53, 13);
+            this.label33.Size = new System.Drawing.Size(76, 13);
             this.label33.TabIndex = 8;
-            this.label33.Text = "Strand 03";
+            this.label33.Text = "Strand 03 / 38";
             // 
             // label34
             // 
             this.label34.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(11, 83);
+            this.label34.Location = new System.Drawing.Point(4, 83);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(53, 13);
+            this.label34.Size = new System.Drawing.Size(76, 13);
             this.label34.TabIndex = 7;
-            this.label34.Text = "Strand 02";
+            this.label34.Text = "Strand 02 / 39";
             // 
             // label35
             // 
             this.label35.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(11, 63);
+            this.label35.Location = new System.Drawing.Point(4, 63);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(53, 13);
+            this.label35.Size = new System.Drawing.Size(76, 13);
             this.label35.TabIndex = 6;
-            this.label35.Text = "Strand 01";
+            this.label35.Text = "Strand 01 / 40";
             // 
             // label36
             // 
             this.label36.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(13, 43);
+            this.label36.Location = new System.Drawing.Point(9, 43);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(48, 13);
+            this.label36.Size = new System.Drawing.Size(66, 13);
             this.label36.TabIndex = 5;
-            this.label36.Text = "Strand B";
+            this.label36.Text = "Strand B / C";
             // 
             // label37
             // 
             this.label37.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(13, 23);
+            this.label37.Location = new System.Drawing.Point(9, 23);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(48, 13);
+            this.label37.Size = new System.Drawing.Size(67, 13);
             this.label37.TabIndex = 4;
-            this.label37.Text = "Strand A";
+            this.label37.Text = "Strand A / D";
             // 
             // label38
             // 
             this.label38.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(11, 163);
+            this.label38.Location = new System.Drawing.Point(4, 163);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(53, 13);
+            this.label38.Size = new System.Drawing.Size(76, 13);
             this.label38.TabIndex = 11;
-            this.label38.Text = "Strand 06";
+            this.label38.Text = "Strand 06 / 35";
             // 
             // label39
             // 
             this.label39.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(11, 183);
+            this.label39.Location = new System.Drawing.Point(4, 183);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(53, 13);
+            this.label39.Size = new System.Drawing.Size(76, 13);
             this.label39.TabIndex = 12;
-            this.label39.Text = "Strand 07";
+            this.label39.Text = "Strand 07 / 34";
             // 
             // label40
             // 
             this.label40.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(11, 203);
+            this.label40.Location = new System.Drawing.Point(4, 203);
             this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(53, 13);
+            this.label40.Size = new System.Drawing.Size(76, 13);
             this.label40.TabIndex = 13;
-            this.label40.Text = "Strand 08";
+            this.label40.Text = "Strand 08 / 33";
             // 
             // label41
             // 
             this.label41.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(11, 243);
+            this.label41.Location = new System.Drawing.Point(4, 243);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(53, 13);
+            this.label41.Size = new System.Drawing.Size(76, 13);
             this.label41.TabIndex = 14;
-            this.label41.Text = "Strand 10";
+            this.label41.Text = "Strand 10 / 31";
             // 
             // label42
             // 
             this.label42.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label42.AutoSize = true;
             this.label42.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label42.Location = new System.Drawing.Point(9, 3);
+            this.label42.Location = new System.Drawing.Point(14, 3);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(56, 13);
             this.label42.TabIndex = 16;
@@ -1706,7 +1710,7 @@
             // 
             this.checkBoxBot_A.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_A.AutoSize = true;
-            this.checkBoxBot_A.Location = new System.Drawing.Point(126, 23);
+            this.checkBoxBot_A.Location = new System.Drawing.Point(137, 23);
             this.checkBoxBot_A.Name = "checkBoxBot_A";
             this.checkBoxBot_A.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_A.TabIndex = 36;
@@ -1716,7 +1720,7 @@
             // 
             this.checkBoxBot_B.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_B.AutoSize = true;
-            this.checkBoxBot_B.Location = new System.Drawing.Point(126, 43);
+            this.checkBoxBot_B.Location = new System.Drawing.Point(137, 43);
             this.checkBoxBot_B.Name = "checkBoxBot_B";
             this.checkBoxBot_B.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_B.TabIndex = 37;
@@ -1726,7 +1730,7 @@
             // 
             this.checkBoxBot_01.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_01.AutoSize = true;
-            this.checkBoxBot_01.Location = new System.Drawing.Point(126, 63);
+            this.checkBoxBot_01.Location = new System.Drawing.Point(137, 63);
             this.checkBoxBot_01.Name = "checkBoxBot_01";
             this.checkBoxBot_01.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_01.TabIndex = 38;
@@ -1736,7 +1740,7 @@
             // 
             this.checkBoxBot_02.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_02.AutoSize = true;
-            this.checkBoxBot_02.Location = new System.Drawing.Point(126, 83);
+            this.checkBoxBot_02.Location = new System.Drawing.Point(137, 83);
             this.checkBoxBot_02.Name = "checkBoxBot_02";
             this.checkBoxBot_02.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_02.TabIndex = 39;
@@ -1746,7 +1750,7 @@
             // 
             this.checkBoxBot_03.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_03.AutoSize = true;
-            this.checkBoxBot_03.Location = new System.Drawing.Point(126, 103);
+            this.checkBoxBot_03.Location = new System.Drawing.Point(137, 103);
             this.checkBoxBot_03.Name = "checkBoxBot_03";
             this.checkBoxBot_03.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_03.TabIndex = 40;
@@ -1756,7 +1760,7 @@
             // 
             this.checkBoxBot_04.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_04.AutoSize = true;
-            this.checkBoxBot_04.Location = new System.Drawing.Point(126, 123);
+            this.checkBoxBot_04.Location = new System.Drawing.Point(137, 123);
             this.checkBoxBot_04.Name = "checkBoxBot_04";
             this.checkBoxBot_04.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_04.TabIndex = 41;
@@ -1766,7 +1770,7 @@
             // 
             this.checkBoxBot_05.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_05.AutoSize = true;
-            this.checkBoxBot_05.Location = new System.Drawing.Point(126, 143);
+            this.checkBoxBot_05.Location = new System.Drawing.Point(137, 143);
             this.checkBoxBot_05.Name = "checkBoxBot_05";
             this.checkBoxBot_05.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_05.TabIndex = 42;
@@ -1776,7 +1780,7 @@
             // 
             this.checkBoxBot_06.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_06.AutoSize = true;
-            this.checkBoxBot_06.Location = new System.Drawing.Point(126, 163);
+            this.checkBoxBot_06.Location = new System.Drawing.Point(137, 163);
             this.checkBoxBot_06.Name = "checkBoxBot_06";
             this.checkBoxBot_06.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_06.TabIndex = 43;
@@ -1786,7 +1790,7 @@
             // 
             this.checkBoxBot_07.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_07.AutoSize = true;
-            this.checkBoxBot_07.Location = new System.Drawing.Point(126, 183);
+            this.checkBoxBot_07.Location = new System.Drawing.Point(137, 183);
             this.checkBoxBot_07.Name = "checkBoxBot_07";
             this.checkBoxBot_07.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_07.TabIndex = 44;
@@ -1796,7 +1800,7 @@
             // 
             this.checkBoxBot_08.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_08.AutoSize = true;
-            this.checkBoxBot_08.Location = new System.Drawing.Point(126, 203);
+            this.checkBoxBot_08.Location = new System.Drawing.Point(137, 203);
             this.checkBoxBot_08.Name = "checkBoxBot_08";
             this.checkBoxBot_08.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_08.TabIndex = 45;
@@ -1806,7 +1810,7 @@
             // 
             this.checkBoxBot_09.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_09.AutoSize = true;
-            this.checkBoxBot_09.Location = new System.Drawing.Point(126, 223);
+            this.checkBoxBot_09.Location = new System.Drawing.Point(137, 223);
             this.checkBoxBot_09.Name = "checkBoxBot_09";
             this.checkBoxBot_09.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_09.TabIndex = 46;
@@ -1816,7 +1820,7 @@
             // 
             this.checkBoxBot_10.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_10.AutoSize = true;
-            this.checkBoxBot_10.Location = new System.Drawing.Point(126, 243);
+            this.checkBoxBot_10.Location = new System.Drawing.Point(137, 243);
             this.checkBoxBot_10.Name = "checkBoxBot_10";
             this.checkBoxBot_10.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_10.TabIndex = 47;
@@ -1826,7 +1830,7 @@
             // 
             this.checkBoxBot_11.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_11.AutoSize = true;
-            this.checkBoxBot_11.Location = new System.Drawing.Point(126, 263);
+            this.checkBoxBot_11.Location = new System.Drawing.Point(137, 263);
             this.checkBoxBot_11.Name = "checkBoxBot_11";
             this.checkBoxBot_11.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_11.TabIndex = 48;
@@ -1837,7 +1841,7 @@
             this.label25.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.Location = new System.Drawing.Point(80, 3);
+            this.label25.Location = new System.Drawing.Point(90, 3);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(29, 13);
             this.label25.TabIndex = 35;
@@ -1847,7 +1851,7 @@
             // 
             this.checkBoxTop_A.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_A.AutoSize = true;
-            this.checkBoxTop_A.Location = new System.Drawing.Point(87, 23);
+            this.checkBoxTop_A.Location = new System.Drawing.Point(97, 23);
             this.checkBoxTop_A.Name = "checkBoxTop_A";
             this.checkBoxTop_A.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_A.TabIndex = 49;
@@ -1857,7 +1861,7 @@
             // 
             this.checkBoxTop_01.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_01.AutoSize = true;
-            this.checkBoxTop_01.Location = new System.Drawing.Point(87, 63);
+            this.checkBoxTop_01.Location = new System.Drawing.Point(97, 63);
             this.checkBoxTop_01.Name = "checkBoxTop_01";
             this.checkBoxTop_01.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_01.TabIndex = 50;
@@ -1867,7 +1871,7 @@
             // 
             this.checkBoxTop_02.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_02.AutoSize = true;
-            this.checkBoxTop_02.Location = new System.Drawing.Point(87, 83);
+            this.checkBoxTop_02.Location = new System.Drawing.Point(97, 83);
             this.checkBoxTop_02.Name = "checkBoxTop_02";
             this.checkBoxTop_02.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_02.TabIndex = 51;
@@ -1877,7 +1881,7 @@
             // 
             this.checkBoxTop_03.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_03.AutoSize = true;
-            this.checkBoxTop_03.Location = new System.Drawing.Point(87, 103);
+            this.checkBoxTop_03.Location = new System.Drawing.Point(97, 103);
             this.checkBoxTop_03.Name = "checkBoxTop_03";
             this.checkBoxTop_03.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_03.TabIndex = 52;
@@ -1887,7 +1891,7 @@
             // 
             this.checkBoxTop_04.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_04.AutoSize = true;
-            this.checkBoxTop_04.Location = new System.Drawing.Point(87, 123);
+            this.checkBoxTop_04.Location = new System.Drawing.Point(97, 123);
             this.checkBoxTop_04.Name = "checkBoxTop_04";
             this.checkBoxTop_04.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_04.TabIndex = 53;
@@ -1897,7 +1901,7 @@
             // 
             this.checkBoxTop_05.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_05.AutoSize = true;
-            this.checkBoxTop_05.Location = new System.Drawing.Point(87, 143);
+            this.checkBoxTop_05.Location = new System.Drawing.Point(97, 143);
             this.checkBoxTop_05.Name = "checkBoxTop_05";
             this.checkBoxTop_05.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_05.TabIndex = 54;
@@ -1907,7 +1911,7 @@
             // 
             this.checkBoxTop_06.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_06.AutoSize = true;
-            this.checkBoxTop_06.Location = new System.Drawing.Point(87, 163);
+            this.checkBoxTop_06.Location = new System.Drawing.Point(97, 163);
             this.checkBoxTop_06.Name = "checkBoxTop_06";
             this.checkBoxTop_06.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_06.TabIndex = 55;
@@ -1917,7 +1921,7 @@
             // 
             this.checkBoxTop_07.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_07.AutoSize = true;
-            this.checkBoxTop_07.Location = new System.Drawing.Point(87, 183);
+            this.checkBoxTop_07.Location = new System.Drawing.Point(97, 183);
             this.checkBoxTop_07.Name = "checkBoxTop_07";
             this.checkBoxTop_07.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_07.TabIndex = 56;
@@ -1927,7 +1931,7 @@
             // 
             this.checkBoxTop_08.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_08.AutoSize = true;
-            this.checkBoxTop_08.Location = new System.Drawing.Point(87, 203);
+            this.checkBoxTop_08.Location = new System.Drawing.Point(97, 203);
             this.checkBoxTop_08.Name = "checkBoxTop_08";
             this.checkBoxTop_08.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_08.TabIndex = 57;
@@ -1937,7 +1941,7 @@
             // 
             this.checkBoxTop_09.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_09.AutoSize = true;
-            this.checkBoxTop_09.Location = new System.Drawing.Point(87, 223);
+            this.checkBoxTop_09.Location = new System.Drawing.Point(97, 223);
             this.checkBoxTop_09.Name = "checkBoxTop_09";
             this.checkBoxTop_09.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_09.TabIndex = 58;
@@ -1947,7 +1951,7 @@
             // 
             this.checkBoxTop_10.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_10.AutoSize = true;
-            this.checkBoxTop_10.Location = new System.Drawing.Point(87, 243);
+            this.checkBoxTop_10.Location = new System.Drawing.Point(97, 243);
             this.checkBoxTop_10.Name = "checkBoxTop_10";
             this.checkBoxTop_10.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_10.TabIndex = 59;
@@ -1957,7 +1961,7 @@
             // 
             this.checkBoxTop_11.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_11.AutoSize = true;
-            this.checkBoxTop_11.Location = new System.Drawing.Point(87, 263);
+            this.checkBoxTop_11.Location = new System.Drawing.Point(97, 263);
             this.checkBoxTop_11.Name = "checkBoxTop_11";
             this.checkBoxTop_11.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_11.TabIndex = 60;
@@ -1967,7 +1971,7 @@
             // 
             this.checkBoxTop_B.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_B.AutoSize = true;
-            this.checkBoxTop_B.Location = new System.Drawing.Point(87, 43);
+            this.checkBoxTop_B.Location = new System.Drawing.Point(97, 43);
             this.checkBoxTop_B.Name = "checkBoxTop_B";
             this.checkBoxTop_B.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_B.TabIndex = 63;
@@ -1977,87 +1981,87 @@
             // 
             this.label27.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(11, 283);
+            this.label27.Location = new System.Drawing.Point(4, 283);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(53, 13);
+            this.label27.Size = new System.Drawing.Size(76, 13);
             this.label27.TabIndex = 64;
-            this.label27.Text = "Strand 12";
+            this.label27.Text = "Strand 12 / 29";
             // 
             // label28
             // 
             this.label28.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(11, 303);
+            this.label28.Location = new System.Drawing.Point(4, 303);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(53, 13);
+            this.label28.Size = new System.Drawing.Size(76, 13);
             this.label28.TabIndex = 65;
-            this.label28.Text = "Strand 13";
+            this.label28.Text = "Strand 13 / 28";
             // 
             // label43
             // 
             this.label43.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(11, 323);
+            this.label43.Location = new System.Drawing.Point(4, 323);
             this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(53, 13);
+            this.label43.Size = new System.Drawing.Size(76, 13);
             this.label43.TabIndex = 66;
-            this.label43.Text = "Strand 14";
+            this.label43.Text = "Strand 14 / 27";
             // 
             // label44
             // 
             this.label44.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(11, 343);
+            this.label44.Location = new System.Drawing.Point(4, 343);
             this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(53, 13);
+            this.label44.Size = new System.Drawing.Size(76, 13);
             this.label44.TabIndex = 67;
-            this.label44.Text = "Strand 15";
+            this.label44.Text = "Strand 15 / 26";
             // 
             // label45
             // 
             this.label45.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(11, 363);
+            this.label45.Location = new System.Drawing.Point(4, 363);
             this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(53, 13);
+            this.label45.Size = new System.Drawing.Size(76, 13);
             this.label45.TabIndex = 68;
-            this.label45.Text = "Strand 16";
+            this.label45.Text = "Strand 16 / 25";
             // 
             // label46
             // 
             this.label46.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(11, 383);
+            this.label46.Location = new System.Drawing.Point(4, 383);
             this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(53, 13);
+            this.label46.Size = new System.Drawing.Size(76, 13);
             this.label46.TabIndex = 69;
-            this.label46.Text = "Strand 17";
+            this.label46.Text = "Strand 17 / 24";
             // 
             // label47
             // 
             this.label47.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(11, 403);
+            this.label47.Location = new System.Drawing.Point(4, 403);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(53, 13);
+            this.label47.Size = new System.Drawing.Size(76, 13);
             this.label47.TabIndex = 70;
-            this.label47.Text = "Strand 18";
+            this.label47.Text = "Strand 18 / 23";
             // 
             // label48
             // 
             this.label48.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(11, 423);
+            this.label48.Location = new System.Drawing.Point(4, 423);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(53, 13);
+            this.label48.Size = new System.Drawing.Size(76, 13);
             this.label48.TabIndex = 71;
-            this.label48.Text = "Strand 19";
+            this.label48.Text = "Strand 19 / 22";
             // 
             // checkBoxTop_12
             // 
             this.checkBoxTop_12.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_12.AutoSize = true;
-            this.checkBoxTop_12.Location = new System.Drawing.Point(87, 283);
+            this.checkBoxTop_12.Location = new System.Drawing.Point(97, 283);
             this.checkBoxTop_12.Name = "checkBoxTop_12";
             this.checkBoxTop_12.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_12.TabIndex = 74;
@@ -2067,7 +2071,7 @@
             // 
             this.checkBoxBot_12.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_12.AutoSize = true;
-            this.checkBoxBot_12.Location = new System.Drawing.Point(126, 283);
+            this.checkBoxBot_12.Location = new System.Drawing.Point(137, 283);
             this.checkBoxBot_12.Name = "checkBoxBot_12";
             this.checkBoxBot_12.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_12.TabIndex = 73;
@@ -2077,7 +2081,7 @@
             // 
             this.checkBoxTop_13.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_13.AutoSize = true;
-            this.checkBoxTop_13.Location = new System.Drawing.Point(87, 303);
+            this.checkBoxTop_13.Location = new System.Drawing.Point(97, 303);
             this.checkBoxTop_13.Name = "checkBoxTop_13";
             this.checkBoxTop_13.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_13.TabIndex = 75;
@@ -2087,7 +2091,7 @@
             // 
             this.checkBoxBot_13.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_13.AutoSize = true;
-            this.checkBoxBot_13.Location = new System.Drawing.Point(126, 303);
+            this.checkBoxBot_13.Location = new System.Drawing.Point(137, 303);
             this.checkBoxBot_13.Name = "checkBoxBot_13";
             this.checkBoxBot_13.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_13.TabIndex = 76;
@@ -2097,7 +2101,7 @@
             // 
             this.checkBoxTop_14.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_14.AutoSize = true;
-            this.checkBoxTop_14.Location = new System.Drawing.Point(87, 323);
+            this.checkBoxTop_14.Location = new System.Drawing.Point(97, 323);
             this.checkBoxTop_14.Name = "checkBoxTop_14";
             this.checkBoxTop_14.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_14.TabIndex = 77;
@@ -2107,7 +2111,7 @@
             // 
             this.checkBoxTop_15.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_15.AutoSize = true;
-            this.checkBoxTop_15.Location = new System.Drawing.Point(87, 343);
+            this.checkBoxTop_15.Location = new System.Drawing.Point(97, 343);
             this.checkBoxTop_15.Name = "checkBoxTop_15";
             this.checkBoxTop_15.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_15.TabIndex = 78;
@@ -2117,7 +2121,7 @@
             // 
             this.checkBoxTop_16.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_16.AutoSize = true;
-            this.checkBoxTop_16.Location = new System.Drawing.Point(87, 363);
+            this.checkBoxTop_16.Location = new System.Drawing.Point(97, 363);
             this.checkBoxTop_16.Name = "checkBoxTop_16";
             this.checkBoxTop_16.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_16.TabIndex = 79;
@@ -2127,7 +2131,7 @@
             // 
             this.checkBoxTop_17.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_17.AutoSize = true;
-            this.checkBoxTop_17.Location = new System.Drawing.Point(87, 383);
+            this.checkBoxTop_17.Location = new System.Drawing.Point(97, 383);
             this.checkBoxTop_17.Name = "checkBoxTop_17";
             this.checkBoxTop_17.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_17.TabIndex = 80;
@@ -2137,7 +2141,7 @@
             // 
             this.checkBoxTop_18.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_18.AutoSize = true;
-            this.checkBoxTop_18.Location = new System.Drawing.Point(87, 403);
+            this.checkBoxTop_18.Location = new System.Drawing.Point(97, 403);
             this.checkBoxTop_18.Name = "checkBoxTop_18";
             this.checkBoxTop_18.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_18.TabIndex = 81;
@@ -2147,7 +2151,7 @@
             // 
             this.checkBoxBot_14.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_14.AutoSize = true;
-            this.checkBoxBot_14.Location = new System.Drawing.Point(126, 323);
+            this.checkBoxBot_14.Location = new System.Drawing.Point(137, 323);
             this.checkBoxBot_14.Name = "checkBoxBot_14";
             this.checkBoxBot_14.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_14.TabIndex = 82;
@@ -2157,7 +2161,7 @@
             // 
             this.checkBoxBot_15.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_15.AutoSize = true;
-            this.checkBoxBot_15.Location = new System.Drawing.Point(126, 343);
+            this.checkBoxBot_15.Location = new System.Drawing.Point(137, 343);
             this.checkBoxBot_15.Name = "checkBoxBot_15";
             this.checkBoxBot_15.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_15.TabIndex = 83;
@@ -2167,7 +2171,7 @@
             // 
             this.checkBoxBot_16.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_16.AutoSize = true;
-            this.checkBoxBot_16.Location = new System.Drawing.Point(126, 363);
+            this.checkBoxBot_16.Location = new System.Drawing.Point(137, 363);
             this.checkBoxBot_16.Name = "checkBoxBot_16";
             this.checkBoxBot_16.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_16.TabIndex = 84;
@@ -2177,7 +2181,7 @@
             // 
             this.checkBoxBot_17.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_17.AutoSize = true;
-            this.checkBoxBot_17.Location = new System.Drawing.Point(126, 383);
+            this.checkBoxBot_17.Location = new System.Drawing.Point(137, 383);
             this.checkBoxBot_17.Name = "checkBoxBot_17";
             this.checkBoxBot_17.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_17.TabIndex = 85;
@@ -2187,7 +2191,7 @@
             // 
             this.checkBoxBot_18.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_18.AutoSize = true;
-            this.checkBoxBot_18.Location = new System.Drawing.Point(126, 403);
+            this.checkBoxBot_18.Location = new System.Drawing.Point(137, 403);
             this.checkBoxBot_18.Name = "checkBoxBot_18";
             this.checkBoxBot_18.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_18.TabIndex = 86;
@@ -2197,7 +2201,7 @@
             // 
             this.checkBoxTop_19.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_19.AutoSize = true;
-            this.checkBoxTop_19.Location = new System.Drawing.Point(87, 423);
+            this.checkBoxTop_19.Location = new System.Drawing.Point(97, 423);
             this.checkBoxTop_19.Name = "checkBoxTop_19";
             this.checkBoxTop_19.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_19.TabIndex = 87;
@@ -2207,7 +2211,7 @@
             // 
             this.checkBoxBot_20.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_20.AutoSize = true;
-            this.checkBoxBot_20.Location = new System.Drawing.Point(126, 443);
+            this.checkBoxBot_20.Location = new System.Drawing.Point(137, 443);
             this.checkBoxBot_20.Name = "checkBoxBot_20";
             this.checkBoxBot_20.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_20.TabIndex = 88;
@@ -2217,7 +2221,7 @@
             // 
             this.checkBoxBot_19.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxBot_19.AutoSize = true;
-            this.checkBoxBot_19.Location = new System.Drawing.Point(126, 423);
+            this.checkBoxBot_19.Location = new System.Drawing.Point(137, 423);
             this.checkBoxBot_19.Name = "checkBoxBot_19";
             this.checkBoxBot_19.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBot_19.TabIndex = 89;
@@ -2227,7 +2231,7 @@
             // 
             this.checkBoxTop_20.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkBoxTop_20.AutoSize = true;
-            this.checkBoxTop_20.Location = new System.Drawing.Point(87, 443);
+            this.checkBoxTop_20.Location = new System.Drawing.Point(97, 443);
             this.checkBoxTop_20.Name = "checkBoxTop_20";
             this.checkBoxTop_20.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTop_20.TabIndex = 90;
@@ -2237,7 +2241,7 @@
             // 
             this.label50.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(37, 463);
+            this.label50.Location = new System.Drawing.Point(42, 463);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(0, 13);
             this.label50.TabIndex = 91;
@@ -2348,6 +2352,24 @@
             this.textBoxSkewOME.Size = new System.Drawing.Size(89, 20);
             this.textBoxSkewOME.TabIndex = 71;
             this.textBoxSkewOME.Visible = false;
+            // 
+            // labelTotTop
+            // 
+            this.labelTotTop.AutoSize = true;
+            this.labelTotTop.Location = new System.Drawing.Point(198, 66);
+            this.labelTotTop.Name = "labelTotTop";
+            this.labelTotTop.Size = new System.Drawing.Size(56, 13);
+            this.labelTotTop.TabIndex = 93;
+            this.labelTotTop.Text = "Total Top:";
+            // 
+            // labelTotBot
+            // 
+            this.labelTotBot.AutoSize = true;
+            this.labelTotBot.Location = new System.Drawing.Point(198, 83);
+            this.labelTotBot.Name = "labelTotBot";
+            this.labelTotBot.Size = new System.Drawing.Size(53, 13);
+            this.labelTotBot.TabIndex = 94;
+            this.labelTotBot.Text = "Total Bot:";
             // 
             // MainFormEditor
             // 
@@ -2569,6 +2591,8 @@
         private System.Windows.Forms.TextBox textBoxSkewME;
         private System.Windows.Forms.Label labelSkewOME;
         private System.Windows.Forms.TextBox textBoxSkewOME;
+        private System.Windows.Forms.Label labelTotBot;
+        private System.Windows.Forms.Label labelTotTop;
     }
 }
 

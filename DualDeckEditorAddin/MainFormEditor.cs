@@ -50,6 +50,7 @@ namespace DualDeckEditorAddin
             checkBoxTrussOffset.CheckedChanged += checkBoxTrussOffset_CheckedChanged;
             checkBoxAsymOME.CheckedChanged += checkBoxAsymOME_CheckChanged;
             AddOffsetCheckboxHandlers();
+            AddStrandCheckboxHandlers();
             textBoxDD_Depth.Leave += textBoxDD_Leave;
             textBoxDD_Length.Leave += textBoxDD_Leave;
             textBoxDD_Width.Leave += textBoxDD_Leave;
@@ -67,6 +68,98 @@ namespace DualDeckEditorAddin
 
             handler = new ParameterUpdateHandler(); 
             exEvent = ExternalEvent.Create(handler);
+        }
+
+        private void AddStrandCheckboxHandlers()
+        {
+            // Checkboxes for top strands
+            var topStrands = new List<CheckBox>
+            {
+                checkBoxTop_A, checkBoxTop_B, checkBoxTop_01, checkBoxTop_02,
+                checkBoxTop_03, checkBoxTop_04, checkBoxTop_05, checkBoxTop_06,
+                checkBoxTop_07, checkBoxTop_08, checkBoxTop_09, checkBoxTop_10,
+                checkBoxTop_11, checkBoxTop_12, checkBoxTop_13, checkBoxTop_14,
+                checkBoxTop_15, checkBoxTop_16, checkBoxTop_17, checkBoxTop_18,
+                checkBoxTop_19, checkBoxTop_20
+            };
+
+            // Checkboxes for bottom strands
+            var bottomStrands = new List<CheckBox>
+            {
+                checkBoxBot_A, checkBoxBot_B, checkBoxBot_01, checkBoxBot_02,
+                checkBoxBot_03, checkBoxBot_04, checkBoxBot_05, checkBoxBot_06,
+                checkBoxBot_07, checkBoxBot_08, checkBoxBot_09, checkBoxBot_10,
+                checkBoxBot_11, checkBoxBot_12, checkBoxBot_13, checkBoxBot_14,
+                checkBoxBot_15, checkBoxBot_16, checkBoxBot_17, checkBoxBot_18,
+                checkBoxBot_19, checkBoxBot_20
+            };
+
+            foreach (var checkBox in topStrands)
+            {
+                checkBox.CheckedChanged += UpdateStrandCounts;
+            }
+
+            foreach (var checkBox in bottomStrands)
+            {
+                checkBox.CheckedChanged += UpdateStrandCounts;
+            }
+        }
+
+        private void UpdateStrandCounts(object sender, EventArgs e)
+        {
+            UpdateStrandCounts();
+        }
+
+        private void UpdateStrandCounts ()
+        {
+            int totalTopStrands = 0;
+            int totalBottomStrands = 0;
+
+            // Checkboxes for top strands
+            var topStrands = new List<string>
+            {
+                "checkBoxTop_A", "checkBoxTop_B", "checkBoxTop_01", "checkBoxTop_02",
+                "checkBoxTop_03", "checkBoxTop_04", "checkBoxTop_05", "checkBoxTop_06",
+                "checkBoxTop_07", "checkBoxTop_08", "checkBoxTop_09", "checkBoxTop_10",
+                "checkBoxTop_11", "checkBoxTop_12", "checkBoxTop_13", "checkBoxTop_14",
+                "checkBoxTop_15", "checkBoxTop_16", "checkBoxTop_17", "checkBoxTop_18",
+                "checkBoxTop_19", "checkBoxTop_20"
+            };
+
+            // Checkboxes for bottom strands
+            var bottomStrands = new List<string>
+            {
+                "checkBoxBot_A", "checkBoxBot_B", "checkBoxBot_01", "checkBoxBot_02",
+                "checkBoxBot_03", "checkBoxBot_04", "checkBoxBot_05", "checkBoxBot_06",
+                "checkBoxBot_07", "checkBoxBot_08", "checkBoxBot_09", "checkBoxBot_10",
+                "checkBoxBot_11", "checkBoxBot_12", "checkBoxBot_13", "checkBoxBot_14",
+                "checkBoxBot_15", "checkBoxBot_16", "checkBoxBot_17", "checkBoxBot_18",
+                "checkBoxBot_19", "checkBoxBot_20"
+            };
+
+            // Count checked top strands
+            foreach (var checkBoxName in topStrands)
+            {
+                var checkBox = this.Controls.Find(checkBoxName, true).FirstOrDefault() as CheckBox;
+                if (checkBox != null && checkBox.Checked)
+                {
+                    totalTopStrands++;
+                }
+            }
+
+            // Count checked bottom strands
+            foreach (var checkBoxName in bottomStrands)
+            {
+                var checkBox = this.Controls.Find(checkBoxName, true).FirstOrDefault() as CheckBox;
+                if (checkBox != null && checkBox.Checked)
+                {
+                    totalBottomStrands++;
+                }
+            }
+
+            // Update the labels
+            labelTotTop.Text = $"Total Top: {totalTopStrands*2}";
+            labelTotBot.Text = $"Total Bot:  {totalBottomStrands*2}";
         }
 
         private void AddOffsetCheckboxHandlers()
@@ -262,6 +355,7 @@ namespace DualDeckEditorAddin
 
                     UpdateMirrorTrussEnabledStatus();
                     UpdateTruss6EnabledStatus();
+                    UpdateStrandCounts();
                 }
                 else
                 {
@@ -1284,6 +1378,8 @@ namespace DualDeckEditorAddin
                 }
             }
         }
+
+       
 
     }
 }
