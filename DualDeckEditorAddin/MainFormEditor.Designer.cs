@@ -43,7 +43,12 @@
             this.textBoxDD_Width = new System.Windows.Forms.TextBox();
             this.textBoxDD_BotJoint = new System.Windows.Forms.TextBox();
             this.textBoxDD_LedgeJoint = new System.Windows.Forms.TextBox();
+            this.labelSkewOME = new System.Windows.Forms.Label();
+            this.textBoxSkewOME = new System.Windows.Forms.TextBox();
+            this.labelSkewME = new System.Windows.Forms.Label();
+            this.textBoxSkewME = new System.Windows.Forms.TextBox();
             this.groupBoxTruss = new System.Windows.Forms.GroupBox();
+            this.checkBoxAsymOME = new System.Windows.Forms.CheckBox();
             this.checkBoxTrussOffset = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanelTruss = new System.Windows.Forms.TableLayoutPanel();
             this.textBoxLong_B = new System.Windows.Forms.TextBox();
@@ -131,6 +136,8 @@
             this.checkBox_2In_B = new System.Windows.Forms.CheckBox();
             this.textBoxShort_A = new System.Windows.Forms.TextBox();
             this.groupBoxStrand = new System.Windows.Forms.GroupBox();
+            this.labelTotBot = new System.Windows.Forms.Label();
+            this.labelTotTop = new System.Windows.Forms.Label();
             this.label51 = new System.Windows.Forms.Label();
             this.checkBoxBotOn = new System.Windows.Forms.CheckBox();
             this.checkBoxTopOn = new System.Windows.Forms.CheckBox();
@@ -210,13 +217,6 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
             this.panelSelect = new System.Windows.Forms.Panel();
-            this.checkBoxAsymOME = new System.Windows.Forms.CheckBox();
-            this.labelSkewME = new System.Windows.Forms.Label();
-            this.textBoxSkewME = new System.Windows.Forms.TextBox();
-            this.labelSkewOME = new System.Windows.Forms.Label();
-            this.textBoxSkewOME = new System.Windows.Forms.TextBox();
-            this.labelTotTop = new System.Windows.Forms.Label();
-            this.labelTotBot = new System.Windows.Forms.Label();
             this.groupBoxDimensions.SuspendLayout();
             this.tableLayoutPanelDimensions.SuspendLayout();
             this.groupBoxTruss.SuspendLayout();
@@ -395,6 +395,46 @@
             this.textBoxDD_LedgeJoint.Size = new System.Drawing.Size(89, 20);
             this.textBoxDD_LedgeJoint.TabIndex = 67;
             // 
+            // labelSkewOME
+            // 
+            this.labelSkewOME.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelSkewOME.AutoSize = true;
+            this.labelSkewOME.Location = new System.Drawing.Point(233, 7);
+            this.labelSkewOME.Name = "labelSkewOME";
+            this.labelSkewOME.Size = new System.Drawing.Size(97, 13);
+            this.labelSkewOME.TabIndex = 70;
+            this.labelSkewOME.Text = "Skew Angle (OME)";
+            this.labelSkewOME.Visible = false;
+            // 
+            // textBoxSkewOME
+            // 
+            this.textBoxSkewOME.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxSkewOME.Location = new System.Drawing.Point(343, 3);
+            this.textBoxSkewOME.Name = "textBoxSkewOME";
+            this.textBoxSkewOME.Size = new System.Drawing.Size(89, 20);
+            this.textBoxSkewOME.TabIndex = 71;
+            this.textBoxSkewOME.Visible = false;
+            // 
+            // labelSkewME
+            // 
+            this.labelSkewME.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelSkewME.AutoSize = true;
+            this.labelSkewME.Location = new System.Drawing.Point(233, 34);
+            this.labelSkewME.Name = "labelSkewME";
+            this.labelSkewME.Size = new System.Drawing.Size(89, 13);
+            this.labelSkewME.TabIndex = 68;
+            this.labelSkewME.Text = "Skew Angle (ME)";
+            this.labelSkewME.Visible = false;
+            // 
+            // textBoxSkewME
+            // 
+            this.textBoxSkewME.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxSkewME.Location = new System.Drawing.Point(343, 30);
+            this.textBoxSkewME.Name = "textBoxSkewME";
+            this.textBoxSkewME.Size = new System.Drawing.Size(89, 20);
+            this.textBoxSkewME.TabIndex = 69;
+            this.textBoxSkewME.Visible = false;
+            // 
             // groupBoxTruss
             // 
             this.groupBoxTruss.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -408,6 +448,17 @@
             this.groupBoxTruss.TabIndex = 4;
             this.groupBoxTruss.TabStop = false;
             this.groupBoxTruss.Text = "Truss Controls:";
+            // 
+            // checkBoxAsymOME
+            // 
+            this.checkBoxAsymOME.AutoSize = true;
+            this.checkBoxAsymOME.Location = new System.Drawing.Point(93, 20);
+            this.checkBoxAsymOME.Name = "checkBoxAsymOME";
+            this.checkBoxAsymOME.Size = new System.Drawing.Size(111, 17);
+            this.checkBoxAsymOME.TabIndex = 2;
+            this.checkBoxAsymOME.Text = "Assymetrical OME";
+            this.checkBoxAsymOME.UseVisualStyleBackColor = true;
+            this.checkBoxAsymOME.Visible = false;
             // 
             // checkBoxTrussOffset
             // 
@@ -1408,6 +1459,24 @@
             this.groupBoxStrand.TabStop = false;
             this.groupBoxStrand.Text = "Strand Controls:";
             // 
+            // labelTotBot
+            // 
+            this.labelTotBot.AutoSize = true;
+            this.labelTotBot.Location = new System.Drawing.Point(198, 83);
+            this.labelTotBot.Name = "labelTotBot";
+            this.labelTotBot.Size = new System.Drawing.Size(53, 13);
+            this.labelTotBot.TabIndex = 94;
+            this.labelTotBot.Text = "Total Bot:";
+            // 
+            // labelTotTop
+            // 
+            this.labelTotTop.AutoSize = true;
+            this.labelTotTop.Location = new System.Drawing.Point(198, 66);
+            this.labelTotTop.Name = "labelTotTop";
+            this.labelTotTop.Size = new System.Drawing.Size(56, 13);
+            this.labelTotTop.TabIndex = 93;
+            this.labelTotTop.Text = "Total Top:";
+            // 
             // label51
             // 
             this.label51.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -2301,75 +2370,6 @@
             this.panelSelect.Name = "panelSelect";
             this.panelSelect.Size = new System.Drawing.Size(512, 36);
             this.panelSelect.TabIndex = 4;
-            // 
-            // checkBoxAsymOME
-            // 
-            this.checkBoxAsymOME.AutoSize = true;
-            this.checkBoxAsymOME.Location = new System.Drawing.Point(93, 20);
-            this.checkBoxAsymOME.Name = "checkBoxAsymOME";
-            this.checkBoxAsymOME.Size = new System.Drawing.Size(111, 17);
-            this.checkBoxAsymOME.TabIndex = 2;
-            this.checkBoxAsymOME.Text = "Assymetrical OME";
-            this.checkBoxAsymOME.UseVisualStyleBackColor = true;
-            this.checkBoxAsymOME.Visible = false;
-            // 
-            // labelSkewME
-            // 
-            this.labelSkewME.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelSkewME.AutoSize = true;
-            this.labelSkewME.Location = new System.Drawing.Point(233, 34);
-            this.labelSkewME.Name = "labelSkewME";
-            this.labelSkewME.Size = new System.Drawing.Size(89, 13);
-            this.labelSkewME.TabIndex = 68;
-            this.labelSkewME.Text = "Skew Angle (ME)";
-            this.labelSkewME.Visible = false;
-            // 
-            // textBoxSkewME
-            // 
-            this.textBoxSkewME.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBoxSkewME.Location = new System.Drawing.Point(343, 30);
-            this.textBoxSkewME.Name = "textBoxSkewME";
-            this.textBoxSkewME.Size = new System.Drawing.Size(89, 20);
-            this.textBoxSkewME.TabIndex = 69;
-            this.textBoxSkewME.Visible = false;
-            // 
-            // labelSkewOME
-            // 
-            this.labelSkewOME.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelSkewOME.AutoSize = true;
-            this.labelSkewOME.Location = new System.Drawing.Point(233, 7);
-            this.labelSkewOME.Name = "labelSkewOME";
-            this.labelSkewOME.Size = new System.Drawing.Size(97, 13);
-            this.labelSkewOME.TabIndex = 70;
-            this.labelSkewOME.Text = "Skew Angle (OME)";
-            this.labelSkewOME.Visible = false;
-            // 
-            // textBoxSkewOME
-            // 
-            this.textBoxSkewOME.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBoxSkewOME.Location = new System.Drawing.Point(343, 3);
-            this.textBoxSkewOME.Name = "textBoxSkewOME";
-            this.textBoxSkewOME.Size = new System.Drawing.Size(89, 20);
-            this.textBoxSkewOME.TabIndex = 71;
-            this.textBoxSkewOME.Visible = false;
-            // 
-            // labelTotTop
-            // 
-            this.labelTotTop.AutoSize = true;
-            this.labelTotTop.Location = new System.Drawing.Point(198, 66);
-            this.labelTotTop.Name = "labelTotTop";
-            this.labelTotTop.Size = new System.Drawing.Size(56, 13);
-            this.labelTotTop.TabIndex = 93;
-            this.labelTotTop.Text = "Total Top:";
-            // 
-            // labelTotBot
-            // 
-            this.labelTotBot.AutoSize = true;
-            this.labelTotBot.Location = new System.Drawing.Point(198, 83);
-            this.labelTotBot.Name = "labelTotBot";
-            this.labelTotBot.Size = new System.Drawing.Size(53, 13);
-            this.labelTotBot.TabIndex = 94;
-            this.labelTotBot.Text = "Total Bot:";
             // 
             // MainFormEditor
             // 
