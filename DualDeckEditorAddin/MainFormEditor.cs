@@ -625,32 +625,36 @@ namespace DualDeckEditorAddin
                 // This HashSet is used to ensure unique names are added (optional based on your exact needs)
                 HashSet<string> addedNames = new HashSet<string>();
 
-                foreach (FamilySymbol symbol in collector)
+                foreach (Element element in collector)
                 {
-                    string familyName = symbol.Family.Name;
-                    string display = "";
+                    FamilySymbol symbol = element as FamilySymbol;
+                    if (symbol != null)
+                    {
+                        string familyName = symbol.Family.Name;
+                        string display = "";
 
-                    // Apply shorthand
-                    if (familyName == "VDC DualDeck_Mirror")
-                    {
-                        display = $"DD Mirror: {symbol.Name}";
-                    }
-                    else if (familyName == "VDC DualDeck_Adjust")
-                    {
-                        display = $"DD Adjust: {symbol.Name}";
-                    }
-                    else if (familyName == "VDC DualDeck_OME_Skewed")
-                    {
-                        display = $"DD Skew: {symbol.Name}";
-                    }
-                    else if (familyName == "VDC DualDeck_Double_Skewed")
-                    {
-                        display = $"DD 2Skew: {symbol.Name}";
-                    }
+                        // Apply shorthand
+                        if (familyName == "VDC DualDeck_Mirror")
+                        {
+                            display = $"DD Mirror: {symbol.Name}";
+                        }
+                        else if (familyName == "VDC DualDeck_Adjust")
+                        {
+                            display = $"DD Adjust: {symbol.Name}";
+                        }
+                        else if (familyName == "VDC DualDeck_OME_Skewed")
+                        {
+                            display = $"DD Skew: {symbol.Name}";
+                        }
+                        else if (familyName == "VDC DualDeck_Double_Skewed")
+                        {
+                            display = $"DD 2Skew: {symbol.Name}";
+                        }
 
-                    if (!string.IsNullOrEmpty(display))
-                    {
-                        familyTypes.Add(new FamilyTypeItem(display, symbol.Id));
+                        if (!string.IsNullOrEmpty(display))
+                        {
+                            familyTypes.Add(new FamilyTypeItem(display, symbol.Id));
+                        }
                     }
                 }
 
@@ -1168,7 +1172,7 @@ namespace DualDeckEditorAddin
         }
 
 
-        private List<string> trussControlsToDisable = new List<string>
+        private readonly List<string> trussControlsToDisable = new List<string>
         {
             "textBoxShort_06", "textBoxLong_06",
             "checkBoxOnOff_06", "label12",
@@ -1182,7 +1186,7 @@ namespace DualDeckEditorAddin
 
         private void UpdateTruss6EnabledStatus()
         {
-            bool enable = true;
+            bool enable;
 
             if (is1Skew == true || is2Skew == true)
             {
@@ -1251,7 +1255,7 @@ namespace DualDeckEditorAddin
             // Positions of the entries you want to enable
             int[] textBoxMappingsPositions = Enumerable.Range(26, 26).ToArray(); // Entries 15-26 (0-based index)
 
-            bool enable = false; // Initialize to a default value
+            bool enable; // Initialize to a default value
             if (is1Skew == true || isAdjust == true || isMirror == true)
             {
                 enable = true;

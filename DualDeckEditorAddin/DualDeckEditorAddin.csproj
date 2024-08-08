@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
 		<OutputType>Library</OutputType>
-		<Configurations>Debug 2023;Release 2023;2021;2022</Configurations>
+		<Configurations>R 2021;R 2022;R 2023;R 2024;D 2021;D 2022;D 2023;D 2024</Configurations>
 	</PropertyGroup>
 	
 	<!--Revit version and framework-->
@@ -28,6 +28,13 @@
 				<TargetFramework>net48</TargetFramework>
 			</PropertyGroup>
 		</When>
+
+		<When Condition="$(Configuration.Contains('2024'))">
+			<PropertyGroup>
+				<RevitVersion>2024</RevitVersion>
+				<TargetFramework>net48</TargetFramework>
+			</PropertyGroup>
+		</When>
 	</Choose>
 	
 	
@@ -42,7 +49,7 @@
 	</PropertyGroup>
 
 	<!--Debug-->
-	<PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+	<PropertyGroup Condition="$(Configuration.Contains('D'))">
 		<DebugSymbols>true</DebugSymbols>
 		<OutputPath>bin\x64\Debug\$(RevitVersion)\</OutputPath>
 		<DefineConstants>DEBUG;TRACE;REVIT$(RevitVersion)</DefineConstants>
@@ -54,7 +61,7 @@
 	</PropertyGroup>
 
 	<!--Release-->
-	<PropertyGroup Condition="!$(Configuration.Contains('Debug'))">
+	<PropertyGroup Condition="$(Configuration.Contains('R'))">
 		<OutputPath>bin\x64\Release\$(RevitVersion)\</OutputPath>
 		<DefineConstants>TRACE;REVIT$(RevitVersion)</DefineConstants>
 		<Optimize>true</Optimize>
@@ -132,7 +139,7 @@
 	
 	
 	<ItemGroup>
-	  <PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RevitVersion).*" IncludeAssets="build; compile" PrivateAssets="All"/>
+	  <PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RevitVersion).*" IncludeAssets="build; compile" PrivateAssets="All" />
 	</ItemGroup>
 
 
