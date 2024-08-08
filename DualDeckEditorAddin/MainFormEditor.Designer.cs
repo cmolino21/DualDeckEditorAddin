@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormEditor));
             this.comboBoxFamilyType = new System.Windows.Forms.ComboBox();
             this.labelSelect = new System.Windows.Forms.Label();
             this.btnSelectDeck = new System.Windows.Forms.Button();
@@ -138,7 +139,6 @@
             this.groupBoxStrand = new System.Windows.Forms.GroupBox();
             this.labelTotBot = new System.Windows.Forms.Label();
             this.labelTotTop = new System.Windows.Forms.Label();
-            this.label51 = new System.Windows.Forms.Label();
             this.checkBoxBotOn = new System.Windows.Forms.CheckBox();
             this.checkBoxTopOn = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanelStrand = new System.Windows.Forms.TableLayoutPanel();
@@ -217,6 +217,12 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
             this.panelSelect = new System.Windows.Forms.Panel();
+            this.labelStrandRulesTitle = new System.Windows.Forms.Label();
+            this.labelStrandRules = new System.Windows.Forms.Label();
+            this.labelTrussRulesTitle = new System.Windows.Forms.Label();
+            this.labelTrussRules = new System.Windows.Forms.Label();
+            this.labelTrussRulesTitle2 = new System.Windows.Forms.Label();
+            this.labelTrussRules2 = new System.Windows.Forms.Label();
             this.groupBoxDimensions.SuspendLayout();
             this.tableLayoutPanelDimensions.SuspendLayout();
             this.groupBoxTruss.SuspendLayout();
@@ -267,7 +273,7 @@
             this.groupBoxDimensions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxDimensions.Location = new System.Drawing.Point(15, 7);
             this.groupBoxDimensions.Name = "groupBoxDimensions";
-            this.groupBoxDimensions.Size = new System.Drawing.Size(463, 160);
+            this.groupBoxDimensions.Size = new System.Drawing.Size(488, 138);
             this.groupBoxDimensions.TabIndex = 3;
             this.groupBoxDimensions.TabStop = false;
             this.groupBoxDimensions.Text = "Dimensions:";
@@ -284,25 +290,25 @@
             this.tableLayoutPanelDimensions.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanelDimensions.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanelDimensions.Controls.Add(this.label4, 0, 3);
-            this.tableLayoutPanelDimensions.Controls.Add(this.label5, 0, 4);
             this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_Depth, 1, 0);
             this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_Length, 1, 1);
             this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_Width, 1, 2);
             this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_BotJoint, 1, 3);
-            this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_LedgeJoint, 1, 4);
-            this.tableLayoutPanelDimensions.Controls.Add(this.labelSkewOME, 3, 0);
-            this.tableLayoutPanelDimensions.Controls.Add(this.textBoxSkewOME, 4, 0);
-            this.tableLayoutPanelDimensions.Controls.Add(this.labelSkewME, 3, 1);
-            this.tableLayoutPanelDimensions.Controls.Add(this.textBoxSkewME, 4, 1);
+            this.tableLayoutPanelDimensions.Controls.Add(this.labelSkewME, 3, 2);
+            this.tableLayoutPanelDimensions.Controls.Add(this.textBoxSkewME, 4, 2);
+            this.tableLayoutPanelDimensions.Controls.Add(this.textBoxSkewOME, 4, 1);
+            this.tableLayoutPanelDimensions.Controls.Add(this.labelSkewOME, 3, 1);
+            this.tableLayoutPanelDimensions.Controls.Add(this.textBoxDD_LedgeJoint, 4, 0);
+            this.tableLayoutPanelDimensions.Controls.Add(this.label5, 3, 0);
             this.tableLayoutPanelDimensions.Location = new System.Drawing.Point(6, 18);
             this.tableLayoutPanelDimensions.Name = "tableLayoutPanelDimensions";
-            this.tableLayoutPanelDimensions.RowCount = 5;
+            this.tableLayoutPanelDimensions.RowCount = 4;
             this.tableLayoutPanelDimensions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanelDimensions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanelDimensions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanelDimensions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanelDimensions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanelDimensions.Size = new System.Drawing.Size(435, 135);
+            this.tableLayoutPanelDimensions.Size = new System.Drawing.Size(435, 108);
             this.tableLayoutPanelDimensions.TabIndex = 0;
             // 
             // label1
@@ -349,7 +355,7 @@
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 115);
+            this.label5.Location = new System.Drawing.Point(233, 7);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 13);
             this.label5.TabIndex = 8;
@@ -390,7 +396,7 @@
             // textBoxDD_LedgeJoint
             // 
             this.textBoxDD_LedgeJoint.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBoxDD_LedgeJoint.Location = new System.Drawing.Point(108, 111);
+            this.textBoxDD_LedgeJoint.Location = new System.Drawing.Point(343, 3);
             this.textBoxDD_LedgeJoint.Name = "textBoxDD_LedgeJoint";
             this.textBoxDD_LedgeJoint.Size = new System.Drawing.Size(89, 20);
             this.textBoxDD_LedgeJoint.TabIndex = 67;
@@ -399,7 +405,7 @@
             // 
             this.labelSkewOME.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelSkewOME.AutoSize = true;
-            this.labelSkewOME.Location = new System.Drawing.Point(233, 7);
+            this.labelSkewOME.Location = new System.Drawing.Point(233, 34);
             this.labelSkewOME.Name = "labelSkewOME";
             this.labelSkewOME.Size = new System.Drawing.Size(97, 13);
             this.labelSkewOME.TabIndex = 70;
@@ -409,7 +415,7 @@
             // textBoxSkewOME
             // 
             this.textBoxSkewOME.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBoxSkewOME.Location = new System.Drawing.Point(343, 3);
+            this.textBoxSkewOME.Location = new System.Drawing.Point(343, 30);
             this.textBoxSkewOME.Name = "textBoxSkewOME";
             this.textBoxSkewOME.Size = new System.Drawing.Size(89, 20);
             this.textBoxSkewOME.TabIndex = 71;
@@ -419,7 +425,7 @@
             // 
             this.labelSkewME.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelSkewME.AutoSize = true;
-            this.labelSkewME.Location = new System.Drawing.Point(233, 34);
+            this.labelSkewME.Location = new System.Drawing.Point(233, 61);
             this.labelSkewME.Name = "labelSkewME";
             this.labelSkewME.Size = new System.Drawing.Size(89, 13);
             this.labelSkewME.TabIndex = 68;
@@ -429,7 +435,7 @@
             // textBoxSkewME
             // 
             this.textBoxSkewME.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBoxSkewME.Location = new System.Drawing.Point(343, 30);
+            this.textBoxSkewME.Location = new System.Drawing.Point(343, 57);
             this.textBoxSkewME.Name = "textBoxSkewME";
             this.textBoxSkewME.Size = new System.Drawing.Size(89, 20);
             this.textBoxSkewME.TabIndex = 69;
@@ -442,9 +448,9 @@
             this.groupBoxTruss.Controls.Add(this.checkBoxAsymOME);
             this.groupBoxTruss.Controls.Add(this.checkBoxTrussOffset);
             this.groupBoxTruss.Controls.Add(this.tableLayoutPanelTruss);
-            this.groupBoxTruss.Location = new System.Drawing.Point(15, 174);
+            this.groupBoxTruss.Location = new System.Drawing.Point(15, 149);
             this.groupBoxTruss.Name = "groupBoxTruss";
-            this.groupBoxTruss.Size = new System.Drawing.Size(463, 399);
+            this.groupBoxTruss.Size = new System.Drawing.Size(488, 413);
             this.groupBoxTruss.TabIndex = 4;
             this.groupBoxTruss.TabStop = false;
             this.groupBoxTruss.Text = "Truss Controls:";
@@ -452,7 +458,7 @@
             // checkBoxAsymOME
             // 
             this.checkBoxAsymOME.AutoSize = true;
-            this.checkBoxAsymOME.Location = new System.Drawing.Point(93, 20);
+            this.checkBoxAsymOME.Location = new System.Drawing.Point(102, 20);
             this.checkBoxAsymOME.Name = "checkBoxAsymOME";
             this.checkBoxAsymOME.Size = new System.Drawing.Size(111, 17);
             this.checkBoxAsymOME.TabIndex = 2;
@@ -463,7 +469,7 @@
             // checkBoxTrussOffset
             // 
             this.checkBoxTrussOffset.AutoSize = true;
-            this.checkBoxTrussOffset.Location = new System.Drawing.Point(12, 20);
+            this.checkBoxTrussOffset.Location = new System.Drawing.Point(21, 20);
             this.checkBoxTrussOffset.Name = "checkBoxTrussOffset";
             this.checkBoxTrussOffset.Size = new System.Drawing.Size(77, 17);
             this.checkBoxTrussOffset.TabIndex = 1;
@@ -1446,23 +1452,29 @@
             // 
             this.groupBoxStrand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxStrand.Controls.Add(this.labelTrussRules2);
+            this.groupBoxStrand.Controls.Add(this.labelTrussRulesTitle2);
+            this.groupBoxStrand.Controls.Add(this.labelTrussRules);
+            this.groupBoxStrand.Controls.Add(this.labelTrussRulesTitle);
+            this.groupBoxStrand.Controls.Add(this.labelStrandRules);
+            this.groupBoxStrand.Controls.Add(this.labelStrandRulesTitle);
             this.groupBoxStrand.Controls.Add(this.labelTotBot);
             this.groupBoxStrand.Controls.Add(this.labelTotTop);
-            this.groupBoxStrand.Controls.Add(this.label51);
             this.groupBoxStrand.Controls.Add(this.checkBoxBotOn);
             this.groupBoxStrand.Controls.Add(this.checkBoxTopOn);
             this.groupBoxStrand.Controls.Add(this.tableLayoutPanelStrand);
-            this.groupBoxStrand.Location = new System.Drawing.Point(15, 580);
+            this.groupBoxStrand.Location = new System.Drawing.Point(15, 566);
             this.groupBoxStrand.Name = "groupBoxStrand";
-            this.groupBoxStrand.Size = new System.Drawing.Size(463, 514);
+            this.groupBoxStrand.Size = new System.Drawing.Size(488, 531);
             this.groupBoxStrand.TabIndex = 5;
             this.groupBoxStrand.TabStop = false;
             this.groupBoxStrand.Text = "Strand Controls:";
+            this.groupBoxStrand.Enter += new System.EventHandler(this.groupBoxStrand_Enter);
             // 
             // labelTotBot
             // 
             this.labelTotBot.AutoSize = true;
-            this.labelTotBot.Location = new System.Drawing.Point(198, 83);
+            this.labelTotBot.Location = new System.Drawing.Point(192, 41);
             this.labelTotBot.Name = "labelTotBot";
             this.labelTotBot.Size = new System.Drawing.Size(53, 13);
             this.labelTotBot.TabIndex = 94;
@@ -1471,40 +1483,30 @@
             // labelTotTop
             // 
             this.labelTotTop.AutoSize = true;
-            this.labelTotTop.Location = new System.Drawing.Point(198, 66);
+            this.labelTotTop.Location = new System.Drawing.Point(192, 20);
             this.labelTotTop.Name = "labelTotTop";
             this.labelTotTop.Size = new System.Drawing.Size(56, 13);
             this.labelTotTop.TabIndex = 93;
             this.labelTotTop.Text = "Total Top:";
             // 
-            // label51
-            // 
-            this.label51.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(13, 487);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(138, 13);
-            this.label51.TabIndex = 92;
-            this.label51.Text = "------Mirror Across Center------";
-            // 
             // checkBoxBotOn
             // 
             this.checkBoxBotOn.AutoSize = true;
-            this.checkBoxBotOn.Location = new System.Drawing.Point(201, 46);
+            this.checkBoxBotOn.Location = new System.Drawing.Point(11, 40);
             this.checkBoxBotOn.Name = "checkBoxBotOn";
-            this.checkBoxBotOn.Size = new System.Drawing.Size(129, 17);
+            this.checkBoxBotOn.Size = new System.Drawing.Size(110, 17);
             this.checkBoxBotOn.TabIndex = 4;
-            this.checkBoxBotOn.Text = "Bottom Strand On/Off";
+            this.checkBoxBotOn.Text = "Bottom Strand On";
             this.checkBoxBotOn.UseVisualStyleBackColor = true;
             // 
             // checkBoxTopOn
             // 
             this.checkBoxTopOn.AutoSize = true;
-            this.checkBoxTopOn.Location = new System.Drawing.Point(201, 23);
+            this.checkBoxTopOn.Location = new System.Drawing.Point(11, 19);
             this.checkBoxTopOn.Name = "checkBoxTopOn";
-            this.checkBoxTopOn.Size = new System.Drawing.Size(115, 17);
+            this.checkBoxTopOn.Size = new System.Drawing.Size(96, 17);
             this.checkBoxTopOn.TabIndex = 3;
-            this.checkBoxTopOn.Text = "Top Strand On/Off";
+            this.checkBoxTopOn.Text = "Top Strand On";
             this.checkBoxTopOn.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanelStrand
@@ -1583,7 +1585,7 @@
             this.tableLayoutPanelStrand.Controls.Add(this.checkBoxBot_19, 2, 21);
             this.tableLayoutPanelStrand.Controls.Add(this.checkBoxTop_20, 1, 22);
             this.tableLayoutPanelStrand.Controls.Add(this.label50, 0, 23);
-            this.tableLayoutPanelStrand.Location = new System.Drawing.Point(6, 20);
+            this.tableLayoutPanelStrand.Location = new System.Drawing.Point(6, 62);
             this.tableLayoutPanelStrand.Name = "tableLayoutPanelStrand";
             this.tableLayoutPanelStrand.RowCount = 24;
             this.tableLayoutPanelStrand.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -2371,6 +2373,61 @@
             this.panelSelect.Size = new System.Drawing.Size(512, 36);
             this.panelSelect.TabIndex = 4;
             // 
+            // labelStrandRulesTitle
+            // 
+            this.labelStrandRulesTitle.AutoSize = true;
+            this.labelStrandRulesTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelStrandRulesTitle.Location = new System.Drawing.Point(192, 65);
+            this.labelStrandRulesTitle.Name = "labelStrandRulesTitle";
+            this.labelStrandRulesTitle.Size = new System.Drawing.Size(107, 13);
+            this.labelStrandRulesTitle.TabIndex = 95;
+            this.labelStrandRulesTitle.Text = "Strand Guidelines";
+            // 
+            // labelStrandRules
+            // 
+            this.labelStrandRules.Location = new System.Drawing.Point(192, 85);
+            this.labelStrandRules.Name = "labelStrandRules";
+            this.labelStrandRules.Size = new System.Drawing.Size(274, 203);
+            this.labelStrandRules.TabIndex = 96;
+            this.labelStrandRules.Text = resources.GetString("labelStrandRules.Text");
+            // 
+            // labelTrussRulesTitle
+            // 
+            this.labelTrussRulesTitle.AutoSize = true;
+            this.labelTrussRulesTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTrussRulesTitle.Location = new System.Drawing.Point(192, 294);
+            this.labelTrussRulesTitle.Name = "labelTrussRulesTitle";
+            this.labelTrussRulesTitle.Size = new System.Drawing.Size(182, 13);
+            this.labelTrussRulesTitle.TabIndex = 97;
+            this.labelTrussRulesTitle.Text = "Truss Guidelines - Longitudinal";
+            // 
+            // labelTrussRules
+            // 
+            this.labelTrussRules.Location = new System.Drawing.Point(192, 314);
+            this.labelTrussRules.Name = "labelTrussRules";
+            this.labelTrussRules.Size = new System.Drawing.Size(274, 61);
+            this.labelTrussRules.TabIndex = 98;
+            this.labelTrussRules.Text = "- Center gap should be between 2\'-0\" and 4\'-6\"\r\n\r\n- At any transition, no more th" +
+    "an 2 truss lines should end";
+            // 
+            // labelTrussRulesTitle2
+            // 
+            this.labelTrussRulesTitle2.AutoSize = true;
+            this.labelTrussRulesTitle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTrussRulesTitle2.Location = new System.Drawing.Point(192, 386);
+            this.labelTrussRulesTitle2.Name = "labelTrussRulesTitle2";
+            this.labelTrussRulesTitle2.Size = new System.Drawing.Size(176, 13);
+            this.labelTrussRulesTitle2.TabIndex = 99;
+            this.labelTrussRulesTitle2.Text = "Truss Guidelines - Transverse";
+            // 
+            // labelTrussRules2
+            // 
+            this.labelTrussRules2.Location = new System.Drawing.Point(192, 406);
+            this.labelTrussRules2.Name = "labelTrussRules2";
+            this.labelTrussRules2.Size = new System.Drawing.Size(274, 112);
+            this.labelTrussRules2.TabIndex = 100;
+            this.labelTrussRules2.Text = resources.GetString("labelTrussRules2.Text");
+            // 
             // MainFormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2585,7 +2642,6 @@
         private System.Windows.Forms.CheckBox checkBoxBotOn;
         private System.Windows.Forms.CheckBox checkBoxTopOn;
         private System.Windows.Forms.Label label50;
-        private System.Windows.Forms.Label label51;
         private System.Windows.Forms.CheckBox checkBoxAsymOME;
         private System.Windows.Forms.Label labelSkewME;
         private System.Windows.Forms.TextBox textBoxSkewME;
@@ -2593,6 +2649,12 @@
         private System.Windows.Forms.TextBox textBoxSkewOME;
         private System.Windows.Forms.Label labelTotBot;
         private System.Windows.Forms.Label labelTotTop;
+        private System.Windows.Forms.Label labelStrandRules;
+        private System.Windows.Forms.Label labelStrandRulesTitle;
+        private System.Windows.Forms.Label labelTrussRules;
+        private System.Windows.Forms.Label labelTrussRulesTitle;
+        private System.Windows.Forms.Label labelTrussRules2;
+        private System.Windows.Forms.Label labelTrussRulesTitle2;
     }
 }
 

@@ -117,26 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="labelTrussRules2.Text" xml:space="preserve">
-    <value>- Roof decks must be all full length trusses unless there is no rooftop equipment
-
-- Need 3/4" clear from any blockout to truss (Unless it is a shaft, then 3" is req'd)
-
--Min. edge distance from deck to first truss is 5" O.C.</value>
-  </data>
-  <data name="labelStrandRules.Text" xml:space="preserve">
-    <value>- No more than 7 strand in 2'-6"
-
-- No more than 6 strand in 1'-10"
-
-- No more than 3 strand in 0'-7"
-
-- Strand minimum of 2" O.C.
-
-- First strand needs to be between 3" and 2'-0" from edge
-
-- Strand must be 2" O.C. from a truss line
-
--Forms are 400' so strand patterns should target ~380' pours</value>
-  </data>
 </root>

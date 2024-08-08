@@ -1383,7 +1383,9 @@ namespace DualDeckEditorAddin
             }
         }
 
-       
+        private void groupBoxStrand_Enter(object sender, EventArgs e)
+        {
 
+        }
     }
 }

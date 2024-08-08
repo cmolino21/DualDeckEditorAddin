@@ -111,6 +111,11 @@
 	<!--Inlcuded Files-->
 	<ItemGroup>
 		<Compile Include="EditParameters.cs" />
+		<Compile Include="Properties\Resources.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
 		<Compile Include="Utility Classes\UIMapping.cs" />
 		<Compile Include="DualDeckEditorCommand.cs" />
 		<Compile Include="MainFormEditor.cs">
@@ -119,9 +124,14 @@
 		<Compile Include="MainFormEditor.Designer.cs">
 			<DependentUpon>MainFormEditor.cs</DependentUpon>
 		</Compile>
+		<Content Include="Images\QuestionMarkToolTip.png" />
 		<EmbeddedResource Include="MainFormEditor.resx">
 			<DependentUpon>MainFormEditor.cs</DependentUpon>
 			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Properties\Resources.resx">
+		  <Generator>ResXFileCodeGenerator</Generator>
+		  <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 	</ItemGroup>
 
