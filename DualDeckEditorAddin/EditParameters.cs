@@ -14,16 +14,14 @@ namespace DualDeckEditorAddin
     {
         private Document _doc;
         private FamilySymbol familySymbol;
-        private FamilyType currentFamilyType;
         private Dictionary<string, string> changesTracker;
         private MainFormEditor _mainForm;
 
-        public void Setup(Document _doc, FamilySymbol familySymbol, FamilyType familyType , Dictionary<string, string> tracker, MainFormEditor mainForm)
+        public void Setup(Document _doc, FamilySymbol familySymbol, Dictionary<string, string> tracker, MainFormEditor mainForm, bool AsymOME)
         {
             this._doc = _doc;
             this.familySymbol = familySymbol;
             this.changesTracker = new Dictionary<string, string>(tracker);
-            this.currentFamilyType = familyType; // Setup with current family type
             _mainForm = mainForm;
         }
 

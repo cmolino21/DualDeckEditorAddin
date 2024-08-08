@@ -356,6 +356,7 @@ namespace DualDeckEditorAddin
                     UpdateMirrorTrussEnabledStatus();
                     UpdateTruss6EnabledStatus();
                     UpdateStrandCounts();
+                    this.BringToFront();
                 }
                 else
                 {
@@ -1042,11 +1043,18 @@ namespace DualDeckEditorAddin
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            bool AsymOME = false;
+
+            if (checkBoxAsymOME.Checked == true)
+            {
+                AsymOME = true;
+            }
+            
             Debug.Print("Changes to save: " + changesTracker.Count);
             if (changesTracker.Count > 0)
             {
                 // Update the handler with current documents and parameters
-                handler.Setup(_doc, familySymbol, activeFamilyType, changesTracker, this);
+                handler.Setup(_doc, familySymbol, changesTracker, this, AsymOME);
                 Debug.Print("Handing off to exEvent: Edit parameters");
                 exEvent.Raise();
             }

@@ -284,7 +284,7 @@
             this.tableLayoutPanelDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
             this.tableLayoutPanelDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
             this.tableLayoutPanelDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanelDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
+            this.tableLayoutPanelDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanelDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
             this.tableLayoutPanelDimensions.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanelDimensions.Controls.Add(this.label2, 0, 1);
@@ -303,7 +303,6 @@
             this.tableLayoutPanelDimensions.Location = new System.Drawing.Point(6, 18);
             this.tableLayoutPanelDimensions.Name = "tableLayoutPanelDimensions";
             this.tableLayoutPanelDimensions.RowCount = 4;
-            this.tableLayoutPanelDimensions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanelDimensions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanelDimensions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanelDimensions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
@@ -396,7 +395,7 @@
             // textBoxDD_LedgeJoint
             // 
             this.textBoxDD_LedgeJoint.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBoxDD_LedgeJoint.Location = new System.Drawing.Point(343, 3);
+            this.textBoxDD_LedgeJoint.Location = new System.Drawing.Point(339, 3);
             this.textBoxDD_LedgeJoint.Name = "textBoxDD_LedgeJoint";
             this.textBoxDD_LedgeJoint.Size = new System.Drawing.Size(89, 20);
             this.textBoxDD_LedgeJoint.TabIndex = 67;
@@ -415,7 +414,7 @@
             // textBoxSkewOME
             // 
             this.textBoxSkewOME.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBoxSkewOME.Location = new System.Drawing.Point(343, 30);
+            this.textBoxSkewOME.Location = new System.Drawing.Point(339, 30);
             this.textBoxSkewOME.Name = "textBoxSkewOME";
             this.textBoxSkewOME.Size = new System.Drawing.Size(89, 20);
             this.textBoxSkewOME.TabIndex = 71;
@@ -435,7 +434,7 @@
             // textBoxSkewME
             // 
             this.textBoxSkewME.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBoxSkewME.Location = new System.Drawing.Point(343, 57);
+            this.textBoxSkewME.Location = new System.Drawing.Point(339, 57);
             this.textBoxSkewME.Name = "textBoxSkewME";
             this.textBoxSkewME.Size = new System.Drawing.Size(89, 20);
             this.textBoxSkewME.TabIndex = 69;
@@ -1476,18 +1475,18 @@
             this.labelTotBot.AutoSize = true;
             this.labelTotBot.Location = new System.Drawing.Point(192, 41);
             this.labelTotBot.Name = "labelTotBot";
-            this.labelTotBot.Size = new System.Drawing.Size(53, 13);
+            this.labelTotBot.Size = new System.Drawing.Size(76, 13);
             this.labelTotBot.TabIndex = 94;
-            this.labelTotBot.Text = "Total Bot:";
+            this.labelTotBot.Text = "Total Bot: N/A";
             // 
             // labelTotTop
             // 
             this.labelTotTop.AutoSize = true;
             this.labelTotTop.Location = new System.Drawing.Point(192, 20);
             this.labelTotTop.Name = "labelTotTop";
-            this.labelTotTop.Size = new System.Drawing.Size(56, 13);
+            this.labelTotTop.Size = new System.Drawing.Size(79, 13);
             this.labelTotTop.TabIndex = 93;
-            this.labelTotTop.Text = "Total Top:";
+            this.labelTotTop.Text = "Total Top: N/A";
             // 
             // checkBoxBotOn
             // 
