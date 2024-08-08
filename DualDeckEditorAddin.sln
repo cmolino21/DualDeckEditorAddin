@@ -3,24 +3,36 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DualDeckEditorAddin", "DualDeckEditorAddin\DualDeckEditorAddin.csproj", "{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DualDeckEditorAddin", "DualDeckEditorAddin\DualDeckEditorAddin.csproj", "{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Debug|x64 = Debug|x64
-		Release|Any CPU = Release|Any CPU
-		Release|x64 = Release|x64
+		2021|Any CPU = 2021|Any CPU
+		2021|x64 = 2021|x64
+		2022|Any CPU = 2022|Any CPU
+		2022|x64 = 2022|x64
+		2023|Any CPU = 2023|Any CPU
+		2023|x64 = 2023|x64
+		Debug 2023|Any CPU = Debug 2023|Any CPU
+		Debug 2023|x64 = Debug 2023|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.Debug|Any CPU.Build.0 = Debug|x64
-		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.Debug|x64.ActiveCfg = Debug|x64
-		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.Debug|x64.Build.0 = Debug|x64
-		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.Release|x64.ActiveCfg = Release|x64
-		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.Release|x64.Build.0 = Release|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.2021|Any CPU.ActiveCfg = 2021|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.2021|Any CPU.Build.0 = 2021|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.2021|x64.ActiveCfg = 2021|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.2021|x64.Build.0 = 2021|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.2022|Any CPU.ActiveCfg = 2022|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.2022|Any CPU.Build.0 = 2022|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.2022|x64.ActiveCfg = 2022|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.2022|x64.Build.0 = 2022|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.2023|Any CPU.ActiveCfg = Release 2023|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.2023|Any CPU.Build.0 = Release 2023|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.2023|x64.ActiveCfg = Release 2023|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.2023|x64.Build.0 = Release 2023|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.Debug 2023|Any CPU.ActiveCfg = Debug 2023|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.Debug 2023|Any CPU.Build.0 = Debug 2023|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.Debug 2023|x64.ActiveCfg = Debug 2023|x64
+		{B4910B52-146D-4FB3-BE0F-824CE0DE5E67}.Debug 2023|x64.Build.0 = Debug 2023|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
