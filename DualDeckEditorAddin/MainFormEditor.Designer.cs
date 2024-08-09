@@ -2436,6 +2436,7 @@
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelSelect);
             this.Controls.Add(this.panelBottom);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(528, 39);
             this.Name = "MainFormEditor";
             this.Text = "DualDeck Editor Tool";
