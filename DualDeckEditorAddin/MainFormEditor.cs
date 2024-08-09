@@ -303,7 +303,7 @@ namespace DualDeckEditorAddin
                     is1Skew = true;
                     checkBoxTrussOffset.Enabled = true;
                     checkBoxAsymOME.Visible = false;
-                    checkBoxAsymOME.Checked = true;
+                    checkBoxAsymOME.Checked = false;
                     labelSkewME.Visible = false;
                     labelSkewOME.Visible = true;
                     textBoxSkewME.Visible = false;
@@ -1045,7 +1045,7 @@ namespace DualDeckEditorAddin
         {
             bool AsymOME = false;
 
-            if (checkBoxAsymOME.Checked == true)
+            if (!checkBoxAsymOME.Checked)
             {
                 AsymOME = true;
             }
@@ -1054,7 +1054,7 @@ namespace DualDeckEditorAddin
             if (changesTracker.Count > 0)
             {
                 // Update the handler with current documents and parameters
-                handler.Setup(_doc, familySymbol, changesTracker, this, AsymOME);
+                handler.Setup(_doc, familySymbol, changesTracker, this, AsymOME, is2Skew);
                 Debug.Print("Handing off to exEvent: Edit parameters");
                 exEvent.Raise();
             }
@@ -1270,7 +1270,7 @@ namespace DualDeckEditorAddin
             }
             else
             {
-                enable = checkBoxAsymOME.Checked;
+                enable = !checkBoxAsymOME.Checked;
             }
 
             List<string> keysToEnable = GetKeysToEnable(textBoxMappingsPositions, null, null, null);

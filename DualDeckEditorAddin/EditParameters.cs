@@ -16,17 +16,23 @@ namespace DualDeckEditorAddin
         private FamilySymbol familySymbol;
         private Dictionary<string, string> changesTracker;
         private MainFormEditor _mainForm;
+        private bool AsymOME;
+        private bool is2Skew;
 
-        public void Setup(Document _doc, FamilySymbol familySymbol, Dictionary<string, string> tracker, MainFormEditor mainForm, bool AsymOME)
+        public void Setup(Document _doc, FamilySymbol familySymbol, Dictionary<string, string> tracker, MainFormEditor mainForm, bool AsymOME, bool is2Skew)
         {
             this._doc = _doc;
             this.familySymbol = familySymbol;
             this.changesTracker = new Dictionary<string, string>(tracker);
             _mainForm = mainForm;
+            this.AsymOME = AsymOME;
+            this.is2Skew = is2Skew;
+
         }
 
         public void Execute(UIApplication app)
         {
+            MessageBox.Show("AsymOME = " + AsymOME + "is 2skew = " + is2Skew);
             Debug.Print("Executing update with changes count: " + changesTracker.Count); // Check if this shows and has count > 0
             using (Transaction tx = new Transaction(_doc, "Update Parameters"))
             {
@@ -68,6 +74,42 @@ namespace DualDeckEditorAddin
                                 int checkboxValue = newCheckValue == "1" ? 1 : 0;
                                 Debug.Print("Changing " + checkBoxEntry.Value.ToString() + " to " + checkboxValue);
                                 parameter.Set(checkboxValue);
+                            }
+                        }
+                    }
+
+                    if (AsymOME == true && is2Skew == false)
+                    {
+                        foreach (var checkBoxEntry in ControlMappings.AsymOMECheckBoxMappingsSkew)
+                        {
+                            CheckBox checkBox = _mainForm.Controls.Find(checkBoxEntry.Key, true).FirstOrDefault() as CheckBox;
+                            if (checkBox != null)
+                            {
+                                Parameter parameter = familySymbol.LookupParameter(checkBoxEntry.Value);
+                                if (parameter != null)
+                                {
+                                    int checkboxValue = checkBox.Checked ? 1 : 0;
+                                    Debug.Print("Changing " + checkBoxEntry.Value.ToString() + " to " + checkboxValue);
+                                    parameter.Set(checkboxValue);
+                                }
+                            }
+                        }
+                    }
+
+                    else if (AsymOME == true && is2Skew == true)
+                    {
+                        foreach (var checkBoxEntry in ControlMappings.AsymOMECheckBoxMappings2Skew)
+                        {
+                            CheckBox checkBox = _mainForm.Controls.Find(checkBoxEntry.Key, true).FirstOrDefault() as CheckBox;
+                            if (checkBox != null)
+                            {
+                                Parameter parameter = familySymbol.LookupParameter(checkBoxEntry.Value);
+                                if (parameter != null)
+                                {
+                                    int checkboxValue = checkBox.Checked ? 1 : 0;
+                                    Debug.Print("Changing " + checkBoxEntry.Value.ToString() + " to " + checkboxValue);
+                                    parameter.Set(checkboxValue);
+                                }
                             }
                         }
                     }

@@ -38,16 +38,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.textBoxDD_Depth = new System.Windows.Forms.TextBox();
             this.textBoxDD_Length = new System.Windows.Forms.TextBox();
             this.textBoxDD_Width = new System.Windows.Forms.TextBox();
             this.textBoxDD_BotJoint = new System.Windows.Forms.TextBox();
-            this.textBoxDD_LedgeJoint = new System.Windows.Forms.TextBox();
-            this.labelSkewOME = new System.Windows.Forms.Label();
-            this.textBoxSkewOME = new System.Windows.Forms.TextBox();
             this.labelSkewME = new System.Windows.Forms.Label();
             this.textBoxSkewME = new System.Windows.Forms.TextBox();
+            this.textBoxSkewOME = new System.Windows.Forms.TextBox();
+            this.labelSkewOME = new System.Windows.Forms.Label();
+            this.textBoxDD_LedgeJoint = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBoxTruss = new System.Windows.Forms.GroupBox();
             this.checkBoxAsymOME = new System.Windows.Forms.CheckBox();
             this.checkBoxTrussOffset = new System.Windows.Forms.CheckBox();
@@ -137,6 +137,12 @@
             this.checkBox_2In_B = new System.Windows.Forms.CheckBox();
             this.textBoxShort_A = new System.Windows.Forms.TextBox();
             this.groupBoxStrand = new System.Windows.Forms.GroupBox();
+            this.labelTrussRules2 = new System.Windows.Forms.Label();
+            this.labelTrussRulesTitle2 = new System.Windows.Forms.Label();
+            this.labelTrussRules = new System.Windows.Forms.Label();
+            this.labelTrussRulesTitle = new System.Windows.Forms.Label();
+            this.labelStrandRules = new System.Windows.Forms.Label();
+            this.labelStrandRulesTitle = new System.Windows.Forms.Label();
             this.labelTotBot = new System.Windows.Forms.Label();
             this.labelTotTop = new System.Windows.Forms.Label();
             this.checkBoxBotOn = new System.Windows.Forms.CheckBox();
@@ -217,12 +223,6 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
             this.panelSelect = new System.Windows.Forms.Panel();
-            this.labelStrandRulesTitle = new System.Windows.Forms.Label();
-            this.labelStrandRules = new System.Windows.Forms.Label();
-            this.labelTrussRulesTitle = new System.Windows.Forms.Label();
-            this.labelTrussRules = new System.Windows.Forms.Label();
-            this.labelTrussRulesTitle2 = new System.Windows.Forms.Label();
-            this.labelTrussRules2 = new System.Windows.Forms.Label();
             this.groupBoxDimensions.SuspendLayout();
             this.tableLayoutPanelDimensions.SuspendLayout();
             this.groupBoxTruss.SuspendLayout();
@@ -285,7 +285,7 @@
             this.tableLayoutPanelDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
             this.tableLayoutPanelDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
+            this.tableLayoutPanelDimensions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
             this.tableLayoutPanelDimensions.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanelDimensions.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanelDimensions.Controls.Add(this.label3, 0, 2);
@@ -350,16 +350,6 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "Bottom Joint Size";
             // 
-            // label5
-            // 
-            this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(233, 7);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 13);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Ledge+Joint";
-            // 
             // textBoxDD_Depth
             // 
             this.textBoxDD_Depth.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -392,34 +382,6 @@
             this.textBoxDD_BotJoint.Size = new System.Drawing.Size(89, 20);
             this.textBoxDD_BotJoint.TabIndex = 66;
             // 
-            // textBoxDD_LedgeJoint
-            // 
-            this.textBoxDD_LedgeJoint.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBoxDD_LedgeJoint.Location = new System.Drawing.Point(339, 3);
-            this.textBoxDD_LedgeJoint.Name = "textBoxDD_LedgeJoint";
-            this.textBoxDD_LedgeJoint.Size = new System.Drawing.Size(89, 20);
-            this.textBoxDD_LedgeJoint.TabIndex = 67;
-            // 
-            // labelSkewOME
-            // 
-            this.labelSkewOME.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelSkewOME.AutoSize = true;
-            this.labelSkewOME.Location = new System.Drawing.Point(233, 34);
-            this.labelSkewOME.Name = "labelSkewOME";
-            this.labelSkewOME.Size = new System.Drawing.Size(97, 13);
-            this.labelSkewOME.TabIndex = 70;
-            this.labelSkewOME.Text = "Skew Angle (OME)";
-            this.labelSkewOME.Visible = false;
-            // 
-            // textBoxSkewOME
-            // 
-            this.textBoxSkewOME.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBoxSkewOME.Location = new System.Drawing.Point(339, 30);
-            this.textBoxSkewOME.Name = "textBoxSkewOME";
-            this.textBoxSkewOME.Size = new System.Drawing.Size(89, 20);
-            this.textBoxSkewOME.TabIndex = 71;
-            this.textBoxSkewOME.Visible = false;
-            // 
             // labelSkewME
             // 
             this.labelSkewME.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -440,6 +402,44 @@
             this.textBoxSkewME.TabIndex = 69;
             this.textBoxSkewME.Visible = false;
             // 
+            // textBoxSkewOME
+            // 
+            this.textBoxSkewOME.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxSkewOME.Location = new System.Drawing.Point(339, 30);
+            this.textBoxSkewOME.Name = "textBoxSkewOME";
+            this.textBoxSkewOME.Size = new System.Drawing.Size(89, 20);
+            this.textBoxSkewOME.TabIndex = 71;
+            this.textBoxSkewOME.Visible = false;
+            // 
+            // labelSkewOME
+            // 
+            this.labelSkewOME.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelSkewOME.AutoSize = true;
+            this.labelSkewOME.Location = new System.Drawing.Point(233, 34);
+            this.labelSkewOME.Name = "labelSkewOME";
+            this.labelSkewOME.Size = new System.Drawing.Size(97, 13);
+            this.labelSkewOME.TabIndex = 70;
+            this.labelSkewOME.Text = "Skew Angle (OME)";
+            this.labelSkewOME.Visible = false;
+            // 
+            // textBoxDD_LedgeJoint
+            // 
+            this.textBoxDD_LedgeJoint.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxDD_LedgeJoint.Location = new System.Drawing.Point(339, 3);
+            this.textBoxDD_LedgeJoint.Name = "textBoxDD_LedgeJoint";
+            this.textBoxDD_LedgeJoint.Size = new System.Drawing.Size(89, 20);
+            this.textBoxDD_LedgeJoint.TabIndex = 67;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(233, 7);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Ledge+Joint";
+            // 
             // groupBoxTruss
             // 
             this.groupBoxTruss.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -459,9 +459,9 @@
             this.checkBoxAsymOME.AutoSize = true;
             this.checkBoxAsymOME.Location = new System.Drawing.Point(102, 20);
             this.checkBoxAsymOME.Name = "checkBoxAsymOME";
-            this.checkBoxAsymOME.Size = new System.Drawing.Size(111, 17);
+            this.checkBoxAsymOME.Size = new System.Drawing.Size(110, 17);
             this.checkBoxAsymOME.TabIndex = 2;
-            this.checkBoxAsymOME.Text = "Assymetrical OME";
+            this.checkBoxAsymOME.Text = "Mirror ME to OME";
             this.checkBoxAsymOME.UseVisualStyleBackColor = true;
             this.checkBoxAsymOME.Visible = false;
             // 
@@ -1470,6 +1470,61 @@
             this.groupBoxStrand.Text = "Strand Controls:";
             this.groupBoxStrand.Enter += new System.EventHandler(this.groupBoxStrand_Enter);
             // 
+            // labelTrussRules2
+            // 
+            this.labelTrussRules2.Location = new System.Drawing.Point(192, 406);
+            this.labelTrussRules2.Name = "labelTrussRules2";
+            this.labelTrussRules2.Size = new System.Drawing.Size(274, 112);
+            this.labelTrussRules2.TabIndex = 100;
+            this.labelTrussRules2.Text = resources.GetString("labelTrussRules2.Text");
+            // 
+            // labelTrussRulesTitle2
+            // 
+            this.labelTrussRulesTitle2.AutoSize = true;
+            this.labelTrussRulesTitle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTrussRulesTitle2.Location = new System.Drawing.Point(192, 386);
+            this.labelTrussRulesTitle2.Name = "labelTrussRulesTitle2";
+            this.labelTrussRulesTitle2.Size = new System.Drawing.Size(176, 13);
+            this.labelTrussRulesTitle2.TabIndex = 99;
+            this.labelTrussRulesTitle2.Text = "Truss Guidelines - Transverse";
+            // 
+            // labelTrussRules
+            // 
+            this.labelTrussRules.Location = new System.Drawing.Point(192, 314);
+            this.labelTrussRules.Name = "labelTrussRules";
+            this.labelTrussRules.Size = new System.Drawing.Size(274, 61);
+            this.labelTrussRules.TabIndex = 98;
+            this.labelTrussRules.Text = "- Center gap should be between 2\'-0\" and 4\'-6\"\r\n\r\n- At any transition, no more th" +
+    "an 2 truss lines should end";
+            // 
+            // labelTrussRulesTitle
+            // 
+            this.labelTrussRulesTitle.AutoSize = true;
+            this.labelTrussRulesTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTrussRulesTitle.Location = new System.Drawing.Point(192, 294);
+            this.labelTrussRulesTitle.Name = "labelTrussRulesTitle";
+            this.labelTrussRulesTitle.Size = new System.Drawing.Size(182, 13);
+            this.labelTrussRulesTitle.TabIndex = 97;
+            this.labelTrussRulesTitle.Text = "Truss Guidelines - Longitudinal";
+            // 
+            // labelStrandRules
+            // 
+            this.labelStrandRules.Location = new System.Drawing.Point(192, 85);
+            this.labelStrandRules.Name = "labelStrandRules";
+            this.labelStrandRules.Size = new System.Drawing.Size(274, 203);
+            this.labelStrandRules.TabIndex = 96;
+            this.labelStrandRules.Text = resources.GetString("labelStrandRules.Text");
+            // 
+            // labelStrandRulesTitle
+            // 
+            this.labelStrandRulesTitle.AutoSize = true;
+            this.labelStrandRulesTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelStrandRulesTitle.Location = new System.Drawing.Point(192, 65);
+            this.labelStrandRulesTitle.Name = "labelStrandRulesTitle";
+            this.labelStrandRulesTitle.Size = new System.Drawing.Size(107, 13);
+            this.labelStrandRulesTitle.TabIndex = 95;
+            this.labelStrandRulesTitle.Text = "Strand Guidelines";
+            // 
             // labelTotBot
             // 
             this.labelTotBot.AutoSize = true;
@@ -2371,61 +2426,6 @@
             this.panelSelect.Name = "panelSelect";
             this.panelSelect.Size = new System.Drawing.Size(512, 36);
             this.panelSelect.TabIndex = 4;
-            // 
-            // labelStrandRulesTitle
-            // 
-            this.labelStrandRulesTitle.AutoSize = true;
-            this.labelStrandRulesTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelStrandRulesTitle.Location = new System.Drawing.Point(192, 65);
-            this.labelStrandRulesTitle.Name = "labelStrandRulesTitle";
-            this.labelStrandRulesTitle.Size = new System.Drawing.Size(107, 13);
-            this.labelStrandRulesTitle.TabIndex = 95;
-            this.labelStrandRulesTitle.Text = "Strand Guidelines";
-            // 
-            // labelStrandRules
-            // 
-            this.labelStrandRules.Location = new System.Drawing.Point(192, 85);
-            this.labelStrandRules.Name = "labelStrandRules";
-            this.labelStrandRules.Size = new System.Drawing.Size(274, 203);
-            this.labelStrandRules.TabIndex = 96;
-            this.labelStrandRules.Text = resources.GetString("labelStrandRules.Text");
-            // 
-            // labelTrussRulesTitle
-            // 
-            this.labelTrussRulesTitle.AutoSize = true;
-            this.labelTrussRulesTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTrussRulesTitle.Location = new System.Drawing.Point(192, 294);
-            this.labelTrussRulesTitle.Name = "labelTrussRulesTitle";
-            this.labelTrussRulesTitle.Size = new System.Drawing.Size(182, 13);
-            this.labelTrussRulesTitle.TabIndex = 97;
-            this.labelTrussRulesTitle.Text = "Truss Guidelines - Longitudinal";
-            // 
-            // labelTrussRules
-            // 
-            this.labelTrussRules.Location = new System.Drawing.Point(192, 314);
-            this.labelTrussRules.Name = "labelTrussRules";
-            this.labelTrussRules.Size = new System.Drawing.Size(274, 61);
-            this.labelTrussRules.TabIndex = 98;
-            this.labelTrussRules.Text = "- Center gap should be between 2\'-0\" and 4\'-6\"\r\n\r\n- At any transition, no more th" +
-    "an 2 truss lines should end";
-            // 
-            // labelTrussRulesTitle2
-            // 
-            this.labelTrussRulesTitle2.AutoSize = true;
-            this.labelTrussRulesTitle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTrussRulesTitle2.Location = new System.Drawing.Point(192, 386);
-            this.labelTrussRulesTitle2.Name = "labelTrussRulesTitle2";
-            this.labelTrussRulesTitle2.Size = new System.Drawing.Size(176, 13);
-            this.labelTrussRulesTitle2.TabIndex = 99;
-            this.labelTrussRulesTitle2.Text = "Truss Guidelines - Transverse";
-            // 
-            // labelTrussRules2
-            // 
-            this.labelTrussRules2.Location = new System.Drawing.Point(192, 406);
-            this.labelTrussRules2.Name = "labelTrussRules2";
-            this.labelTrussRules2.Size = new System.Drawing.Size(274, 112);
-            this.labelTrussRules2.TabIndex = 100;
-            this.labelTrussRules2.Text = resources.GetString("labelTrussRules2.Text");
             // 
             // MainFormEditor
             // 

@@ -29,6 +29,7 @@ namespace DualDeckEditorAddin
         public static Dictionary<string, string> TextBoxDimensionMappings2Skew { get; private set; }
         public static Dictionary<string, string> TextBoxMappings2Skew { get; private set; }
         public static Dictionary<string, string> CheckBoxMappings2Skew { get; private set; }
+        public static Dictionary<string, string> AsymOMECheckBoxMappings2Skew { get; private set; }
 
         public static Dictionary<string, string> mirroringPairsWithoutOffset { get; private set; }
         public static Dictionary<string, string> mirroringPairsWithOffset { get; private set; }
@@ -47,6 +48,7 @@ namespace DualDeckEditorAddin
             InitializeTextBoxDimensionMappingsSkew();
             InitializeTextBoxMappings2Skew();
             InitializeCheckBoxMappings2Skew();
+            InitializeAsymOMECheckBoxMappings2Skew();
             InitializeTextBoxDimensionMappings2Skew();
             InitializeMirroringPairs();
         }
@@ -512,7 +514,6 @@ namespace DualDeckEditorAddin
             AsymOMECheckBoxMappingsSkew = new Dictionary<string, string>
             {
                 // Trusses
-                {"checkBoxTrussOffset", "6.5\" Truss_Offset"},
                 {"checkBoxOnOff_A", "OME_TrussA"},
                 {"checkBoxOnOff_01", "OME_Truss01"},
                 {"checkBoxOnOff_02", "OME_Truss02"},
@@ -701,6 +702,27 @@ namespace DualDeckEditorAddin
 
                 // Misc.
                 {"checkBoxAsymOME", "Mirror ME to OME"}
+            };
+        }
+
+        private static void InitializeAsymOMECheckBoxMappings2Skew()
+        {
+            AsymOMECheckBoxMappings2Skew = new Dictionary<string, string>
+            {
+                // Trusses
+                {"checkBoxOnOff_A", "ASym_OME_TrussA"},
+                {"checkBoxOnOff_01", "ASym_OME_Truss01"},
+                {"checkBoxOnOff_02", "ASym_OME_Truss02"},
+                {"checkBoxOnOff_03", "ASym_OME_Truss03"},
+                {"checkBoxOnOff_04", "ASym_OME_Truss04"},
+                {"checkBoxOnOff_05", "ASym_OME_Truss05"},
+                {"checkBoxOnOff_06", "ASym_OME_Truss06"},
+                {"checkBoxOnOff_07", "ASym_OME_Truss07"},
+                {"checkBoxOnOff_08", "ASym_OME_Truss08"},
+                {"checkBoxOnOff_09", "ASym_OME_Truss09"},
+                {"checkBoxOnOff_10", "ASym_OME_Truss10"},
+                {"checkBoxOnOff_11", "ASym_OME_Truss11"},
+                {"checkBoxOnOff_B", "ASym_OME_TrussB"}
             };
         }
 
